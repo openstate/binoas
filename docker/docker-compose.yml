@@ -1,0 +1,115 @@
+version: "3.1"
+services:
+  # TODO: backend
+  # TODO: frontend
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - binoas
+  # kafka taken from https://hub.docker.com/r/wurstmeister/kafka/
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092"
+    networks:
+      - binoas
+    environment:
+      # Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  # redis:
+  #   image: "redis:${REDIS_VERSION}"
+  #   volumes:
+  #    - redisdata:/data
+  #   sysctls:
+  #    - net.core.somaxconn=65535
+  #   mem_limit: 1g
+  elastic_endpoint:
+    container_name: binoas_elastic_endpoint
+    image: "docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}"
+    # ports:
+    #   - "9200:9200"
+    environment:
+      - network.host=0.0.0.0
+      - discovery.zen.ping.unicast.hosts=binoas_elastic_endpoint
+      - discovery.zen.minimum_master_nodes=2
+      - node.max_local_storage_nodes=20
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - http.host=0.0.0.0
+      - node.master=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - binoas
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: wget -q -O - http://127.0.0.1:9200/_cat/health
+      interval: 15s
+      timeout: 10s
+      retries: 3
+  elastic:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}"
+    environment:
+      - network.host=0.0.0.0
+      - discovery.zen.ping.unicast.hosts=binoas_elastic_endpoint
+      - discovery.zen.minimum_master_nodes=2
+      - node.max_local_storage_nodes=20
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - binoas
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: wget -q -O - http://127.0.0.1:9200/_cat/health
+      interval: 15s
+      timeout: 10s
+      retries: 3
+  mysql:
+    image: mysql:5.7.21
+    # This root password will be overwritten with the password used in
+    # the backup that will be restored from a .sql file in the
+    # docker-entrypoint-initdb.d directory.
+    environment:
+      - MYSQL_DATABASE=binoas
+      - MYSQL_ROOT_PASSWORD=test
+    networks:
+      - binoas
+    volumes:
+      - binoas-mysql-volume:/var/lib/mysql
+      - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+    restart: always
+networks:
+  binoas:
+  nginx-load-balancer:
+    external:
+      name: docker_nginx-load-balancer
+volumes:
+  esdata:
+    driver: local
+  redisdata:
+    driver: local
+  binoas-mysql-volume:
+    driver: local

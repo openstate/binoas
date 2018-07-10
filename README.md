@@ -10,6 +10,11 @@ binoas is a service that allows you to get updates via email when one or more do
 
 * docker-compose
 
+
+1. `cd docker`
+2. `docker-compose up -d zookeeper`
+3. `docker-compose scale kafka=2`
+
 ## Documentation
 
 ## Contributing
