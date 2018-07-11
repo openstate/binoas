@@ -101,6 +101,16 @@ services:
       - binoas-mysql-volume:/var/lib/mysql
       - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
     restart: always
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    volumes:
+      - ../:/opt/binoas
+    networks:
+      - binoas
+      - nginx-load-balancer
+    restart: always
 networks:
   binoas:
   nginx-load-balancer:
