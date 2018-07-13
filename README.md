@@ -13,7 +13,7 @@ binoas is a service that allows you to get updates via email when one or more do
 
 1. `cd docker`
 2. `docker-compose up -d zookeeper`
-3. `# Set this correctly: On a Mac lookup the IP en en0`
+3. `# Set this correctly: On a Mac lookup the IP en en0` See [documentation](https://github.com/wurstmeister/kafka-docker/wiki/Connectivity) for this
 4. `ifconfig en0 |grep inet |grep -v inet6 |cut -d ' ' -f 2`
 5. `KAFKA_ADVERTISED_HOST_NAME: 192.168.0.1`
 6. `docker-compose scale kafka=2`
