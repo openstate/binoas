@@ -17,7 +17,7 @@ services:
       - binoas
     environment:
       # Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.1
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.121.19
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -110,6 +110,28 @@ services:
     networks:
       - binoas
       - nginx-load-balancer
+    restart: always
+  transformer:
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    # NOTE: the command should be updated
+    command: python loader.py
+    volumes:
+      - ../:/opt/binoas
+    networks:
+      - binoas
+    restart: always
+  loader:
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    # NOTE: the command should be updated
+    command: python loader.py
+    volumes:
+      - ../:/opt/binoas
+    networks:
+      - binoas
     restart: always
 networks:
   binoas:
