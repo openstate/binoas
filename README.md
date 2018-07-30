@@ -22,6 +22,7 @@ binoas is a service that allows you to get updates via email when one or more do
 9. `./start-kafka-shell.sh 192.168.0.1 172.17.0.1:2181`
 10. `cd /opt/kafka && ./bin/kafka-topics.sh --create --topic topic --partitions 4 --zookeeper $ZK --replication-factor 2`
 11. See [this tutorial](https://wurstmeister.github.io/kafka-docker/)
+12. `` /bin/kafka-console-producer.sh --topic=topic --broker-list=`broker-list.sh` ``
 
 ## Documentation
 
