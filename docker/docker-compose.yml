@@ -111,6 +111,9 @@ services:
       - binoas
       - nginx-load-balancer
     restart: always
+    command: flask run --host=0.0.0.0
+    ports:
+      - "5000:5000"
   transformer:
     build:
       context: .
