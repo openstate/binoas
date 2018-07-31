@@ -3,6 +3,7 @@ import threading
 import logging
 import time
 import multiprocessing
+import sys
 
 from kafka import KafkaConsumer, KafkaProducer
 
@@ -55,7 +56,10 @@ class Consumer(multiprocessing.Process):
         consumer.close()
 
 
-def main():
+def main(sys.argv):
+    role = sys.argv[1]
+    logging.info('Starting up with role : %s' % (role,))
+
     tasks = [
         # Producer(),
         Consumer()
@@ -79,4 +83,4 @@ if __name__ == "__main__":
         format='%(asctime)s.%(msecs)s:%(name)s:%(thread)d:%(levelname)s:%(process)d:%(message)s',
         level=logging.INFO
         )
-    main()
+    main(sys.argv)
