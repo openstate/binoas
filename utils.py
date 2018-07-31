@@ -9,4 +9,4 @@ def load_config():
     config = {}
     with open('config.yaml') as f:
         config = load(f, Loader=Loader)
-    return config['binoas']
+    return config
