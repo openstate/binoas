@@ -106,3 +106,4 @@ venv.bak/
 kafka-docker/
 
 config.py
+config.yaml

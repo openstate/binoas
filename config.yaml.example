@@ -1,0 +1,8 @@
+binoas:
+  applications:
+    poliflw:
+      name: PoliFLW
+    politwoops:
+      name: politwoops
+    openraadsinformatie:
+      name: "Open Raadsinformatie"

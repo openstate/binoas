@@ -5,7 +5,7 @@ from app import app
 
 @app.route("/")
 def index():
-    return app.config['KAFKA_HOST']
+    return u"%s : %s" % (app.config['KAFKA_HOST'], app.config['binoas']['applications'],)
 
 
 if __name__ == "__main__":
