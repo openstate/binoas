@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash, Markup
+from flask import render_template, request, redirect, url_for, flash, Markup, jsonify
 
 from kafka import KafkaConsumer, KafkaProducer
 
@@ -10,9 +10,7 @@ producer = KafkaProducer(bootstrap_servers=app.config['binoas']['zookeeper'])
 
 @app.route("/")
 def index():
-    return u"%s : %s" % (
-        app.config['binoas']['zookeeper'],
-        app.config['binoas']['applications'],)
+    return jsonify(app.config['binoas'])
 
 
 @app.route("/posts/new")

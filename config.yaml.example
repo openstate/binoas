@@ -1,8 +1,24 @@
 binoas:
+  zookeeper: kafka
+  _defaults: &defaults
+    routes:
+      app:
+        topics:
+          in: topic
+      transformer:
+        topics:
+          in: topic
+          out: objects
+      loader:
+        topics:
+          in: objects
   applications:
     poliflw:
+      <<: *defaults
       name: PoliFLW
     politwoops:
+      <<: *defaults
       name: politwoops
     openraadsinformatie:
+      <<: *defaults
       name: "Open Raadsinformatie"
