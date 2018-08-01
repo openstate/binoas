@@ -8,8 +8,10 @@ binoas is a service that allows you to get updates via email when one or more do
 
 ## Installation
 
-* docker-compose
+1. Copy `config.py.example` to `config.py` and edit it appropriately
+2. Copy `config.yaml.example` to `config.yaml` and edit it appropriately
 
+## Running
 
 1. `cd docker`
 2. `docker-compose up -d zookeeper`
