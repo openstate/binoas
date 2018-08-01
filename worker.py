@@ -84,12 +84,16 @@ class Consumer(multiprocessing.Process):
                 self.producer.send(t, transformed_message)
 
 
-def main(argv):
+def start_worker(argv, klass):
+    logging.basicConfig(
+        format='%(asctime)s.%(msecs)s:%(name)s:%(thread)d:%(levelname)s:%(process)d:%(message)s',
+        level=logging.INFO)
+
     role = argv[1]
     logging.info('Starting up with role : %s' % (role,))
 
     tasks = [
-        Consumer(role)
+        klass(role)
     ]
 
     for t in tasks:
@@ -106,8 +110,4 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        format='%(asctime)s.%(msecs)s:%(name)s:%(thread)d:%(levelname)s:%(process)d:%(message)s',
-        level=logging.INFO
-        )
-    main(sys.argv)
+    start_worker(sys.argv, Consumer)

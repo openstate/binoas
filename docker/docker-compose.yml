@@ -132,7 +132,7 @@ services:
       context: .
       dockerfile: Dockerfile-app
     # NOTE: the command should be updated
-    command: python worker.py loader
+    command: python loader.py loader
     volumes:
       - ../:/opt/binoas
     networks:
