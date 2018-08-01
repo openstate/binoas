@@ -42,31 +42,46 @@ class Consumer(multiprocessing.Process):
         self.stop_event.set()
 
     def run(self):
-        consumer = KafkaConsumer(
+        self.consumer = KafkaConsumer(
             bootstrap_servers=self.config['binoas']['zookeeper'],
             auto_offset_reset='earliest', consumer_timeout_ms=1000)
 
-        topics = list(set(itertools.chain.from_iterable(
+        self.topics_in = list(set(itertools.chain.from_iterable(
             [
                 a['routes'][self.role]['topics'].get('in', []) for k, a in
                 self.config['binoas']['applications'].items()])))
-        logging.info('Consuming topics: %s' % (topics,))
-        consumer.subscribe(topics)
+        logging.info('Consuming topics: %s' % (self.topics_in,))
+        self.consumer.subscribe(self.topics_in)
+
+        self.topics_out = list(set(itertools.chain.from_iterable(
+            [
+                a['routes'][self.role]['topics'].get('out', []) for k, a in
+                self.config['binoas']['applications'].items()])))
+
+        if len(self.topics_out) > 0:
+            logging.info('Producing for topics: %s' % (self.topics_out,))
+            self.producer = KafkaProducer(bootstrap_servers='kafka')
+        else:
+            logging.info('Not setting up producers')
+            self.producer = None
 
         while not self.stop_event.is_set():
-            for message in consumer:
+            for message in self.consumer:
                 transformed = self.transform(message)
                 self.output(transformed)
                 if self.stop_event.is_set():
                     break
 
-        consumer.close()
+        self.consumer.close()
 
     def transform(self, message):
-        return message
+        return message.value
 
     def output(self, transformed_message):
         logging.info(transformed_message)
+        if self.producer is not None:
+            for t in self.topics_out:
+                self.producer.send(t, transformed_message)
 
 
 def main(argv):
