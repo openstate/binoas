@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import threading
+import itertools
 import logging
 import time
 import multiprocessing
@@ -31,9 +32,10 @@ class Producer(threading.Thread):
 
 
 class Consumer(multiprocessing.Process):
-    def __init__(self):
+    def __init__(self, role):
         multiprocessing.Process.__init__(self)
         self.stop_event = multiprocessing.Event()
+        self.role = role
         self.config = load_config()
 
     def stop(self):
@@ -43,26 +45,36 @@ class Consumer(multiprocessing.Process):
         consumer = KafkaConsumer(
             bootstrap_servers=self.config['binoas']['zookeeper'],
             auto_offset_reset='earliest', consumer_timeout_ms=1000)
-        # FIXME: allow to set the topic in the config
-        consumer.subscribe(['topic'])
+
+        topics = list(set(itertools.chain.from_iterable(
+            [
+                a['routes'][self.role]['topics'].get('in', []) for k, a in
+                self.config['binoas']['applications'].items()])))
+        logging.info('Consuming topics: %s' % (topics,))
+        consumer.subscribe(topics)
 
         while not self.stop_event.is_set():
             for message in consumer:
-                logging.info(self.config['binoas']['applications'])
-                logging.info(message)
+                transformed = self.transform(message)
+                self.output(transformed)
                 if self.stop_event.is_set():
                     break
 
         consumer.close()
 
+    def transform(self, message):
+        return message
 
-def main(sys.argv):
-    role = sys.argv[1]
+    def output(self, transformed_message):
+        logging.info(transformed_message)
+
+
+def main(argv):
+    role = argv[1]
     logging.info('Starting up with role : %s' % (role,))
 
     tasks = [
-        # Producer(),
-        Consumer()
+        Consumer(role)
     ]
 
     for t in tasks:
