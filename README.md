@@ -36,6 +36,12 @@ for msg in comsumer:
     print(msg)
 
 ```
+
+## Testing
+
+We use the default unit testing framework that is built into python. You can start
+it as follows: `docker exec binoas_loader_1 python tests.py`
+
 ## Contributing
 
 ## Authors and contributors
