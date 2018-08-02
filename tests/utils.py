@@ -2,10 +2,41 @@
 
 import unittest
 
-from utils import load_config
+from utils import load_config, is_valid_config, ConfigurationError
 
 
 class TestLoadConfig(unittest.TestCase):
+    def test_valid_config(self):
+        config = {
+            'binoas': {}
+        }
+        self.assertTrue(is_valid_config(config))
+
+    def test_invalid_config_no_main_key(self):
+        config = {
+            'dummy': {}
+        }
+        self.assertFalse(is_valid_config(config))
+
+    def test_invalid_config_multiple_keys(self):
+        config = {
+            'binoas': {},
+            'other': 'yes'
+        }
+        self.assertFalse(is_valid_config(config))
+
+    def test_invalid_config_multiple_keys_no_main_key(self):
+        config = {
+            'dummy': {},
+            'other': 'yes'
+        }
+        self.assertFalse(is_valid_config(config))
+
+    def test_invalid_config_empty(self):
+        config = {
+        }
+        self.assertFalse(is_valid_config(config))
+
     def test_load_config(self):
         result = load_config('tests/test.yaml')
         expected = {
@@ -54,3 +85,7 @@ class TestLoadConfig(unittest.TestCase):
         }
 
         self.assertEqual(result, expected)
+
+    def test_load_invalid_config(self):
+        with self.assertRaises(ConfigurationError):
+            load_config('tests/invalid.yaml')
