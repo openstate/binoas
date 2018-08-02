@@ -1,0 +1,25 @@
+binoas:
+  zookeeper: kafka
+  _defaults: &defaults
+    routes:
+      app:
+        topics:
+          in:
+            - topic
+      transformer:
+        topics:
+          in:
+            - topic
+          out:
+            - objects
+      loader:
+        topics:
+          in:
+            - objects
+  applications:
+    poliflw:
+      name: PoliFLW
+    politwoops:
+      name: politwoops
+    openraadsinformatie:
+      name: "Open Raadsinformatie"
