@@ -38,7 +38,7 @@ class TestLoadConfig(unittest.TestCase):
         self.assertFalse(is_valid_config(config))
 
     def test_load_config(self):
-        result = load_config('tests/test.yaml')
+        result = load_config('tests/data/test.yaml')
         expected = {
             'binoas': {
                 'zookeeper': 'kafka',
@@ -88,4 +88,4 @@ class TestLoadConfig(unittest.TestCase):
 
     def test_load_invalid_config(self):
         with self.assertRaises(ConfigurationError):
-            load_config('tests/invalid.yaml')
+            load_config('tests/data/invalid.yaml')
