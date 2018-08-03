@@ -1,2 +1,3 @@
 from .utils import TestLoadConfig
-from .binoas.posts import TestBasePostTransformer
+
+from .binoas.posts import TestBasePostTransformer, TestJSONPathPostTransformer
