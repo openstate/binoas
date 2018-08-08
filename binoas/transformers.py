@@ -14,4 +14,13 @@ class BasePostTransformer:
 class JSONPathPostTransformer(BasePostTransformer):
         def transform(self, payload):
             post = Post(payload)
-            return
+
+            result = {
+                'application': post['application'],
+                'payload': {}
+            }
+            for fld, expr in self.config['binoas']['applications'][post['application']]['rules'].items():
+                jsonpath_expr = parse(expr)
+                res = jsonpath_expr.find(post['payload'])[0].value
+                result['payload'][fld] = res
+            return result
