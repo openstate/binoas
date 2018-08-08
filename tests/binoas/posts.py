@@ -2,7 +2,38 @@
 
 import unittest
 
-from binoas.posts import BasePostTransformer, JSONPathPostTransformer
+from binoas.posts import Post, BasePostTransformer, JSONPathPostTransformer
+
+
+class TestPost(unittest.TestCase):
+    def test_valid_post(self):
+        payload = {
+            'application': 'poliflw',
+            'payload': {}
+        }
+        post = Post(payload)
+        self.assertEqual(post['application'], 'poliflw')
+        self.assertEqual(post['payload'], {})
+
+    def test_no_application_post(self):
+        payload = {
+            'payload': {}
+        }
+        with self.assertRaises(ValueError):
+            post = Post(payload)
+
+    def test_no_payload_post(self):
+        payload = {
+            'application': 'politwoops'
+        }
+        with self.assertRaises(ValueError):
+            post = Post(payload)
+
+    def test_empty_post(self):
+        payload = {
+        }
+        with self.assertRaises(ValueError):
+            post = Post(payload)
 
 
 class TestBasePostTransformer(unittest.TestCase):
@@ -20,42 +51,19 @@ class TestBasePostTransformer(unittest.TestCase):
         with self.assertRaises(NotImplementedError):
             self.post_transformer.transform({})
 
-    def test_valid_post(self):
-        post = {
-            'application': 'poliflw',
-            'payload': {}
-        }
-        self.assertTrue(self.post_transformer.is_valid_post(post))
-
-    def test_invalid_application_post(self):
-        post = {
-            'application': 'politwoops',
-            'payload': {}
-        }
-        self.assertFalse(self.post_transformer.is_valid_post(post))
-
-    def test_no_application_post(self):
-        post = {
-            'payload': {}
-        }
-        self.assertFalse(self.post_transformer.is_valid_post(post))
-
-    def test_no_payload_post(self):
-        post = {
-            'application': 'politwoops'
-        }
-        self.assertFalse(self.post_transformer.is_valid_post(post))
-
-    def test_empty_post(self):
-        post = {
-        }
-        self.assertFalse(self.post_transformer.is_valid_post(post))
 
 
 class TestJSONPathPostTransformer(unittest.TestCase):
     def setUp(self):
-        rules = {}
-        self.post_transformer = JSONPathPostTransformer(rules)
+        config = {
+            'binoas': {
+                'applications': {
+                    'poliflw': {}
+                }
+            }
+        }
+        self.post_transformer = JSONPathPostTransformer(config)
 
-    def test_transform(self):
-        self.assertEqual(self.post_transformer.transform({}), None)
+    def test_transform_no_valid_post(self):
+        with self.assertRaises(ValueError):
+            self.post_transformer.transform({})
