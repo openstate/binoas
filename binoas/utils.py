@@ -5,8 +5,7 @@ except ImportError:
     from yaml import Loader
 
 
-class ConfigurationError(Exception):
-    pass
+from binoas.exceptions import ConfigurationError
 
 
 def load_config(config_file='config.yaml'):

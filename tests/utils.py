@@ -2,7 +2,8 @@
 
 import unittest
 
-from binoas.utils import load_config, is_valid_config, ConfigurationError
+from binoas.utils import load_config, is_valid_config
+from binoas.exceptions import ConfigurationError
 
 
 class TestLoadConfig(unittest.TestCase):
