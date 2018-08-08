@@ -1,0 +1,67 @@
+{
+  "application": "poliflw",
+  "payload": {
+    "date": "2018-07-25T12:31:38",
+    "date_granularity": 12,
+    "description": "Donderdag 6 september hopen we op zomers weer, want dan vindt voor alle Amsterdamse CDA leden en ge\u00efnteresseerden de CDA zomerborrel plaats. Voor \u20ac15,- ontvang je drie drankjes (bier, wijn, fris), een klein puntzakje friet en twee gefrituurde snacks. Wie komt gezellig langs?&amp;nbsp;\nLocatie: Brasserie Nel, Amstelveld 12Aanvang: 19.30uAanmelden: via dorienvoerman@hotmail.comBetaling: Je kunt de \u20ac15,- cash meenemen of van te voren via CDA Afdeling Amsterdam op rekening NL38INGB0000065005 overmaken o.v.v. CDA zomerborrel incl. je naam.",
+    "enrichments": {
+      "parties": [
+        "CDA", 
+        "CDA"
+      ],
+      "politicians": [],
+      "sentiment": {
+        "polarity": {
+          "description": "Neutraal",
+          "score": 0.125
+        },
+        "subjectivity": {
+          "description": "Subjectief",
+          "score": 0.5125
+        }
+      },
+      "topics": [
+        {
+          "id": 2,
+          "name": "Zorg en gezondheid | Organisatie en beleid"
+        }
+      ]
+    },
+    "location": "Amsterdam",
+    "meta": {
+      "collection": "CDA",
+      "original_object_id": "https://www.cda.nl/noord-holland/amsterdam/actueel/nieuws/zomerborrel-6-september/",
+      "original_object_urls": {
+        "html": "https://www.cda.nl/noord-holland/amsterdam/actueel/nieuws/zomerborrel-6-september/"
+      },
+      "processing_finished": "2018-08-08T06:02:36.933460",
+      "processing_started": "2018-08-08T06:02:30.046049",
+      "rights": "Undefined",
+      "source_id": "cda_amsterdam"
+    },
+    "parties": [
+      "CDA",
+      "CDA"
+    ],
+    "politicians": [],
+    "sentiment": {
+      "polarity": {
+        "description": "Neutraal",
+        "score": 0.125
+      },
+      "subjectivity": {
+        "description": "Subjectief",
+        "score": 0.5125
+      }
+    },
+    "source": "Partij nieuws",
+    "title": "Zomerborrel: 6 september",
+    "topics": [
+      {
+        "id": 2,
+        "name": "Zorg en gezondheid | Organisatie en beleid"
+      }
+    ],
+    "type": "Partij"
+  }
+}

@@ -1,0 +1,357 @@
+{
+  "application": "poliflw",
+  "payload": {
+    "user_name": "Vera_Bergkamp",
+    "updated_at": "2018-08-04T16:29:59+02:00",
+    "details": {
+      "user": {
+        "description": "2e Kamerlid D66, Secretaris fractie, WLZ & WMO (care), mantelzorg & vrijwilligers, kunst & cultuur, drugs, familierecht, misbruik, initiatiefwet Art 1 GW & AWGB",
+        "following": null,
+        "follow_request_sent": null,
+        "default_profile_image": false,
+        "profile_text_color": "634047",
+        "name": "Vera Bergkamp",
+        "lang": "en",
+        "listed_count": 552,
+        "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme3/bg.gif",
+        "profile_link_color": "088253",
+        "profile_background_image_url": "http://abs.twimg.com/images/themes/theme3/bg.gif",
+        "screen_name": "Vera_Bergkamp",
+        "profile_use_background_image": true,
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1013483450547007488/-eNE2qkQ_normal.jpg",
+        "friends_count": 2892,
+        "is_translator": false,
+        "default_profile": false,
+        "verified": true,
+        "profile_sidebar_border_color": "D3D2CF",
+        "utc_offset": null,
+        "profile_background_tile": false,
+        "contributors_enabled": false,
+        "protected": false,
+        "location": "Amsterdam",
+        "profile_banner_url": "https://pbs.twimg.com/profile_banners/100024085/1532163213",
+        "profile_sidebar_fill_color": "E3E2DE",
+        "id_str": "100024085",
+        "statuses_count": 20450,
+        "geo_enabled": false,
+        "url": "https://d66.nl/mensen/vera-bergkamp/",
+        "created_at": "Mon Dec 28 19:11:50 +0000 2009",
+        "id": 100024085,
+        "profile_background_color": "EDECE9",
+        "profile_image_url": "http://pbs.twimg.com/profile_images/1013483450547007488/-eNE2qkQ_normal.jpg",
+        "time_zone": null,
+        "translator_type": "none",
+        "followers_count": 19775,
+        "favourites_count": 1753,
+        "notifications": null
+      },
+      "coordinates": null,
+      "in_reply_to_status_id": null,
+      "truncated": true,
+      "place": null,
+      "lang": "nl",
+      "favorite_count": 0,
+      "quote_count": 0,
+      "in_reply_to_user_id_str": null,
+      "retweet_count": 0,
+      "in_reply_to_screen_name": null,
+      "is_quote_status": false,
+      "contributors": null,
+      "possibly_sensitive": false,
+      "display_text_range": [
+        0,
+        140
+      ],
+      "in_reply_to_status_id_str": null,
+      "favorited": false,
+      "timestamp_ms": "1533392704762",
+      "entities": {
+        "user_mentions": [
+          {
+            "name": "D66",
+            "screen_name": "D66",
+            "id_str": "28076891",
+            "indices": [
+              40,
+              44
+            ],
+            "id": 28076891
+          },
+          {
+            "name": "Partij van de Arbeid",
+            "screen_name": "PvdA",
+            "id_str": "7343682",
+            "indices": [
+              45,
+              50
+            ],
+            "id": 7343682
+          },
+          {
+            "name": "GroenLinks",
+            "screen_name": "groenlinks",
+            "id_str": "11836402",
+            "indices": [
+              57,
+              68
+            ],
+            "id": 11836402
+          },
+          {
+            "name": "Kajsa Ollongren",
+            "screen_name": "KajsaOllongren",
+            "id_str": "2561159192",
+            "indices": [
+              85,
+              100
+            ],
+            "id": 2561159192
+          },
+          {
+            "name": "Mark Harbers",
+            "screen_name": "markharbers",
+            "id_str": "115393803",
+            "indices": [
+              107,
+              119
+            ],
+            "id": 115393803
+          }
+        ],
+        "hashtags": [],
+        "urls": [
+          {
+            "display_url": "twitter.com/i/web/status/1…",
+            "expanded_url": "https://twitter.com/i/web/status/1025749465611808768",
+            "url": "https://t.co/YBlgoGseOQ",
+            "indices": [
+              124,
+              147
+            ]
+          }
+        ],
+        "symbols": []
+      },
+      "text": "Fijn de steun voor de initiatiefwet van @D66 @PvdA &amp; @groenlinks van het Kabinet @KajsaOllongren &amp; @markharbers om… https://t.co/YBlgoGseOQ",
+      "created_at": "Sat Aug 04 14:25:04 +0000 2018",
+      "id_str": "1025749465611808768",
+      "id": 1025749465611808800,
+      "deleted_at": "2018-08-04T16:25:06.264962",
+      "reply_count": 0,
+      "filter_level": "low",
+      "extended_tweet": {
+        "full_text": "Fijn de steun voor de initiatiefwet van @D66 @PvdA &amp; @groenlinks van het Kabinet @KajsaOllongren &amp; @markharbers om artikel 1 vd #Grondwet uit te breiden! ! Nog wel wat werk te doen samen met collega’s @kirstenvdhul &amp; @NevinOzutok, maar dit is een fijne stimulans! https://t.co/KwCjmGt1cM",
+        "display_text_range": [
+          0,
+          280
+        ],
+        "extended_entities": {
+          "media": [
+            {
+              "type": "photo",
+              "display_url": "pic.twitter.com/KwCjmGt1cM",
+              "sizes": {
+                "large": {
+                  "h": 1066,
+                  "w": 1600,
+                  "resize": "fit"
+                },
+                "small": {
+                  "h": 453,
+                  "w": 680,
+                  "resize": "fit"
+                },
+                "thumb": {
+                  "h": 150,
+                  "w": 150,
+                  "resize": "crop"
+                },
+                "medium": {
+                  "h": 800,
+                  "w": 1200,
+                  "resize": "fit"
+                }
+              },
+              "expanded_url": "https://twitter.com/Vera_Bergkamp/status/1025749465611808768/photo/1",
+              "media_url": "http://pbs.twimg.com/media/Djwxsm5XoAA2DHs.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/Djwxsm5XoAA2DHs.jpg",
+              "url": "https://t.co/KwCjmGt1cM",
+              "id_str": "1025749457558806528",
+              "indices": [
+                281,
+                304
+              ],
+              "id": 1025749457558806500
+            }
+          ]
+        },
+        "entities": {
+          "user_mentions": [
+            {
+              "name": "D66",
+              "screen_name": "D66",
+              "id_str": "28076891",
+              "id": 28076891,
+              "indices": [
+                40,
+                44
+              ]
+            },
+            {
+              "name": "Partij van de Arbeid",
+              "screen_name": "PvdA",
+              "id_str": "7343682",
+              "id": 7343682,
+              "indices": [
+                45,
+                50
+              ]
+            },
+            {
+              "name": "GroenLinks",
+              "screen_name": "groenlinks",
+              "id_str": "11836402",
+              "id": 11836402,
+              "indices": [
+                57,
+                68
+              ]
+            },
+            {
+              "name": "Kajsa Ollongren",
+              "screen_name": "KajsaOllongren",
+              "id_str": "2561159192",
+              "id": 2561159192,
+              "indices": [
+                85,
+                100
+              ]
+            },
+            {
+              "name": "Mark Harbers",
+              "screen_name": "markharbers",
+              "id_str": "115393803",
+              "id": 115393803,
+              "indices": [
+                107,
+                119
+              ]
+            },
+            {
+              "name": "Kirsten van den Hul",
+              "screen_name": "kirstenvdhul",
+              "id_str": "44845014",
+              "id": 44845014,
+              "indices": [
+                211,
+                224
+              ]
+            },
+            {
+              "name": "Nevin Ozutok",
+              "screen_name": "NevinOzutok",
+              "id_str": "160957719",
+              "id": 160957719,
+              "indices": [
+                231,
+                243
+              ]
+            }
+          ],
+          "hashtags": [
+            {
+              "text": "Grondwet",
+              "indices": [
+                136,
+                145
+              ]
+            }
+          ],
+          "urls": [],
+          "symbols": [],
+          "media": [
+            {
+              "type": "photo",
+              "display_url": "pic.twitter.com/KwCjmGt1cM",
+              "sizes": {
+                "large": {
+                  "h": 1066,
+                  "w": 1600,
+                  "resize": "fit"
+                },
+                "small": {
+                  "h": 453,
+                  "w": 680,
+                  "resize": "fit"
+                },
+                "thumb": {
+                  "h": 150,
+                  "w": 150,
+                  "resize": "crop"
+                },
+                "medium": {
+                  "h": 800,
+                  "w": 1200,
+                  "resize": "fit"
+                }
+              },
+              "expanded_url": "https://twitter.com/Vera_Bergkamp/status/1025749465611808768/photo/1",
+              "media_url": "http://pbs.twimg.com/media/Djwxsm5XoAA2DHs.jpg",
+              "media_url_https": "https://pbs.twimg.com/media/Djwxsm5XoAA2DHs.jpg",
+              "url": "https://t.co/KwCjmGt1cM",
+              "id_str": "1025749457558806528",
+              "indices": [
+                281,
+                304
+              ],
+              "id": 1025749457558806500
+            }
+          ]
+        }
+      },
+      "geo": null,
+      "in_reply_to_user_id": null,
+      "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+      "retweeted": false
+    },
+    "created_at": "2018-08-04T16:25:04+02:00",
+    "content": "Fijn de steun voor de initiatiefwet van @D66 @PvdA &amp; @groenlinks van het Kabinet @KajsaOllongren &amp; @markharbers om… https://t.co/YBlgoGseOQ",
+    "politician_id": 911,
+    "politician": {
+      "role": null,
+      "mentionable": true,
+      "gender": "f",
+      "user_name": "Vera_Bergkamp",
+      "twitter_total_deleted": 566,
+      "twitter_followers": 19793,
+      "screen_name": "Vera Bergkamp",
+      "end_date": null,
+      "updated_at": "2018-08-08T11:01:09+02:00",
+      "start_date": null,
+      "twitter_id": 100024085,
+      "party_id": 3,
+      "images": false,
+      "bio": "2e Kamerlid D66, Secretaris fractie, WLZ & WMO (care), mantelzorg & vrijwilligers, kunst & cultuur, drugs, familierecht, misbruik, initiatiefwet Art 1 GW & AWGB",
+      "verified": false,
+      "first_name": null,
+      "birth_place": null,
+      "twitter_since": null,
+      "status": 1,
+      "date_of_birth": null,
+      "area": null,
+      "current_place": "Amsterdam",
+      "avatar": "https://pbs.twimg.com/profile_images/1013483450547007488/-eNE2qkQ_normal.jpg",
+      "twitter_following": 2896,
+      "last_name": null,
+      "created_at": "2015-02-10T08:32:30+01:00",
+      "avatar_fetched_at": "2018-08-08T11:01:09+02:00",
+      "twitter_verified": true,
+      "twitter_total_favorited": 1764,
+      "twitter_total": 20461,
+      "last_tweeted_at": "2018-08-04T16:30:01+02:00",
+      "id": 911,
+      "last_mentioned_at": "2018-08-04T16:30:01+02:00"
+    },
+    "id": "1025749465611808768"
+  }
+}
