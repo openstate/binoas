@@ -5,7 +5,7 @@ import os
 import logging
 # from logging.handlers import SMTPHandler, RotatingFileHandler
 from config import Config
-from utils import load_config
+from binoas.utils import load_config
 from flask import Flask
 # from flask_sqlalchemy import SQLAlchemy
 

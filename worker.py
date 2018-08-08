@@ -8,7 +8,7 @@ import sys
 
 from kafka import KafkaConsumer, KafkaProducer
 
-from utils import load_config
+from binoas.utils import load_config
 
 
 class Producer(threading.Thread):
