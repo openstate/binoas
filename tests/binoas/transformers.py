@@ -34,8 +34,15 @@ class TestJSONPathPostTransformer(unittest.TestCase):
                             'description': "description",
                             'url': "meta.original_object_urls.html",
                             'created': "date",
-                            'modified': "date"
-                            # data:
+                            'modified': "date",
+                            'data': [
+                                'parties',
+                                'politicians',
+                                'location',
+                                'source',
+                                'type',
+                                'topics'
+                            ]
                         }
                     }
                 }
@@ -74,4 +81,5 @@ class TestJSONPathPostTransformer(unittest.TestCase):
             content = in_file.read()
         data = json.loads(content)
         result = self.post_transformer.transform(data)
+        print(result)
         self.assertEqual(result, expected)

@@ -20,7 +20,23 @@ class JSONPathPostTransformer(BasePostTransformer):
                 'payload': {}
             }
             for fld, expr in self.config['binoas']['applications'][post['application']]['rules'].items():
-                jsonpath_expr = parse(expr)
-                res = jsonpath_expr.find(post['payload'])[0].value
-                result['payload'][fld] = res
+                if fld != 'data':
+                    jsonpath_expr = parse(expr)
+                    res = jsonpath_expr.find(post['payload'])[0].value
+                    result['payload'][fld] = res
+                else:
+                    result['payload']['data'] = []
+                    for data_expr in expr:
+                        jsonpath_expr = parse(data_expr)
+                        for res in jsonpath_expr.find(post['payload']):
+                            if type(res.value) is list:
+                                values = res.value
+                            else:
+                                values = [res.value]
+                            for value in values:
+                                result['payload']['data'].append({
+                                    'key': data_expr,
+                                    'value': value
+                                })
+
             return result
