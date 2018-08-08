@@ -1,6 +1,4 @@
 from collections import UserDict
-import sys
-from jsonpath_rw import jsonpath, parse
 
 
 class Post(UserDict):
@@ -11,17 +9,3 @@ class Post(UserDict):
             ('payload' in self)
         ):
             raise ValueError('Not a valid post')
-
-
-class BasePostTransformer(object):
-    def __init__(self, config):
-        self.config = config
-
-    def transform(self, payload):
-        raise NotImplementedError
-
-
-class JSONPathPostTransformer(BasePostTransformer):
-        def transform(self, payload):
-            post = Post(payload)
-            return

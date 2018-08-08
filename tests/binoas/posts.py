@@ -2,7 +2,7 @@
 
 import unittest
 
-from binoas.posts import Post, BasePostTransformer, JSONPathPostTransformer
+from binoas.posts import Post
 
 
 class TestPost(unittest.TestCase):
@@ -34,36 +34,3 @@ class TestPost(unittest.TestCase):
         }
         with self.assertRaises(ValueError):
             post = Post(payload)
-
-
-class TestBasePostTransformer(unittest.TestCase):
-    def setUp(self):
-        config = {
-            'binoas': {
-                'applications': {
-                    'poliflw': {}
-                }
-            }
-        }
-        self.post_transformer = BasePostTransformer(config)
-
-    def test_transform(self):
-        with self.assertRaises(NotImplementedError):
-            self.post_transformer.transform({})
-
-
-
-class TestJSONPathPostTransformer(unittest.TestCase):
-    def setUp(self):
-        config = {
-            'binoas': {
-                'applications': {
-                    'poliflw': {}
-                }
-            }
-        }
-        self.post_transformer = JSONPathPostTransformer(config)
-
-    def test_transform_no_valid_post(self):
-        with self.assertRaises(ValueError):
-            self.post_transformer.transform({})
