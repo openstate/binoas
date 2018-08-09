@@ -5,6 +5,7 @@ import logging
 import time
 import multiprocessing
 import sys
+import json
 
 from kafka import KafkaConsumer, KafkaProducer
 
@@ -44,7 +45,8 @@ class Consumer(multiprocessing.Process):
     def run(self):
         self.consumer = KafkaConsumer(
             bootstrap_servers=self.config['binoas']['zookeeper'],
-            auto_offset_reset='earliest', consumer_timeout_ms=1000)
+            auto_offset_reset='earliest', consumer_timeout_ms=1000,
+            value_deserializer=json.loads)
 
         self.topics_in = list(set(itertools.chain.from_iterable(
             [
@@ -60,7 +62,9 @@ class Consumer(multiprocessing.Process):
 
         if len(self.topics_out) > 0:
             logging.info('Producing for topics: %s' % (self.topics_out,))
-            self.producer = KafkaProducer(bootstrap_servers='kafka')
+            self.producer = KafkaProducer(
+                bootstrap_servers='kafka',
+                value_serializer=lambda v: json.dumps(v).encode('utf-8'))
         else:
             logging.info('Not setting up producers')
             self.producer = None
@@ -81,6 +85,7 @@ class Consumer(multiprocessing.Process):
         logging.info(transformed_message)
         if self.producer is not None:
             for t in self.topics_out:
+                logging.info('Producting to channel: %s' % (t,))
                 self.producer.send(t, transformed_message)
 
 
