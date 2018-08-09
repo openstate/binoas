@@ -22,7 +22,10 @@ class JSONPathPostTransformer(BasePostTransformer):
             for fld, expr in self.config['binoas']['applications'][post['application']]['rules'].items():
                 if fld != 'data':
                     jsonpath_expr = parse(expr)
-                    res = jsonpath_expr.find(post['payload'])[0].value
+                    try:
+                        res = jsonpath_expr.find(post['payload'])[0].value
+                    except IndexError:
+                        res = None
                     result['payload'][fld] = res
                 else:
                     result['payload']['data'] = []

@@ -139,3 +139,40 @@ class TestJSONPathPostTransformer(unittest.TestCase):
         data = json.loads(content)
         result = self.post_transformer.transform(data)
         self.assertEqual(result, expected)
+
+    def test_transform_valid_post_politwoops_no_find_no_data(self):
+        expected = {
+            'application': 'politwoops',
+            'payload': {
+                'id': None,
+                'title': (
+                    'Fijn de steun voor de initiatiefwet van @D66 @PvdA &amp; '
+                    '@groenlinks van het Kabinet @KajsaOllongren &amp; '
+                    '@markharbers om… https://t.co/YBlgoGseOQ'),
+                'description': (
+                    'Fijn de steun voor de initiatiefwet van @D66 @PvdA &amp; '
+                    '@groenlinks van het Kabinet @KajsaOllongren &amp; '
+                    '@markharbers om artikel 1 vd #Grondwet uit te breiden! '
+                    '\uf64f\uf3fb! Nog wel wat werk te doen samen met collega'
+                    '’s @kirstenvdhul &amp; @NevinOzutok, maar dit is een '
+                    'fijne stimulans!\uf44a\uf3fb\uf308 https://t.co/KwCjmGt1cM'),
+                'url': '1025749465611808768',
+                'created': '2018-08-04T16:25:04+02:00',
+                'modified': '2018-08-04T16:29:59+02:00',
+                'data': [
+                    {'key': 'user_name', 'value': 'Vera_Bergkamp'},
+                    {'key': 'politician_id', 'value': 911},
+                    {'key': 'politician.party_id', 'value': 3}
+                ]
+            }
+        }
+
+        self.post_transformer.config[
+            'binoas']['applications']['politwoops']['rules']['id'] = (
+                'meta.original_object_id')
+
+        with open('tests/data/politwoops.json', 'r') as in_file:
+            content = in_file.read()
+        data = json.loads(content)
+        result = self.post_transformer.transform(data)
+        self.assertEqual(result, expected)
