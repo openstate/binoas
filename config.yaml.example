@@ -22,3 +22,8 @@ binoas:
     openraadsinformatie:
       <<: *defaults
       name: "Open Raadsinformatie"
+    test:
+      <<: *defaults
+      name: "Test"
+      rules:
+        title: "*"

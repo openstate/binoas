@@ -19,7 +19,12 @@ def index():
 
 @app.route("/posts/new")
 def new_post():
-    producer.send('topic', {'a': 1})
+    producer.send('topic', {
+        'application': 'test',
+        'payload': {
+            'description': 'Dit is een test'
+        }
+    })
     return u''
 
 if __name__ == "__main__":
