@@ -1,0 +1,95 @@
+{
+  "template": "binoas_*",
+  "settings": {
+    "index": {
+      "number_of_shards": 3,
+      "number_of_replicas": 0,
+      "query": {
+        "default_field": "description"
+      },
+      "analysis": {
+        "analyzer": {
+          "default": {
+            "type": "dutch"
+          },
+          "text_nl": {
+            "type": "custom",
+            "filter": [
+              "asciifolding",
+              "lowercase",
+              "custom_word_delimiter"
+            ],
+            "tokenizer": "standard"
+          }
+        },
+        "filter": {
+          "custom_word_delimiter": {
+            "type": "word_delimiter",
+            "split_on_numerics": false,
+            "generate_number_parts": true,
+            "preserve_original": true,
+            "stem_english_possesive": false,
+            "catenate_words": false,
+            "catenate_numbers": true,
+            "split_on_case_change": false,
+            "generate_word_parts": true
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "_default_": {
+      "_all": {
+        "enabled": false
+      },
+      "dynamic_templates": [
+        {
+          "original_object_urls": {
+            "path_match": "meta.original_object_urls.*",
+            "mapping": {
+              "type": "keyword",
+              "index": "false"
+            }
+          }
+        }
+      ],
+      "properties": {
+        "id": {
+          "type": "keyword"
+        },
+        "title": {
+          "type": "text",
+          "analyzer": "text_nl"
+        },
+        "description": {
+          "type": "text",
+          "analyzer": "text_nl"
+        },
+        "created": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "modified": {
+          "type": "date",
+          "format": "dateOptionalTime"
+        },
+        "url": {
+          "type": "keyword"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "keyword": {
+              "type": "keyword"
+            },
+            "value": {
+              "type": "text",
+              "analyzer": "text_nl"
+            }
+          }
+        }
+      }
+    }
+  }
+}
