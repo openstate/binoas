@@ -1,5 +1,5 @@
 from collections import UserDict
-
+import logging
 
 class Post(UserDict):
     def __init__(self, *args, **kwargs):

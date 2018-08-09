@@ -10,6 +10,7 @@ import json
 from kafka import KafkaConsumer, KafkaProducer
 
 from binoas.utils import load_config
+from binoas.transformers import JSONPathPostTransformer
 
 
 class Producer(threading.Thread):
@@ -83,10 +84,26 @@ class Consumer(multiprocessing.Process):
 
     def output(self, transformed_message):
         logging.info(transformed_message)
+
+        if transformed_message is None:
+            return
+
         if self.producer is not None:
             for t in self.topics_out:
                 logging.info('Producting to channel: %s' % (t,))
                 self.producer.send(t, transformed_message)
+
+
+class JSONTransformer(Consumer):
+    def __init__(self, role):
+        super().__init__(role)
+        self.transformer = JSONPathPostTransformer(self.config)
+
+    def transform(self, message):
+        try:
+            return self.transformer.transform(message.value)
+        except ValueError as e:
+            logging.error(e)
 
 
 class Loader(Consumer):
