@@ -41,7 +41,7 @@ class TestJSONPathPostTransformer(unittest.TestCase):
                                 'location',
                                 'source',
                                 'type',
-                                'topics'
+                                'topics[*].name'
                             ]
                         }
                     }
@@ -74,7 +74,15 @@ class TestJSONPathPostTransformer(unittest.TestCase):
                 ),
                 'url': 'https://www.cda.nl/noord-holland/amsterdam/actueel/nieuws/zomerborrel-6-september/',
                 'created': '2018-07-25T12:31:38',
-                'modified': '2018-07-25T12:31:38'
+                'modified': '2018-07-25T12:31:38',
+                'data': [
+                    {'key': 'parties', 'value': 'CDA'},
+                    {'key': 'parties', 'value': 'CDA'},
+                    {'key': 'location', 'value': 'Amsterdam'},
+                    {'key': 'source', 'value': 'Partij nieuws'},
+                    {'key': 'type', 'value': 'Partij'},
+                    {'key': 'topics[*].name', 'value': 'Zorg en gezondheid | Organisatie en beleid'}
+                ]
             }
         }
         with open('tests/data/poliflw.json', 'r') as in_file:
