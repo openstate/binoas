@@ -19,7 +19,9 @@ binoas is a service that allows you to get updates via email when one or more do
 4. `KAFKA_ADVERTISED_HOST_NAME: 192.168.0.1`
 5. `docker-compose up -d`
 6. `# Wait a minute (no, really -- kafka does take a while to init properly)`
-7. See [this tutorial](https://wurstmeister.github.io/kafka-docker/)
+7. `docker exec binoas_transformer_1 manage.py elasticsearch put_template`
+8. `# The above for the first time only`
+9. See [this tutorial](https://wurstmeister.github.io/kafka-docker/)
 
 ## Documentation
 
