@@ -20,5 +20,3 @@ class Config(object):
 
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:<DB_PASSWORD>@stm_mysql_1:3306/binoas'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    KAFKA_HOST = 'kafka'
