@@ -1,4 +1,5 @@
 import json
+import logging
 
 from elasticsearch import Elasticsearch, serializer, compat, exceptions
 
@@ -21,6 +22,7 @@ class JSONSerializerPython2(serializer.JSONSerializer):
 
 
 def setup_elasticsearch(config):
+    logging.info('Setting up Elasticsearch: %s' % (config['binoas']['elasticsearch'],))
     return Elasticsearch([config['binoas']['elasticsearch']],
                          serializer=JSONSerializerPython2())
 

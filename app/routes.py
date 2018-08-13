@@ -22,6 +22,7 @@ def new_post():
     producer.send('topic', {
         'application': 'test',
         'payload': {
+            'id': 1,
             'description': 'Dit is een test'
         }
     })

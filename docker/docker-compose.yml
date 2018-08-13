@@ -16,6 +16,8 @@ services:
       - "9092"
     networks:
       - binoas
+    depends_on:
+      - zookeeper
     environment:
       # Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.
       KAFKA_ADVERTISED_HOST_NAME: 192.168.121.19
@@ -62,6 +64,7 @@ services:
       interval: 15s
       timeout: 10s
       retries: 3
+    restart: always
   elastic:
     image: "docker.elastic.co/elasticsearch/elasticsearch:${ES_VERSION}"
     environment:
@@ -89,6 +92,7 @@ services:
       interval: 15s
       timeout: 10s
       retries: 3
+    restart: always
   mysql:
     image: mysql:5.7.21
     # This root password will be overwritten with the password used in
@@ -107,6 +111,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-app
+    depends_on:
+      - zookeeper
+      - kafka
     volumes:
       - ../:/opt/binoas
     networks:
@@ -120,8 +127,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-app
+    depends_on:
+      - zookeeper
+      - kafka
     # NOTE: the command should be updated
-    command: python worker.py transformer
+    command: sh -c "sleep 30 && python worker.py transformer"
     volumes:
       - ../:/opt/binoas
     networks:
@@ -131,8 +141,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-app
+    depends_on:
+      - zookeeper
+      - kafka
+      - elastic_endpoint
     # NOTE: the command should be updated
-    command: python loader.py loader
+    command: sh -c "sleep 30 && python loader.py loader"
     volumes:
       - ../:/opt/binoas
     networks:
