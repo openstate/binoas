@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for, flash, Markup, js
 
 from kafka import KafkaConsumer, KafkaProducer
 
-from app import app
+from app import app, db
 
 #TODO: how about thread safety??
 producer = KafkaProducer(

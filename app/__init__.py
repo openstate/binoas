@@ -7,10 +7,12 @@ import logging
 from config import Config
 from binoas.utils import load_config
 from flask import Flask
-# from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config['binoas'] = load_config()['binoas']
+
+db = SQLAlchemy(app)
 
 from app import routes
