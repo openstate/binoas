@@ -1,5 +1,9 @@
 binoas:
   zookeeper: kafka
+  elasticsearch:
+    host: elasticsearch
+    port: 9200
+    timeout: 20
   _defaults: &defaults
     routes:
       app:

@@ -11,6 +11,7 @@ from kafka import KafkaConsumer, KafkaProducer
 
 from binoas.utils import load_config
 from binoas.transformers import JSONPathPostTransformer
+from binoas.es import setup_elasticsearch
 
 
 class Producer(threading.Thread):
@@ -106,10 +107,23 @@ class JSONTransformer(Consumer):
             logging.error(e)
 
 
-class Loader(Consumer):
+class ElasticsearchLoader(Consumer):
+    def __init__(self, role):
+        super().__init__(role)
+        self.es = setup_elasticsearch(self.config)
+
     def output(self, transformed_message):
         logging.info('Should save to Elasticsearch now!')
         logging.info(transformed_message)
+
+        # Index documents into new index
+        index_name = 'binoas_%s' % (transformed_message['application'],)
+        doc_type = 'item'
+        object_id = transformed_message['payload']['id']
+
+        self.es.index(
+            index=index_name, doc_type=doc_type,
+            body=transformed_message['payload'], id=object_id)
 
 
 def start_worker(argv, klass):
