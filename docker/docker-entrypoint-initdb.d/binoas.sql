@@ -2,10 +2,9 @@ CREATE DATABASE IF NOT EXISTS `binoas`;
 
 CREATE TABLE IF NOT EXISTS `binoas`.`user` (
   `id` INT(11) NOT NULL PRIMARY KEY,
-  `external_id` VARCHAR(255),
+  `application` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
-  index idx_external (external_id),
-  index idx_email (email)
+  unique index idx_application_email (application, email)
 );
 
 CREATE TABLE IF NOT EXISTS `binoas`.`user_queries` (
