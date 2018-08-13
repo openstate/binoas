@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS `binoas`.`user_queries` (
   `frequency` VARCHAR(32),
   PRIMARY KEY (`user_id`, `query_id`),
   index idx_user_id (user_id),
-  index idx_query (query_id)
+  index idx_query_frequency (query_id, frequency)
 );
