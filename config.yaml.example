@@ -1,5 +1,9 @@
 binoas:
   zookeeper: kafka
+  db:
+    uri: "mysql+pymysql://root:test@binoas_mysql_1:3306/binoas"
+    options:
+      isolation_level: "READ COMMITTED"
   elasticsearch:
     host: elastic
     port: 9200

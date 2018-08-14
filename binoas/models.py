@@ -1,18 +1,21 @@
 from sqlalchemy.schema import PrimaryKeyConstraint
+from sqlalchemy import Integer, String, Column, ForeignKey
 
-from app import app, db
-
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    application = db.Column(db.String(255), index=True)
-    email = db.Column(db.String(255), index=True)
+from binoas.db import Base
 
 
-class UserQueries(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    query_id = db.Column(db.String(255), index=True)
-    frequency = db.Column(db.String(255), index=True)
+class User(Base):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    application = Column(String(255), index=True)
+    email = Column(String(255), index=True)
+
+
+class UserQueries(Base):
+    __tablename__ = 'user_queries'
+    user_id = Column(Integer, ForeignKey("user.id"))
+    query_id = Column(String(255), index=True)
+    frequency = Column(String(255), index=True)
 
     __table_args__ = (
         PrimaryKeyConstraint('user_id', 'query_id'),
