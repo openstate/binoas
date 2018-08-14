@@ -9,6 +9,10 @@ session = None
 
 
 def setup_db(config):
+    """
+    Make a connection to the database, as specified in the configuration file.
+    Returns the SQLAlchemy session.
+    """
     engine = create_engine(
         config['binoas']['db']['uri'], **config['binoas']['db']['options'])
     # use session_factory() to get a new Session

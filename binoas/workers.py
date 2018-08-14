@@ -35,7 +35,16 @@ class Producer(threading.Thread):
 
 
 class Consumer(multiprocessing.Process):
+    """
+    A class which acts as a consumer of one or more Kafka topic(s). It is
+    intended to be generic and it's behavior can be altered in subclasses.
+    This class basically acts as a simple transformer from one topic (input)
+    to output topics. It has a transform method which does not do anything.
+    """
     def __init__(self, role):
+        """
+        Initializes the process. The role is passed to give more information.
+        """
         multiprocessing.Process.__init__(self)
         self.stop_event = multiprocessing.Event()
         self.role = role
@@ -45,6 +54,9 @@ class Consumer(multiprocessing.Process):
         self.stop_event.set()
 
     def run(self):
+        """
+        Runs the consumer. This is basically a never stopping routine.
+        """
         self.consumer = KafkaConsumer(
             bootstrap_servers=self.config['binoas']['zookeeper'],
             auto_offset_reset='earliest', consumer_timeout_ms=1000,
@@ -81,9 +93,17 @@ class Consumer(multiprocessing.Process):
         self.consumer.close()
 
     def transform(self, message):
+        """
+        Transform the message. Currently simply returns the value (Ie. it is
+        not altered).
+        """
         return message.value
 
     def output(self, transformed_message):
+        """
+        This is a routine that outputs the transformed messages if there
+        is an Kafka output topic defined.
+        """
         logging.info(transformed_message)
 
         if transformed_message is None:
@@ -91,11 +111,14 @@ class Consumer(multiprocessing.Process):
 
         if self.producer is not None:
             for t in self.topics_out:
-                logging.info('Producting to channel: %s' % (t,))
+                logging.info('Producing to channel: %s' % (t,))
                 self.producer.send(t, transformed_message)
 
 
 class JSONTransformer(Consumer):
+    """
+    This transformer applies a json path transformer and return the result.
+    """
     def __init__(self, role):
         super().__init__(role)
         self.transformer = JSONPathPostTransformer(self.config)
@@ -108,6 +131,10 @@ class JSONTransformer(Consumer):
 
 
 class ElasticsearchLoader(Consumer):
+    """
+    This class loads the messages in an Elasticsearch store, as specified in
+    the configuration file.
+    """
     def __init__(self, role):
         super().__init__(role)
         self.es = setup_elasticsearch(self.config)
@@ -127,6 +154,9 @@ class ElasticsearchLoader(Consumer):
 
 
 def start_worker(argv, klass):
+    """
+    This routine starts a worker with the given class.
+    """
     logging.basicConfig(
         format='%(asctime)s.%(msecs)s:%(name)s:%(thread)d:%(levelname)s:%(process)d:%(message)s',
         level=logging.INFO)
