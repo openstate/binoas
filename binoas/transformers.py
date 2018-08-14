@@ -29,8 +29,13 @@ class JSONPathPostTransformer(BasePostTransformer):
                     result['payload'][fld] = res
                 else:
                     result['payload']['data'] = []
-                    for data_expr in expr:
-                        jsonpath_expr = parse(data_expr)
+                    for expr_info in expr:
+                        if not isinstance(expr_info, dict):
+                            expr_info = {
+                                'path': expr_info,
+                                'name': expr_info
+                            }
+                        jsonpath_expr = parse(expr_info['path'])
                         for res in jsonpath_expr.find(post['payload']):
                             if type(res.value) is list:
                                 values = res.value
@@ -38,7 +43,7 @@ class JSONPathPostTransformer(BasePostTransformer):
                                 values = [res.value]
                             for value in values:
                                 result['payload']['data'].append({
-                                    'key': data_expr,
+                                    'key': expr_info['name'],
                                     'value': value
                                 })
 

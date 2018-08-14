@@ -41,7 +41,10 @@ class TestJSONPathPostTransformer(unittest.TestCase):
                                 'location',
                                 'source',
                                 'type',
-                                'topics[*].name'
+                                {
+                                    'name': 'topic',
+                                    'path': 'topics[*].name'
+                                }
                             ]
                         }
                     },
@@ -97,7 +100,7 @@ class TestJSONPathPostTransformer(unittest.TestCase):
                     {'key': 'location', 'value': 'Amsterdam'},
                     {'key': 'source', 'value': 'Partij nieuws'},
                     {'key': 'type', 'value': 'Partij'},
-                    {'key': 'topics[*].name', 'value': 'Zorg en gezondheid | Organisatie en beleid'}
+                    {'key': 'topic', 'value': 'Zorg en gezondheid | Organisatie en beleid'}
                 ]
             }
         }
