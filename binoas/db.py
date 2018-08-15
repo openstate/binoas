@@ -15,10 +15,11 @@ def setup_db(config):
     """
     global engine, session, Base
 
-    engine = create_engine(
-        config['binoas']['db']['uri'], **config['binoas']['db']['options'])
-    # use session_factory() to get a new Session
-    _SessionFactory = sessionmaker(bind=engine)
-    Base.metadata.create_all(engine)
-    session = _SessionFactory()
+    if session is None:
+        engine = create_engine(
+            config['binoas']['db']['uri'], **config['binoas']['db']['options'])
+        # use session_factory() to get a new Session
+        _SessionFactory = sessionmaker(bind=engine)
+        Base.metadata.create_all(engine)
+        session = _SessionFactory()
     return session

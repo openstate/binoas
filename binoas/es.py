@@ -3,6 +3,8 @@ import logging
 
 from elasticsearch import Elasticsearch, serializer, compat, exceptions
 
+es = None
+
 
 class JSONSerializerPython2(serializer.JSONSerializer):
     """Override elasticsearch library serializer to ensure it encodes utf characters during json dump.
@@ -25,9 +27,14 @@ def setup_elasticsearch(config):
     """
     Set up a connection to Elasticsearch and returns the instance.
     """
-    logging.info('Setting up Elasticsearch: %s' % (config['binoas']['elasticsearch'],))
-    return Elasticsearch([config['binoas']['elasticsearch']],
-                         serializer=JSONSerializerPython2())
 
+    global es
 
-# elasticsearch = setup_elasticsearch()
+    if es is None:
+        logging.info(
+            'Setting up Elasticsearch: %s' % (
+                config['binoas']['elasticsearch'],))
+        es = Elasticsearch(
+            [config['binoas']['elasticsearch']],
+            serializer=JSONSerializerPython2())
+    return es

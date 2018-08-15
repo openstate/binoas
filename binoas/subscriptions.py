@@ -25,7 +25,8 @@ class Subscription(UserDict):
             raise ValueError('Not a valid subscription')
 
     def save(self):
-        raise NotImplementedError
+        user = self.save_user()
+        query = self.save_query()
 
     def save_user(self):
         user = session.query(User).filter_by(
@@ -37,3 +38,24 @@ class Subscription(UserDict):
             )
             session.add(user)
             session.commit()
+        return user
+
+    def save_query(self):
+        es_query = self.build_query()
+        return {}
+
+    def build_query(self):
+        if 'query' in self:
+            return self['query']
+        else:
+            return {
+                "query": {
+                    "bool": {
+                        "must": [
+                            {
+                                "term": {k: v}
+                            } for k, v in self['subscription'].items()
+                        ]
+                    }
+                }
+            }
