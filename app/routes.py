@@ -5,6 +5,8 @@ from flask import render_template, request, redirect, url_for, flash, Markup, js
 from kafka import KafkaConsumer, KafkaProducer
 
 from app import app, BinoasError
+
+from binoas.posts import Post
 from binoas.subscriptions import Subscription
 
 
@@ -63,6 +65,11 @@ def new_post():
     else:
         payload = request.data
 
+    try:
+        post = Post(payload)
+    except ValueError:
+        raise BinoasError('Not a valid post payload', 400)
+
     producer.send('topic', payload)
 
     return jsonify({
@@ -73,7 +80,14 @@ def new_post():
 @app.route("/subscriptions/new", methods=['POST'])
 @decode_json_post_data
 def new_subscription():
-    return jsonify(request.data)
+    try:
+        subscription = Subscription(request.data)
+    except ValueError:
+        raise BinoasError('Not a valid subscription payload', 400)
+
+    return jsonify({
+        'status': 'ok'
+    })
 
 if __name__ == "__main__":
     app.run(threaded=True)
