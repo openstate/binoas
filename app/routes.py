@@ -70,6 +70,7 @@ def new_post():
     except ValueError:
         raise BinoasError('Not a valid post payload', 400)
 
+    # FIXME: need to send this to the correct channel
     producer.send('topic', payload)
 
     return jsonify({
@@ -84,6 +85,11 @@ def new_subscription():
         subscription = Subscription(request.data)
     except ValueError:
         raise BinoasError('Not a valid subscription payload', 400)
+
+    try:
+        subscription.save()
+    except Exception as e:
+        raise BinoasError('General error: %s' % (str(e),), 400)
 
     return jsonify({
         'status': 'ok'

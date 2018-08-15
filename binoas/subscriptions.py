@@ -1,6 +1,9 @@
 from collections import UserDict
 import logging
 
+from binoas.db import session
+from binoas.models import User, UserQueries
+
 
 class Subscription(UserDict):
     """
@@ -20,3 +23,17 @@ class Subscription(UserDict):
             )
         ):
             raise ValueError('Not a valid subscription')
+
+    def save(self):
+        raise NotImplementedError
+
+    def save_user(self):
+        user = session.query(User).filter_by(
+            application=self['application'], email=self['email']).first()
+        if user is None:
+            user = User(
+                application=self['application'],
+                email=self['email']
+            )
+            session.add(user)
+            session.commit()
