@@ -1,5 +1,6 @@
 import json
 from functools import wraps
+import logging
 
 from flask import render_template, request, redirect, url_for, flash, Markup, jsonify
 from kafka import KafkaConsumer, KafkaProducer
@@ -70,8 +71,11 @@ def new_post():
     except ValueError:
         raise BinoasError('Not a valid post payload', 400)
 
-    # FIXME: need to send this to the correct channel
-    producer.send('topic', payload)
+    appl = payload['application']
+    topics = app.config['binoas']['applications'][
+        appl]['routes']['app']['topics']['out']
+    for topic in topics:
+        producer.send(topic, payload)
 
     return jsonify({
         'status': 'ok'

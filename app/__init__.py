@@ -51,6 +51,11 @@ def create_app():
 
     return app
 
+logging.basicConfig(
+    format='%(asctime)s.%(msecs)s:%(name)s:%(thread)d:%(levelname)s:%(process)d:%(message)s',
+    level=logging.INFO)
+
+
 app = create_app()
 
 from app import routes
