@@ -41,13 +41,14 @@ class Consumer(multiprocessing.Process):
     This class basically acts as a simple transformer from one topic (input)
     to output topics. It has a transform method which does not do anything.
     """
-    def __init__(self, role):
+    def __init__(self, role, group=None):
         """
         Initializes the process. The role is passed to give more information.
         """
         multiprocessing.Process.__init__(self)
         self.stop_event = multiprocessing.Event()
         self.role = role
+        self.group = group
         self.config = load_config()
 
     def stop(self):
@@ -58,11 +59,12 @@ class Consumer(multiprocessing.Process):
         Runs the consumer. This is basically a never stopping routine.
         """
 
-        # FIXME: figure out how to connect to a group ...
+        if self.group is not None:
+            logging.info('Running as group: %s' % (self.group,))
         self.consumer = KafkaConsumer(
             bootstrap_servers=self.config['binoas']['zookeeper'],
             auto_offset_reset='earliest', consumer_timeout_ms=1000,
-            value_deserializer=json.loads)
+            value_deserializer=json.loads, group_id=self.group)
 
         self.topics_in = list(set(itertools.chain.from_iterable(
             [
@@ -121,8 +123,8 @@ class JSONTransformer(Consumer):
     """
     This transformer applies a json path transformer and return the result.
     """
-    def __init__(self, role):
-        super().__init__(role)
+    def __init__(self, role, group=None):
+        super().__init__(role, group)
         self.transformer = JSONPathPostTransformer(self.config)
 
     def transform(self, message):
@@ -137,8 +139,8 @@ class ElasticsearchLoader(Consumer):
     This class loads the messages in an Elasticsearch store, as specified in
     the configuration file.
     """
-    def __init__(self, role):
-        super().__init__(role)
+    def __init__(self, role, group=None):
+        super().__init__(role, group)
         self.es = setup_elasticsearch(self.config)
 
     def output(self, transformed_message):
@@ -159,8 +161,8 @@ class ElasticsearchPercolator(Consumer):
     """
     This class uses the Elasticsearch percolator function to find alerts
     """
-    def __init__(self, role):
-        super().__init__(role)
+    def __init__(self, role, group=None):
+        super().__init__(role, group)
         self.es = setup_elasticsearch(self.config)
 
     def transform(self, message):
@@ -178,8 +180,13 @@ def start_worker(argv, klass):
     role = argv[1]
     logging.info('Starting up with role : %s' % (role,))
 
+    if len(argv) > 2:
+        group = argv[2]
+    else:
+        group = None
+
     tasks = [
-        klass(role)
+        klass(role, group)
     ]
 
     for t in tasks:
