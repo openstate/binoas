@@ -184,11 +184,13 @@ class ElasticsearchPercolator(ElasticsearchBaseConsumer):
                 }
             }
         })
-        return {
-            'application': message.value['application'],
-            'payload': message.value['payload'],
-            'alerts': results
-        }
+
+        if results['hits']['total'] > 0:
+            return {
+                'application': message.value['application'],
+                'payload': message.value['payload'],
+                'alerts': results
+            }
 
 
 def start_worker(argv, klass):
