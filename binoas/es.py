@@ -23,7 +23,7 @@ class JSONSerializerPython2(serializer.JSONSerializer):
             raise exceptions.SerializationError(data, e)
 
 
-def setup_elasticsearch(config):
+def setup_elasticsearch(config={}):
     """
     Set up a connection to Elasticsearch and returns the instance.
     """

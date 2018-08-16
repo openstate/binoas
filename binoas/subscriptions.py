@@ -1,7 +1,10 @@
 from collections import UserDict
 import logging
+import hashlib
+import json
 
-from binoas.db import session
+from binoas.db import setup_db
+from binoas.es import setup_elasticsearch
 from binoas.models import User, UserQueries
 
 
@@ -26,9 +29,11 @@ class Subscription(UserDict):
 
     def save(self):
         user = self.save_user()
-        query = self.save_query()
+        query = self.save_query(user)
+        return user, query
 
     def save_user(self):
+        session = setup_db()
         user = session.query(User).filter_by(
             application=self['application'], email=self['email']).first()
         if user is None:
@@ -40,9 +45,30 @@ class Subscription(UserDict):
             session.commit()
         return user
 
-    def save_query(self):
+    def save_query(self, user):
+        session = setup_db()
+        es = setup_elasticsearch()
         es_query = self.build_query()
-        return {}
+        es_id = hashlib.sha224(
+            ('%s:%s' % (
+                self['application'],
+                hashlib.sha224(json.dumps(es_query).encode('utf-8')
+            ).hexdigest(),)).encode('utf-8')).hexdigest()
+
+        # Index documents into new index
+        index_name = 'binoas_%s' % (self['application'],)
+        es.index(
+            index=index_name, doc_type='queries', body=es_query, id=es_id)
+
+        user_query = session.query(UserQueries).filter_by(
+            user_id=user.id, query_id=es_id).first()
+        if user_query is None:
+            user_query = UserQueries(user_id=user.id, query_id=es_id)
+            session.add(user_query)
+        user_query.frequency = self['frequency']
+        session.commit()
+        return user_query
+
 
     def build_query(self):
         if 'query' in self:
