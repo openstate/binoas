@@ -57,6 +57,8 @@ class Consumer(multiprocessing.Process):
         """
         Runs the consumer. This is basically a never stopping routine.
         """
+
+        # FIXME: figure out how to connect to a group ...
         self.consumer = KafkaConsumer(
             bootstrap_servers=self.config['binoas']['zookeeper'],
             auto_offset_reset='earliest', consumer_timeout_ms=1000,
@@ -151,6 +153,18 @@ class ElasticsearchLoader(Consumer):
         self.es.index(
             index=index_name, doc_type=doc_type,
             body=transformed_message['payload'], id=object_id)
+
+
+class ElasticsearchPercolator(Consumer):
+    """
+    This class uses the Elasticsearch percolator function to find alerts
+    """
+    def __init__(self, role):
+        super().__init__(role)
+        self.es = setup_elasticsearch(self.config)
+
+    def transform(self, message):
+        return message.value
 
 
 def start_worker(argv, klass):

@@ -12,7 +12,7 @@ binoas:
     routes:
       app:
         topics:
-          in: topic
+          out: topic
       transformer:
         topics:
           in: topic
@@ -20,6 +20,13 @@ binoas:
       loader:
         topics:
           in: objects
+      percolator:
+        group: percolator
+        topics:
+          in:
+            - objects
+          out:
+            - alerts
   applications:
     poliflw:
       <<: *defaults
