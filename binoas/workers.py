@@ -134,15 +134,21 @@ class JSONTransformer(Consumer):
             logging.error(e)
 
 
-class ElasticsearchLoader(Consumer):
+class ElasticsearchBaseConsumer(Consumer):
     """
-    This class loads the messages in an Elasticsearch store, as specified in
-    the configuration file.
+    Base class for consumers that works with Elasticsearch. Makes the
+    Elasticsearch connection available in the consumer.
     """
     def __init__(self, role, group=None):
         super().__init__(role, group)
         self.es = setup_elasticsearch(self.config)
 
+
+class ElasticsearchLoader(ElasticsearchBaseConsumer):
+    """
+    This class loads the messages in an Elasticsearch store, as specified in
+    the configuration file.
+    """
     def output(self, transformed_message):
         logging.info('Should save to Elasticsearch now!')
         logging.info(transformed_message)
@@ -157,16 +163,32 @@ class ElasticsearchLoader(Consumer):
             body=transformed_message['payload'], id=object_id)
 
 
-class ElasticsearchPercolator(Consumer):
+class ElasticsearchPercolator(ElasticsearchBaseConsumer):
     """
     This class uses the Elasticsearch percolator function to find alerts
     """
-    def __init__(self, role, group=None):
-        super().__init__(role, group)
-        self.es = setup_elasticsearch(self.config)
-
     def transform(self, message):
-        return message.value
+        index_name = 'binoas_%s' % (message.value['application'],)
+        doc_type = 'item'
+        results = self.es.search(index=index_name, body={
+            "query": {
+                "percolate": {
+                    "field": "query",
+                    "document_type": doc_type,
+                    "document": message.value['payload']
+                }
+            },
+            "highlight": {
+                "fields": {
+                    "*": {}
+                }
+            }
+        })
+        return {
+            'application': message.value['application'],
+            'payload': message.value['payload'],
+            'alerts': results
+        }
 
 
 def start_worker(argv, klass):
