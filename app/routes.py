@@ -87,12 +87,18 @@ def new_subscription():
         raise BinoasError('Not a valid subscription payload', 400)
 
     try:
-        subscription.save()
+        user, user_query = subscription.save()
     except Exception as e:
         raise BinoasError('General error: %s' % (str(e),), 400)
 
     return jsonify({
-        'status': 'ok'
+        'status': 'ok',
+        'user': {
+            'id': user.id,
+        },
+        'query': {
+            'id': user_query.query_id
+        }
     })
 
 if __name__ == "__main__":

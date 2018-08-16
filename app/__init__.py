@@ -6,7 +6,11 @@ import logging
 # from logging.handlers import SMTPHandler, RotatingFileHandler
 from config import Config
 from binoas.utils import load_config
+
 from flask import Flask, jsonify
+
+from binoas.db import setup_db
+from binoas.es import setup_elasticsearch
 
 
 class BinoasError(Exception):
@@ -41,6 +45,9 @@ def create_app():
         return resp
 
     app.after_request(add_cors_headers)
+
+    setup_db(app.config)
+    setup_elasticsearch(app.config)
 
     return app
 
