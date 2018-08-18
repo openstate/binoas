@@ -27,16 +27,24 @@ def main():
     email = '%s@bje.dds.nl' % (prefix.replace('-', ''))
     print(email)
 
-    words = 'dit is een lijst van onzinnige woorden'.split()
-    alert = random.choice(words)
+    subscription_options = {
+        'title': {
+            'title': random.choice(
+                'dit is een lijst van onzinnige woorden'.split())
+        },
+        'topic': {
+            'data.key': 'topic',
+            'data.value': random.choice('tag1 tag2'.split())
+        }
+    }
+    fld = random.choice(list(subscription_options.keys()))
+    print(fld)
 
     subscription = {
         'application': 'test',
         'email': email,
         'frequency': '6H',
-        'subscription': {
-            'title': alert
-        }
+        'subscription': subscription_options[fld]
     }
     print(requests.post(
         'http://app:5000/subscriptions/new',

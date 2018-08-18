@@ -87,7 +87,7 @@
         "data": {
           "type": "object",
           "properties": {
-            "keyword": {
+            "key": {
               "type": "keyword"
             },
             "value": {
