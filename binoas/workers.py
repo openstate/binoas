@@ -250,6 +250,15 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
                     logging.info(r)
                     self.producer.send(t, r)
 
+
+class Mailer(Consumer):
+    def output(self, transformed_message):
+        if transformed_message is None:
+            return
+        logging.info('Should go and send an email to %s now!' % (
+            transformed_message['user']['email'],))
+
+
 def start_worker(argv, klass):
     """
     This routine starts a worker with the given class.
@@ -286,5 +295,6 @@ registry = {
     'transformer': JSONTransformer,
     'loader': ElasticsearchLoader,
     'percolator': ElasticsearchPercolator,
-    'subfetcher': DatabaseSubscriberFetcher
+    'subfetcher': DatabaseSubscriberFetcher,
+    'mailer': Mailer
 }

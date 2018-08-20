@@ -147,7 +147,6 @@ services:
       - zookeeper
       - kafka
       - elastic_endpoint
-    # NOTE: the command should be updated
     command: sh -c "sleep 30 && python worker.py loader"
     volumes:
       - ../:/opt/binoas
@@ -163,7 +162,6 @@ services:
       - kafka
       - elastic_endpoint
       - mysql
-    # NOTE: the command should be updated
     command: sh -c "sleep 30 && python worker.py percolator percolator"
     volumes:
       - ../:/opt/binoas
@@ -178,8 +176,20 @@ services:
       - zookeeper
       - kafka
       - mysql
-    # NOTE: the command should be updated
     command: sh -c "sleep 30 && python worker.py subfetcher"
+    volumes:
+      - ../:/opt/binoas
+    networks:
+      - binoas
+    restart: always
+  mailer:
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    depends_on:
+      - zookeeper
+      - kafka
+    command: sh -c "sleep 30 && python worker.py mailer"
     volumes:
       - ../:/opt/binoas
     networks:
