@@ -170,6 +170,21 @@ services:
     networks:
       - binoas
     restart: always
+  subfetcher:
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    depends_on:
+      - zookeeper
+      - kafka
+      - mysql
+    # NOTE: the command should be updated
+    command: sh -c "sleep 30 && python worker.py subfetcher"
+    volumes:
+      - ../:/opt/binoas
+    networks:
+      - binoas
+    restart: always
 networks:
   binoas:
   nginx-load-balancer:

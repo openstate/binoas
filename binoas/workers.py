@@ -209,18 +209,43 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
     def transform(self, message):
         query_ids = {
             h['_id']: h for h in message.value['alerts']['hits']['hits']}
-        user_queries = self.db.query(UserQueries).filter(
-            UserQueries.id._in(query_ids.keys())
-        ).all()
-        return {
-            'application': message.value['application'],
-            'payload': message.value['payload'],
-            'alerts': message.value['alerts'],
-            'user_queries': {
-                u.user_id: u.query_id for u in user_queries
-            }
-        }
+        logging.info('Found queries:')
+        logging.info(query_ids)
 
+        user_queries = self.db.query(UserQueries).filter(
+            UserQueries.query_id.in_(query_ids.keys())
+        ).all()
+        logging.info('Found user queries:')
+        logging.info([u.user_id for u in user_queries])
+
+        result = []
+        for u in user_queries:
+            # TODO: check for frequency
+            result.append({
+                'application': message.value['application'],
+                'payload': message.value['payload'],
+                'user_id': u.user_id,
+                'user_email': u.user.email,
+                'query': query_ids[u.query_id]
+            })
+        return result
+
+    def output(self, transformed_message):
+        """
+        This is a routine that outputs the transformed messages if there
+        is an Kafka output topic defined.
+        """
+
+        if transformed_message is None:
+            return
+
+        if self.producer is not None:
+            for r in transformed_message:
+                for t in self.topics_out:
+                    logging.info('Producing to channel: %s (u: %s/%s)' % (
+                        t, r['user_id'], r['user_email'],))
+                    logging.info(r)
+                    self.producer.send(t, r)
 
 def start_worker(argv, klass):
     """
@@ -258,5 +283,5 @@ registry = {
     'transformer': JSONTransformer,
     'loader': ElasticsearchLoader,
     'percolator': ElasticsearchPercolator,
-    'subscriber_fetcher': DatabaseSubscriberFetcher
+    'subfetcher': DatabaseSubscriberFetcher
 }

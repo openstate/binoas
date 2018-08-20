@@ -1,5 +1,6 @@
 from sqlalchemy.schema import PrimaryKeyConstraint
 from sqlalchemy import Integer, String, Column, ForeignKey
+from sqlalchemy.orm import relationship
 
 from binoas.db import Base
 
@@ -14,6 +15,8 @@ class User(Base):
     application = Column(String(255), index=True)
     email = Column(String(255), index=True)
 
+    queries = relationship("UserQueries", back_populates="user")
+
 
 class UserQueries(Base):
     """
@@ -25,6 +28,8 @@ class UserQueries(Base):
     user_id = Column(Integer, ForeignKey("user.id"))
     query_id = Column(String(255), index=True)
     frequency = Column(String(255), index=True)
+
+    user = relationship("User", back_populates="queries")
 
     __table_args__ = (
         PrimaryKeyConstraint('user_id', 'query_id'),
