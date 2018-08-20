@@ -214,18 +214,21 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
 
         user_queries = self.db.query(UserQueries).filter(
             UserQueries.query_id.in_(query_ids.keys())
+        ).filter(
+            UserQueries.frequency == None
         ).all()
         logging.info('Found user queries:')
         logging.info([u.user_id for u in user_queries])
 
         result = []
         for u in user_queries:
-            # TODO: check for frequency
             result.append({
                 'application': message.value['application'],
                 'payload': message.value['payload'],
-                'user_id': u.user_id,
-                'user_email': u.user.email,
+                'user': {
+                    'id': u.user_id,
+                    'email': u.user.email
+                },
                 'query': query_ids[u.query_id]
             })
         return result
@@ -243,7 +246,7 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
             for r in transformed_message:
                 for t in self.topics_out:
                     logging.info('Producing to channel: %s (u: %s/%s)' % (
-                        t, r['user_id'], r['user_email'],))
+                        t, r['user']['id'], r['user']['email'],))
                     logging.info(r)
                     self.producer.send(t, r)
 
