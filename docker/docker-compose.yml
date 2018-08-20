@@ -148,7 +148,7 @@ services:
       - kafka
       - elastic_endpoint
     # NOTE: the command should be updated
-    command: sh -c "sleep 30 && python loader.py loader"
+    command: sh -c "sleep 30 && python worker.py loader"
     volumes:
       - ../:/opt/binoas
     networks:
@@ -164,7 +164,7 @@ services:
       - elastic_endpoint
       - mysql
     # NOTE: the command should be updated
-    command: sh -c "sleep 30 && python percolator.py percolator percolator"
+    command: sh -c "sleep 30 && python worker.py percolator percolator"
     volumes:
       - ../:/opt/binoas
     networks:

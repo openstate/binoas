@@ -253,3 +253,10 @@ def start_worker(argv, klass):
 
     for task in tasks:
         task.join()
+
+registry = {
+    'transformer': JSONTransformer,
+    'loader': ElasticsearchLoader,
+    'percolator': ElasticsearchPercolator,
+    'subscriber_fetcher': DatabaseSubscriberFetcher
+}
