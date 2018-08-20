@@ -27,6 +27,16 @@ binoas:
             - objects
           out:
             - alerts
+      subfetcher:
+        topics:
+          in:
+            - alerts
+          out:
+            - mails
+      mailer:
+        topics:
+          in:
+            - mails
   applications:
     poliflw:
       <<: *defaults
