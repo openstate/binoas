@@ -12,6 +12,8 @@ from kafka import KafkaConsumer, KafkaProducer
 from binoas.utils import load_config
 from binoas.transformers import JSONPathPostTransformer
 from binoas.es import setup_elasticsearch
+from binoas.db import setup_db
+from binoas.models import User, UserQueries
 
 
 class Producer(threading.Thread):
@@ -191,6 +193,33 @@ class ElasticsearchPercolator(ElasticsearchBaseConsumer):
                 'payload': message.value['payload'],
                 'alerts': results
             }
+
+
+class DatabaseBaseConsumer(Consumer):
+    """
+    Base class for consumers that works with the database. Makes the
+    database connection available in the consumer.
+    """
+    def __init__(self, role, group=None):
+        super().__init__(role, group)
+        self.db = setup_db(self.config)
+
+
+class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
+    def transform(self, message):
+        query_ids = {
+            h['_id']: h for h in message.value['alerts']['hits']['hits']}
+        user_queries = self.db.query(UserQueries).filter(
+            UserQueries.id._in(query_ids.keys())
+        ).all()
+        return {
+            'application': message.value['application'],
+            'payload': message.value['payload'],
+            'alerts': message.value['alerts'],
+            'user_queries': {
+                u.user_id: u.query_id for u in user_queries
+            }
+        }
 
 
 def start_worker(argv, klass):
