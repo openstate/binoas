@@ -253,8 +253,14 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
 
 class Mailer(Consumer):
     def output(self, transformed_message):
+        logging.info(transformed_message)
         if transformed_message is None:
             return
+        if 'user' not in transformed_message:
+            logging.info('Discarding message')
+            return
+
+
         logging.info('Should go and send an email to %s now!' % (
             transformed_message['user']['email'],))
 
