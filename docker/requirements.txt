@@ -8,6 +8,7 @@ kafka-python
 elasticsearch>=5.0.0,<6.0.0
 PyYAML==3.13
 jsonpath-rw==1.4.0
+sendgrid==5.6.0
 
 # Dependencies installed by the packages above
 certifi==2018.1.18

@@ -8,6 +8,8 @@ binoas:
     host: elastic
     port: 9200
     timeout: 20
+  sendgrid:
+    api_key: "SG.xxxxxx"
   _defaults: &defaults
     routes:
       app:

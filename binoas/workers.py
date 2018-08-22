@@ -14,6 +14,7 @@ from binoas.transformers import JSONPathPostTransformer
 from binoas.es import setup_elasticsearch
 from binoas.db import setup_db
 from binoas.models import User, UserQueries
+from binoas.mail import send_mail
 
 
 class Producer(threading.Thread):
@@ -260,9 +261,12 @@ class Mailer(Consumer):
             logging.info('Discarding message')
             return
 
-
         logging.info('Should go and send an email to %s now!' % (
             transformed_message['user']['email'],))
+        send_mail(
+            self.config['binoas']['sendgrid']['api_key'],
+            '[%s] new alert' % (transformed_message['application'],),
+            'There was a new alert!', ['breyten@openstate.eu'])
 
 
 def start_worker(argv, klass):
