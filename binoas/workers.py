@@ -15,6 +15,7 @@ from binoas.es import setup_elasticsearch
 from binoas.db import setup_db
 from binoas.models import User, UserQueries
 from binoas.mail import send_mail
+from binoas.template import Templater
 
 
 class Producer(threading.Thread):
@@ -277,10 +278,14 @@ class Mailer(Consumer):
 
         logging.info('Should go and send an email to %s now!' % (
             transformed_message['payload']['user']['email'],))
+
+        templater = Templater(self.config)
+        content = templater.compile(transformed_message)
+
         send_mail(
             self.config['binoas']['sendgrid']['api_key'],
             '[%s] new alert' % (transformed_message['application'],),
-            'There was a new alert!', [transformed_message['payload']['user']['email']])
+            content, [transformed_message['payload']['user']['email']])
 
 
 def start_worker(argv, klass):
