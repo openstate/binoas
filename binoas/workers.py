@@ -225,12 +225,21 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
         for u in user_queries:
             result.append({
                 'application': message.value['application'],
-                'payload': message.value['payload'],
-                'user': {
-                    'id': u.user_id,
-                    'email': u.user.email
-                },
-                'query': query_ids[u.query_id]
+                'payload': {
+                    'alerts': [
+                        {
+                            # FIXME: put query title/desc here ...
+                            'query': query_ids[u.query_id],
+                            'documents': [
+                                message.value['payload']
+                            ],
+                        }
+                    ],
+                    'user': {
+                        'id': u.user_id,
+                        'email': u.user.email
+                    }
+                }
             })
         return result
 
@@ -246,8 +255,9 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
         if self.producer is not None:
             for r in transformed_message:
                 for t in self.topics_out:
-                    logging.info('Producing to channel: %s (u: %s/%s)' % (
-                        t, r['user']['id'], r['user']['email'],))
+                    if 'user' in r:
+                        logging.info('Producing to channel: %s (u: %s/%s)' % (
+                            t, r['user']['id'], r['user']['email'],))
                     logging.info(r)
                     self.producer.send(t, r)
 
@@ -257,16 +267,20 @@ class Mailer(Consumer):
         logging.info(transformed_message)
         if transformed_message is None:
             return
-        if 'user' not in transformed_message:
-            logging.info('Discarding message')
+        if 'user' not in transformed_message['payload']:
+            logging.info('Discarding message (no user in payload)')
+            return
+
+        if 'application' not in transformed_message:
+            logging.info('Discarding message (no valid application specification)')
             return
 
         logging.info('Should go and send an email to %s now!' % (
-            transformed_message['user']['email'],))
+            transformed_message['payload']['user']['email'],))
         send_mail(
             self.config['binoas']['sendgrid']['api_key'],
             '[%s] new alert' % (transformed_message['application'],),
-            'There was a new alert!', [transformed_message['user']['email']])
+            'There was a new alert!', [transformed_message['payload']['user']['email']])
 
 
 def start_worker(argv, klass):

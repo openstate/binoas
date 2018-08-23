@@ -11,5 +11,6 @@ def send_mail(api_key, subject, content, to=['developers@openstate.eu']):
         subject, Email(to[0], to[0]))
 
     mail.add_content(Content("text/plain", content))
+    mail.add_content(Content("text/html", "<html><body><h1>Test</h1>" + content + "</body></html>"))
 
     sg.client.mail.send.post(request_body=mail.get())
