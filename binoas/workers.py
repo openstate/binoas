@@ -266,7 +266,7 @@ class Mailer(Consumer):
         send_mail(
             self.config['binoas']['sendgrid']['api_key'],
             '[%s] new alert' % (transformed_message['application'],),
-            'There was a new alert!', ['breyten@openstate.eu'])
+            'There was a new alert!', [transformed_message['user']['email']])
 
 
 def start_worker(argv, klass):
