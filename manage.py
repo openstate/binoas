@@ -9,6 +9,7 @@ import os
 import requests
 import sys
 import time
+import logging
 
 import click
 from click.core import Command
@@ -16,7 +17,12 @@ from click.decorators import _make_command
 
 from binoas.utils import load_config
 from binoas.es import setup_elasticsearch
+from binoas.digest import Digest
 
+
+logging.basicConfig(
+    format='%(asctime)s.%(msecs)s:%(name)s:%(thread)d:%(levelname)s:%(process)d:%(message)s',
+    level=logging.INFO)
 
 def command(name=None, cls=None, **attrs):
     """
@@ -74,9 +80,26 @@ def es_put_template(template_file):
     es.indices.put_template('binoas_template', template)
 
 
+@command('make_digest')
+def es_make_digest():
+    """
+    Make a digest.
+    """
+
+    config = load_config()
+    es = setup_elasticsearch(config)
+
+    digest = Digest(config)
+
+    for application in config['binoas']['applications']:
+        click.echo('Making digest for %s' % (application,))
+        digest.make(application)
+
+
 # Register commands explicitly with groups, so we can easily use the docstring
 # wrapper
 elasticsearch.add_command(es_put_template)
+elasticsearch.add_command(es_make_digest)
 
 if __name__ == '__main__':
     cli()
