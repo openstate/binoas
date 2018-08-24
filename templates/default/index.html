@@ -80,10 +80,10 @@ table, tr, td {
 @media only screen {
   html {
     min-height: 100%;
-    background: #f3f3f3; } }
+    background: #f2f2f2; } }
 
 table.body {
-  background: #f3f3f3;
+  background: #f2f2f2;
   height: 100%;
   width: 100%; }
 
@@ -834,7 +834,7 @@ p,
 td,
 th,
 a {
-  color: #0a0a0a;
+  color: #3d4a4c;
   font-family: Helvetica, Arial, sans-serif;
   font-weight: normal;
   padding: 0;
@@ -926,7 +926,7 @@ h6 a:visited {
   color: #2199e8; }
 
 pre {
-  background: #f3f3f3;
+  background: #f2f2f2;
   margin: 30px 0;
   Margin: 30px 0; }
   pre code {
@@ -945,7 +945,7 @@ table.hr {
     max-width: 580px;
     border-top: 0;
     border-right: 0;
-    border-bottom: 1px solid #0a0a0a;
+    border-bottom: 1px solid #3d4a4c;
     border-left: 0;
     margin: 20px auto;
     Margin: 20px auto;
@@ -963,7 +963,7 @@ span.preheader {
   visibility: hidden;
   mso-hide: all !important;
   font-size: 1px;
-  color: #f3f3f3;
+  color: #f2f2f2;
   line-height: 1px;
   max-height: 0px;
   max-width: 0px;
@@ -1130,11 +1130,11 @@ th.callout-inner {
   th.callout-inner.primary {
     background: #def0fc;
     border: 1px solid #444444;
-    color: #0a0a0a; }
+    color: #3d4a4c; }
   th.callout-inner.secondary {
     background: #ebebeb;
     border: 1px solid #444444;
-    color: #0a0a0a; }
+    color: #3d4a4c; }
   th.callout-inner.success {
     background: #e1faea;
     border: 1px solid #1b9448;
@@ -1354,34 +1354,39 @@ body.outlook p {
     table.button.small-expand center,
     table.button.small-expanded center {
       min-width: 0; } }
-    
-    </style>  
+
+    </style>
 
     <style>
       .header {
-        background: #8a8a8a;
+        background: white;
+        margin-bottom: 20px !important;
       }
-      
+
       .header .columns {
         padding-bottom: 0;
       }
-      
+
       .header p {
         color: #fff;
         margin-bottom: 0;
       }
-      
+
       .header .wrapper-inner {
         padding: 20px;
         /*controls the height of the header*/
       }
-      
+
       .header .container {
-        background: #8a8a8a;
+        background: #f2f2f2;
       }
-      
+
       .wrapper.secondary {
-        background: #f3f3f3;
+        background: #f2f2f2;
+      }
+
+      .header h1 {
+        margin-right: 10px;
       }
     </style>
 
@@ -1406,7 +1411,7 @@ body.outlook p {
                                 <th class="small-6 large-6 columns first">
                                   <table>
                                     <tr>
-                                      <th> <img src="http://placehold.it/200x50/663399"> </th>
+                                      <th> <img src="https://waarismijnstemlokaal.nl/static/dist/images/mstile-70x70.png"> </th>
                                     </tr>
                                   </table>
                                 </th>
@@ -1414,7 +1419,7 @@ body.outlook p {
                                   <table>
                                     <tr>
                                       <th>
-                                        <p class="text-right">HERO</p>
+                                        <h1 class="text-right">{{ app.name }}</h1>
                                       </th>
                                     </tr>
                                   </table>
@@ -1447,20 +1452,19 @@ body.outlook p {
                             <table>
                               <tr>
                                 <th>
-                                  <h1>Hi, Elijah Baily</h1>
-                                  <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi impedit sapiente delectus molestias quia.</p> <img src="http://placehold.it/580x300" alt="">
-                                  <table class="callout">
-                                    <tr>
-                                      <th class="callout-inner primary">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam assumenda, praesentium qui vitae voluptate dolores. <a href="#">Click it!</a></p>
-                                      </th>
-                                      <th class="expander"></th>
-                                    </tr>
-                                  </table>
-                                  <h2>Title Ipsum <small>This is a note.</small></h2>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi repellat, harum. Quas nobis id aut, aspernatur, sequi tempora laborum corporis cum debitis, ullam, dolorem dolore quisquam aperiam! Accusantium, ullam, nesciunt.
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus consequuntur commodi, aut sed, quas quam optio accusantium recusandae nesciunt, architecto veritatis. Voluptatibus sunt esse dolor ipsum voluptates,
-                                    assumenda quisquam.</p>
+                                  <h2>Nieuwe alerts</h2>
+                                  <p>Er zijn nieuwe documenten gevonden voor de volgende zoekopdrachten:</p>
+                                  {% for alert in payload.alerts %}
+                                    <h2>{{ alert.query._id }}</h2>
+                                    <ul>
+                                    {% for doc in alert.documents %}
+                                      <li>{{ doc.title }}</li>
+                                    {% endfor %}
+                                    </ul>
+                                  {% endfor %}
+                                  <p>
+                                  </p>
+                                  <!--
                                   <table class="button large secondary">
                                     <tr>
                                       <td>
@@ -1471,7 +1475,7 @@ body.outlook p {
                                         </table>
                                       </td>
                                     </tr>
-                                  </table>
+                                  </table> -->
                                 </th>
                                 <th class="expander"></th>
                               </tr>

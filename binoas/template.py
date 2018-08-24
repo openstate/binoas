@@ -19,6 +19,7 @@ class Templater:
                 'templates/default/index.html')
         return templ.render({
             'application': application,
+            'app': self.config['binoas']['applications'][application],
             'payload': payload,
             'config': self.config
         })
