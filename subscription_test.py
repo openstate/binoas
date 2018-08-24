@@ -30,11 +30,7 @@ def main():
     subscription_options = {
         'title': {
             'title': random.choice(
-                'dit is een lijst die bestaat uit onzinnige woorden'.split())
-        },
-        'topic': {
-            'data.key': 'topic',
-            'data.value': random.choice('tag1 tag2'.split())
+                'RT @ANanninga: De grap van @minpres over art vd steur als tekstschrijver en dan n helemaal zwartgecensureerd papier laten zien, was wel gee'.lower().split())
         }
     }
     fld = random.choice(list(subscription_options.keys()))

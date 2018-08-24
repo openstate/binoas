@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import json
 import logging
 
 from elasticsearch.exceptions import NotFoundError
@@ -13,6 +14,25 @@ class Digest:
         self.config = config
         self.es = setup_elasticsearch(self.config)
 
+    def _make_percolate_query(self, index_name, r):
+        return {
+                "index": index_name,
+                "type": "queries"
+            }, {
+                "query": {
+                    "percolate": {
+                        "field": "query",
+                        "document_type": 'item',
+                        "document": r['_source']
+                    }
+                },
+                "highlight": {
+                    "fields": {
+                        "*": {}
+                    }
+                }
+            }
+
     def make(self, application):
         if application not in self.config['binoas']['applications']:
             raise ValueError('Application could not be found')
@@ -21,7 +41,7 @@ class Digest:
             "query": {
                 "range": {
                     "modified": {
-                        "gte": "now-1d/d",
+                        "gte": "now-365d/d",
                         "lt":  "now/d"
                     }
                 }
@@ -29,8 +49,20 @@ class Digest:
         }
         index_name = 'binoas_%s' % (application,)
 
+        perc_req = ''
         try:
-            results = [r for r in scan(self.es, es_query, index=index_name, doc_type='item')]
-        except NotFoundError as e:
-            results = None
-        logging.info(results)
+            for r in scan(self.es, es_query, index=index_name, doc_type='item'):
+                req_head, req_body = self._make_percolate_query(index_name, r)
+                perc_req += '%s \n' % (json.dumps(req_head),)
+                perc_req += '%s \n' % (json.dumps(req_body),)
+        except NotFoundError:
+            pass
+
+        try:
+            results = self.es.msearch(body=perc_req)
+        except ValueError as e:
+            results = {'responses': []}
+
+        for r in results['responses']:
+            if r['hits']['total'] > 0:
+                logging.info(r)
