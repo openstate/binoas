@@ -51,18 +51,25 @@ class Digest:
 
         perc_req = ''
         try:
-            for r in scan(self.es, es_query, index=index_name, doc_type='item'):
-                req_head, req_body = self._make_percolate_query(index_name, r)
-                perc_req += '%s \n' % (json.dumps(req_head),)
-                perc_req += '%s \n' % (json.dumps(req_body),)
+            scan_results = [
+                r for r in scan(
+                    self.es, es_query, index=index_name, doc_type='item')]
         except NotFoundError:
-            pass
+            scan_results = []
+
+        if len(scan_results) <= 0:
+            return
+
+        for r in scan_results:
+            req_head, req_body = self._make_percolate_query(index_name, r)
+            perc_req += '%s \n' % (json.dumps(req_head),)
+            perc_req += '%s \n' % (json.dumps(req_body),)
 
         try:
             results = self.es.msearch(body=perc_req)
         except ValueError as e:
             results = {'responses': []}
 
-        for r in results['responses']:
+        for d, r in zip(scan_results, results['responses']):
             if r['hits']['total'] > 0:
-                logging.info(r)
+                logging.info((d, r))
