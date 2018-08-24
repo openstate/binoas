@@ -30,7 +30,7 @@ def main():
     subscription_options = {
         'title': {
             'title': random.choice(
-                'dit is een lijst van onzinnige woorden'.split())
+                'dit is een lijst die bestaat uit onzinnige woorden'.split())
         },
         'topic': {
             'data.key': 'topic',
@@ -41,7 +41,7 @@ def main():
     print(fld)
 
     subscription = {
-        'application': 'test',
+        'application': 'politwoops',
         'email': email,
         'frequency': '6H',
         'subscription': subscription_options[fld]
