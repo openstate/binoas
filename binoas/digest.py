@@ -6,6 +6,8 @@ import logging
 from elasticsearch.exceptions import NotFoundError
 from elasticsearch.helpers import scan
 
+from kafka import KafkaProducer
+
 from binoas.es import setup_elasticsearch
 from binoas.db import setup_db
 from binoas.models import User, UserQueries
@@ -39,6 +41,17 @@ class Digest:
     def make(self, application):
         if application not in self.config['binoas']['applications']:
             raise ValueError('Application could not be found')
+
+        topics_out = self.config['binoas']['applications'][application][
+            'routes']['subfetcher']['topics'].get('out', [])
+        if len(topics_out) > 0:
+            logging.info('Producing for topics: %s' % (topics_out,))
+            producer = KafkaProducer(
+                bootstrap_servers='kafka',
+                value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+        else:
+            logging.info('Not setting up producers')
+            producer = None
 
         es_query = {
             "query": {
@@ -109,14 +122,18 @@ class Digest:
                     application, uq[0].user.email,
                     [u.query_id for u in uq],
                     sum([len(queries[q]['documents']) for q in [u.query_id for u in uq]])))
-            # logging.info({
-            #     'application': application,
-            #     'payload': {
-            #         'alerts': [
-            #             queries[u.query_id] for u in users_with_queries[user_id]],
-            #         'user': {
-            #             'id': uq[0].user_id,
-            #             'email': uq[0].user.email
-            #         }
-            #     }
-            # })
+            pl = {
+                'application': application,
+                'payload': {
+                    'alerts': [
+                        queries[u.query_id] for u in users_with_queries[user_id]],
+                    'user': {
+                        'id': uq[0].user_id,
+                        'email': uq[0].user.email
+                    }
+                }
+            }
+            if producer is not None:
+                for t in topics_out:
+                    logging.info('Producing to channel: %s' % (t,))
+                    producer.send(t, pl)

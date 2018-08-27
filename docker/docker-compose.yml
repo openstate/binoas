@@ -20,7 +20,7 @@ services:
       - zookeeper
     environment:
       # Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.121.19
+      KAFKA_ADVERTISED_HOST_NAME: 10.50.152.206    # 192.168.121.19
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     restart: always
     volumes:
