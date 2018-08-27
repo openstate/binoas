@@ -58,6 +58,11 @@ def elasticsearch():
     """Manage Elasticsearch"""
 
 
+@cli.group()
+def digest():
+    """Manage digests"""
+
+
 @command('put_template')
 @click.option('--template_file', default='mappings/template.json',
               type=click.File('rb'), help='Path to JSON file containing the template.')
@@ -81,7 +86,7 @@ def es_put_template(template_file):
 
 
 @command('make_digest')
-def es_make_digest():
+def digest_make():
     """
     Make a digest.
     """
@@ -99,7 +104,7 @@ def es_make_digest():
 # Register commands explicitly with groups, so we can easily use the docstring
 # wrapper
 elasticsearch.add_command(es_put_template)
-elasticsearch.add_command(es_make_digest)
+digest.add_command(digest_make)
 
 if __name__ == '__main__':
     cli()
