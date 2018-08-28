@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `binoas`.`user` (
 CREATE TABLE IF NOT EXISTS `binoas`.`user_queries` (
   `user_id` INT(11) NOT NULL,
   `query_id` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
   `frequency` VARCHAR(32),
   PRIMARY KEY (`user_id`, `query_id`),
   index idx_user_id (user_id),

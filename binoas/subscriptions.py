@@ -20,6 +20,7 @@ class Subscription(UserDict):
             ('application' in self) and
             ('email' in self) and
             ('frequency' in self) and
+            ('description' in self) and
             (
                 ('subscription' in self) or
                 ('query' in self)
@@ -65,6 +66,7 @@ class Subscription(UserDict):
         if user_query is None:
             user_query = UserQueries(user_id=user.id, query_id=es_id)
             session.add(user_query)
+        user_query.description = self['description']
         user_query.frequency = self['frequency']
         session.commit()
         return user_query

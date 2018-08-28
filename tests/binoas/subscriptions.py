@@ -36,11 +36,24 @@ class TestSubscription(unittest.TestCase):
         with self.assertRaises(ValueError):
             subscription = Subscription(payload)
 
+    def test_only_application_email_freq_subscription(self):
+        payload = {
+            'application': 'poliflw',
+            'email': 'breyten@openstate.eu',
+            'frequency': '6H',
+            'subscription': {
+                'title': 'test'
+            }
+        }
+        with self.assertRaises(ValueError):
+            subscription = Subscription(payload)
+
     def test_valid_subscription_subscription(self):
         payload = {
             'application': 'poliflw',
             'email': 'breyten@openstate.eu',
             'frequency': '6H',
+            'description': 'test',
             'subscription': {
                 'title': 'test'
             }
@@ -50,12 +63,14 @@ class TestSubscription(unittest.TestCase):
         self.assertEqual(subscription['email'], 'breyten@openstate.eu')
         self.assertEqual(subscription['frequency'], '6H')
         self.assertEqual(subscription['subscription']['title'], 'test')
+        self.assertEqual(subscription['description'], 'test')
 
     def test_valid_subscription_query(self):
         payload = {
             'application': 'poliflw',
             'email': 'breyten@openstate.eu',
             'frequency': '6H',
+            'description': 'test',
             'query': {
                 'match': {'title': 'test'}
             }
@@ -71,6 +86,7 @@ class TestSubscription(unittest.TestCase):
             'application': 'poliflw',
             'email': 'breyten@openstate.eu',
             'frequency': '6H',
+            'description': 'test',
             'query': {
             }
         }
@@ -86,6 +102,7 @@ class TestSubscription(unittest.TestCase):
             'application': 'poliflw',
             'email': 'breyten@openstate.eu',
             'frequency': '6H',
+            'description': 'test',
             'subscription': {
             }
         }
@@ -108,6 +125,7 @@ class TestSubscription(unittest.TestCase):
             'application': 'poliflw',
             'email': 'breyten@openstate.eu',
             'frequency': '6H',
+            'description': 'test',
             'query': {
                 "match": {
                     "title": "test"
@@ -130,6 +148,7 @@ class TestSubscription(unittest.TestCase):
             'application': 'poliflw',
             'email': 'breyten@openstate.eu',
             'frequency': '6H',
+            'description': 'test',
             'subscription': {
                 'title': 'test'
             }
@@ -158,6 +177,7 @@ class TestSubscription(unittest.TestCase):
             'application': 'poliflw',
             'email': 'breyten@openstate.eu',
             'frequency': '6H',
+            'description': 'test',
             'subscription': {
                 'title': 'test',
                 'tag': 'tag1'

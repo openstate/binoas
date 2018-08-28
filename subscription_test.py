@@ -40,6 +40,7 @@ def main():
         'application': 'politwoops',
         'email': email,
         'frequency': '6H',
+        'description': subscription_options[fld]['title'],
         'subscription': subscription_options[fld]
     }
     print(requests.post(

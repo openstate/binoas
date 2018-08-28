@@ -26,6 +26,7 @@ class UserQueries(Base):
     """
     __tablename__ = 'user_queries'
     user_id = Column(Integer, ForeignKey("user.id"))
+    description = Column(String(255))
     query_id = Column(String(255), index=True)
     frequency = Column(String(255), index=True)
 
