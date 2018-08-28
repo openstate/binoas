@@ -49,7 +49,7 @@ class Consumer(multiprocessing.Process, ConsumerMixin, ProducerMixin):
 
         self.init_consumer()
         self.init_producer()
-        
+
         while not self.stop_event.is_set():
             for message in self.consumer:
                 transformed = self.transform(message)
@@ -71,15 +71,7 @@ class Consumer(multiprocessing.Process, ConsumerMixin, ProducerMixin):
         This is a routine that outputs the transformed messages if there
         is an Kafka output topic defined.
         """
-        logging.info(transformed_message)
-
-        if transformed_message is None:
-            return
-
-        if self.producer is not None:
-            for t in self.topics_out:
-                logging.info('Producing to channel: %s' % (t,))
-                self.producer.send(t, transformed_message)
+        self.produce_message(transformed_message)
 
 
 class JSONTransformer(Consumer):

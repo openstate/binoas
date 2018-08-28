@@ -59,3 +59,14 @@ class ProducerMixin:
             bootstrap_servers='kafka',
             value_serializer=lambda v: json.dumps(v).encode('utf-8'))
         logging.info('Producing for topics: %s' % (self.topics_out,))
+
+        def produce_message(self, transformed_message):
+            logging.debug(transformed_message)
+
+            if transformed_message is None:
+                return
+
+            if self.producer is not None:
+                for t in self.topics_out:
+                    logging.info('Producing to channel: %s' % (t,))
+                    self.producer.send(t, transformed_message)
