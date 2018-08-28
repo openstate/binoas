@@ -9,6 +9,7 @@ from app import app, BinoasError
 
 from binoas.posts import Post
 from binoas.subscriptions import Subscription
+from binoas.mixins import ProducerMixin
 
 
 def decode_json_post_data(fn):
@@ -37,11 +38,18 @@ def decode_json_post_data(fn):
 
     return wrapped_function
 
-# TODO: how about thread safety??
-producer = KafkaProducer(
-    bootstrap_servers=app.config['binoas']['zookeeper'],
-    value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
+class Producer(ProducerMixin):
+    def __init__(self):
+        """
+        Initializes the process. The role is passed to give more information.
+        """
+        self.role = 'app'
+        self.config = app.config
+
+# TODO: how about thread safety??
+producer = Producer()
+producer.init_producer()
 
 @app.route("/")
 def index():
@@ -71,11 +79,7 @@ def new_post():
     except ValueError:
         raise BinoasError('Not a valid post payload', 400)
 
-    appl = payload['application']
-    topics = app.config['binoas']['applications'][
-        appl]['routes']['app']['topics']['out']
-    for topic in topics:
-        producer.send(topic, payload)
+    producer.produce_message(payload)
 
     return jsonify({
         'status': 'ok'
