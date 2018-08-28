@@ -11,13 +11,16 @@ from kafka import KafkaProducer
 from binoas.es import setup_elasticsearch
 from binoas.db import setup_db
 from binoas.models import User, UserQueries
+from binoas.mixins import ProducerMixin
 
 
-class Digest:
+class Digest(ProducerMixin):
     def __init__(self, config):
         self.config = config
+        self.role = 'subfetcher'
         self.es = setup_elasticsearch(self.config)
         self.db = setup_db(self.config)
+        self.init_producer()
 
     def _make_percolate_query(self, index_name, r):
         return {
@@ -41,17 +44,6 @@ class Digest:
     def make(self, application):
         if application not in self.config['binoas']['applications']:
             raise ValueError('Application could not be found')
-
-        topics_out = self.config['binoas']['applications'][application][
-            'routes']['subfetcher']['topics'].get('out', [])
-        if len(topics_out) > 0:
-            logging.info('Producing for topics: %s' % (topics_out,))
-            producer = KafkaProducer(
-                bootstrap_servers='kafka',
-                value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-        else:
-            logging.info('Not setting up producers')
-            producer = None
 
         es_query = {
             "query": {
@@ -133,7 +125,5 @@ class Digest:
                     }
                 }
             }
-            if producer is not None:
-                for t in topics_out:
-                    logging.info('Producing to channel: %s' % (t,))
-                    producer.send(t, pl)
+
+            self.produce_message(pl)
