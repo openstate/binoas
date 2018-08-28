@@ -13,32 +13,13 @@ from binoas.utils import load_config
 from binoas.transformers import JSONPathPostTransformer
 from binoas.es import setup_elasticsearch
 from binoas.db import setup_db
+from binoas.mixins import ConsumerMixin, ProducerMixin
 from binoas.models import User, UserQueries
 from binoas.mail import send_mail
 from binoas.template import Templater
 
 
-class Producer(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
-        self.stop_event = threading.Event()
-        self.config = load_config()
-
-    def stop(self):
-        self.stop_event.set()
-
-    def run(self):
-        producer = KafkaProducer(bootstrap_servers='kafka')
-
-        while not self.stop_event.is_set():
-            producer.send('my-topic', b"test")
-            producer.send('my-topic', b"\xc2Hola, mundo!")
-            time.sleep(1)
-
-        producer.close()
-
-
-class Consumer(multiprocessing.Process):
+class Consumer(multiprocessing.Process, ConsumerMixin, ProducerMixin):
     """
     A class which acts as a consumer of one or more Kafka topic(s). It is
     intended to be generic and it's behavior can be altered in subclasses.
@@ -65,32 +46,10 @@ class Consumer(multiprocessing.Process):
 
         if self.group is not None:
             logging.info('Running as group: %s' % (self.group,))
-        self.consumer = KafkaConsumer(
-            bootstrap_servers=self.config['binoas']['zookeeper'],
-            auto_offset_reset='earliest', consumer_timeout_ms=1000,
-            value_deserializer=json.loads, group_id=self.group)
 
-        self.topics_in = list(set(itertools.chain.from_iterable(
-            [
-                a['routes'][self.role]['topics'].get('in', []) for k, a in
-                self.config['binoas']['applications'].items()])))
-        logging.info('Consuming topics: %s' % (self.topics_in,))
-        self.consumer.subscribe(self.topics_in)
-
-        self.topics_out = list(set(itertools.chain.from_iterable(
-            [
-                a['routes'][self.role]['topics'].get('out', []) for k, a in
-                self.config['binoas']['applications'].items()])))
-
-        if len(self.topics_out) > 0:
-            logging.info('Producing for topics: %s' % (self.topics_out,))
-            self.producer = KafkaProducer(
-                bootstrap_servers='kafka',
-                value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-        else:
-            logging.info('Not setting up producers')
-            self.producer = None
-
+        self.init_consumer()
+        self.init_producer()
+        
         while not self.stop_event.is_set():
             for message in self.consumer:
                 transformed = self.transform(message)
