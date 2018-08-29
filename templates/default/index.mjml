@@ -1,0 +1,63 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all padding="0px"></mj-all>
+      <mj-text font-family="Montserrat,sans-serif" padding="0 25px" font-size="14px"></mj-text>
+      <mj-section background-color="#ffffff"></mj-section>
+      <mj-class name="preheader" color="#000000" font-size="11px"></mj-class>
+    </mj-attributes>
+    <mj-style inline="inline">a { text-decoration: none!important; color: inherit!important; }</mj-style>
+  </mj-head>
+  <mj-body background-color="#0a91a6">
+    <mj-section padding="20px 0">
+      <mj-group background-color="#f3f3f3">
+        <mj-column>
+          <mj-image src="https://waarismijnstemlokaal.nl/static/dist/images/mstile-70x70.png" width="70" height="70" alt="header image" align="left"></mj-image>
+        </mj-column>
+        <mj-column background-color="#f3f3f3">
+          <mj-text mj-class="preheader" align="right" font-family="Source Code Pro,monospace" padding="5px" font-size="15px">{{ app.name }}</mj-text>
+        </mj-column>
+      </mj-group>
+    </mj-section>
+    <mj-section padding-bottom="20px" padding-top="10px">
+      <mj-column>
+        <mj-text align="left"><h4>Je hebt 1 of meerdere alerts:</h4></mj-text>
+
+        <mj-text align="left"><h5>Nieuwe alerts voor 'voorbeeld':</h5></mj-text>
+        <mj-text align="left">
+          <ul>
+            <li>{{ doc.title }}</li>
+            <li>{{ doc.title }}</li>
+            <li>{{ doc.title }}</li>
+          </ul>
+        </mj-text>
+        <mj-text align="left"><h5>Nieuwe alerts voor 'een':</h5></mj-text>
+        <mj-text align="left">
+          <ul>
+            <li>{{ doc.title }}</li>
+            <li>{{ doc.title }}</li>
+            <li>{{ doc.title }}</li>
+          </ul>
+        </mj-text>
+        <mj-button background-color="#8bb420" color="#FFFFFF" href="https://mjml.io" font-family="Arial, sans-serif" padding="20px 0 0 0" font-weight="bold" font-size="16px">Refer a friend now</mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="20px 0">
+      <mj-group background-color="#f3f3f3">
+        <mj-column padding="20px">
+          <mj-image src="https://openstate.eu/wp-content/uploads/sites/14/2018/08/brandico_2014-04-07_facebook_256_0_7f8c8d_none.png" width="14" alt="facebook" href="https://www.facebook.com/openstatefoundation/?fref=email" align="left"></mj-image>
+          <mj-image src="https://openstate.eu/wp-content/uploads/sites/14/2018/08/brandico_2014-04-07_twitter_256_0_7f8c8d_none.png" width="14" alt="facebook" href="https://twitter.com/OpenStateEU" align="left"></mj-image>
+          <mj-image src="https://openstate.eu/wp-content/uploads/sites/14/2018/08/ionicons_2-0-1_email_256_0_7f8c8d_none.png" width="14" alt="facebook" href="http://openstate.eu/contact" align="left"></mj-image>
+        </mj-column>
+        <mj-column padding="20px">
+          <mj-image src="https://openstate.eu/wp-content/uploads/sites/14/2018/08/logo-open-state-foundation-1.png" width="70" height="70" alt="header image" align="right"></mj-image>
+        </mj-column>
+        <mj-column padding="25px 20px">
+          <mj-text mj-class="preheader" align="left" font-family="Source Code Pro,monospace" padding="0" font-size="10px">Open</mj-text>
+          <mj-text mj-class="preheader" align="left" font-family="Source Code Pro,monospace" padding="0" font-size="10px">State</mj-text>
+          <mj-text mj-class="preheader" align="left" font-family="Source Code Pro,monospace" padding="0" font-size="10px">Foundation</mj-text>
+        </mj-column>
+      </mj-group>
+    </mj-section>
+  </mj-body>
+</mjml>
