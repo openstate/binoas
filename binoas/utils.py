@@ -4,6 +4,7 @@ try:
 except ImportError:
     from yaml import Loader
 
+import re
 
 from binoas.exceptions import ConfigurationError
 
@@ -33,3 +34,24 @@ def is_valid_config(config):
         len(config.keys()) == 1 and
         ('binoas' in config)
     )
+
+
+def parse_frequency(freq):
+    """
+    Parses a frequency string and returns the number of seconds.
+    Supported formats: 1s, 1m, 1h, 1d, 1w, 1y
+    """
+    m = re.search('^(\d+)(s|m|h|d|w|y)$', freq.lower())
+    if m is None:
+        raise ValueError('Input not in required format')
+
+    multipliers = {
+        's': 1,
+        'm': 60,
+        'h': 3600,
+        'd': 86400,
+        'w': 604800,
+        'y': 31536000,
+    }
+
+    return int(m.group(1)) * multipliers[m.group(2)]
