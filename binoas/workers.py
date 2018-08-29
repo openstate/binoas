@@ -180,8 +180,10 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
                 'payload': {
                     'alerts': [
                         {
-                            # FIXME: put query title/desc here ...
-                            'query': query_ids[u.query_id],
+                            'query': {
+                                'id': u.query_id,
+                                'description': u.description
+                            },
                             'documents': [
                                 message.value['payload']
                             ],

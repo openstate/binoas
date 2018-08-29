@@ -1455,7 +1455,7 @@ body.outlook p {
                                   <h2>Nieuwe alerts</h2>
                                   <p>Er zijn nieuwe documenten gevonden voor de volgende zoekopdrachten:</p>
                                   {% for alert in payload.alerts %}
-                                    <h2>{{ alert.query }}</h2>
+                                    <h2>{{ alert.query.description }}</h2>
                                     <ul>
                                     {% for doc in alert.documents %}
                                       <li>{{ doc.title }}</li>

@@ -92,7 +92,6 @@ class Digest(ProducerMixin):
                     queries[q['_id']]['documents'].append(d['_source'])
                 except LookupError:
                     queries[q['_id']] = {
-                        'query': q['_source'],
                         'documents': [d['_source']]
                     }
 
@@ -117,11 +116,18 @@ class Digest(ProducerMixin):
                     application, uq[0].user.email,
                     [u.query_id for u in uq],
                     sum([len(queries[q]['documents']) for q in [u.query_id for u in uq]])))
+
             pl = {
                 'application': application,
                 'payload': {
                     'alerts': [
-                        queries[u.query_id] for u in users_with_queries[user_id]],
+                        {
+                            'query': {
+                                'id': u.query_id,
+                                'description': u.description
+                            },
+                            'documents': queries[u.query_id]['documents']
+                        } for u in uq],
                     'user': {
                         'id': uq[0].user_id,
                         'email': uq[0].user.email

@@ -64,7 +64,7 @@ def new_post():
             'application': 'test',
             'payload': {
                 'id': 1,
-                'description': 'Dit is een test',
+                'description': 'Dit is een test met een aantal woorden er in',
                 'topics': [
                     {'id': 1, 'name': 'tag1'},
                     {'id': 1, 'name': 'tag2'},
