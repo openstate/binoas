@@ -12,7 +12,7 @@ from binoas.es import setup_elasticsearch
 from binoas.db import setup_db
 from binoas.models import User, UserQueries
 from binoas.mixins import ProducerMixin
-
+from binoas.utils import parse_frequency
 
 class Digest(ProducerMixin):
     def __init__(self, config):
@@ -41,16 +41,17 @@ class Digest(ProducerMixin):
                 }
             }
 
-    def make(self, application):
+    def make(self, application, frequency):
         if application not in self.config['binoas']['applications']:
             raise ValueError('Application could not be found')
 
+        seconds = parse_frequency(frequency)
         es_query = {
             "query": {
                 "range": {
                     "modified": {
-                        "gte": "now-365d/d",
-                        "lt":  "now/d"
+                        "gte": "now-%ss/s" % (seconds,),
+                        "lt":  "now/s"
                     }
                 }
             }
@@ -65,6 +66,8 @@ class Digest(ProducerMixin):
         except NotFoundError:
             scan_results = []
 
+        logging.info('Found %s documents for frequency %s' % (
+            len(scan_results), frequency),)
         if len(scan_results) <= 0:
             return
 
@@ -96,7 +99,7 @@ class Digest(ProducerMixin):
         user_queries = self.db.query(UserQueries).filter(
             UserQueries.query_id.in_(queries.keys())
         ).filter(
-            UserQueries.frequency == None
+            UserQueries.frequency == frequency.lower()
         ).all()
         logging.info('Found user queries:')
         logging.info([u.user_id for u in user_queries])

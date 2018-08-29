@@ -10,6 +10,7 @@ import requests
 import sys
 import time
 import logging
+from time import sleep
 
 import click
 from click.core import Command
@@ -85,8 +86,10 @@ def es_put_template(template_file):
     es.indices.put_template('binoas_template', template)
 
 
-@command('make_digest')
-def digest_make():
+@command('make')
+@click.option('--frequency', default='1h',
+              type=str, help='The frequency for the digest')
+def digest_make(frequency):
     """
     Make a digest.
     """
@@ -97,8 +100,10 @@ def digest_make():
     digest = Digest(config)
 
     for application in config['binoas']['applications']:
-        click.echo('Making digest for %s' % (application,))
-        digest.make(application)
+        click.echo('Making digest for %s and frequency %s' % (
+            application, frequency))
+        digest.make(application, frequency)
+        sleep(5)
 
 
 # Register commands explicitly with groups, so we can easily use the docstring
