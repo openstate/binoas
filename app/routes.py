@@ -114,7 +114,7 @@ def new_subscription():
     })
 
 
-@app.route("subscriptions/delete", methods=['DELETE'])
+@app.route("/subscriptions/delete", methods=['DELETE'])
 @decode_json_post_data
 def delete_subscription():
     user_id = request.data['user_id']
@@ -143,6 +143,19 @@ def delete_subscription():
         'status': 'ok'
     })
 
+
+@app.route("/subscriptions", methods=["POST"])
+@decode_json_post_data
+def list_subscriptions():
+    session = setup_db(app.config)
+    user_queries = session.query(UserQueries).filter_by(
+        **request.data).all()
+    return jsonify({
+        'meta': {
+            'total': len(user_queries)
+        },
+        'results': [u.to_json() for u in user_queries]
+    })
 
 if __name__ == "__main__":
     app.run(threaded=True)

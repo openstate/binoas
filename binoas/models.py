@@ -36,3 +36,11 @@ class UserQueries(Base):
         PrimaryKeyConstraint('user_id', 'query_id'),
         {},
     )
+
+    def to_json(self):
+        return {
+            'user_id': self.user_id,
+            'query_id': self.query_id,
+            'description': self.description,
+            'frequency': self.frequency
+        }
