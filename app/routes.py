@@ -7,9 +7,12 @@ from kafka import KafkaConsumer, KafkaProducer
 
 from app import app, BinoasError
 
+from binoas.db import setup_db
+from binoas.es import setup_elasticsearch
 from binoas.posts import Post
 from binoas.subscriptions import Subscription
 from binoas.mixins import ProducerMixin
+from binoas.models import UserQueries
 
 
 def decode_json_post_data(fn):
@@ -50,6 +53,7 @@ class Producer(ProducerMixin):
 # TODO: how about thread safety??
 producer = Producer()
 producer.init_producer()
+
 
 @app.route("/")
 def index():
@@ -108,6 +112,37 @@ def new_subscription():
             'id': user_query.query_id
         }
     })
+
+
+@app.route("subscriptions/delete", methods=['DELETE'])
+@decode_json_post_data
+def delete_subscription():
+    user_id = request.data['user_id']
+    query_id = request.data['query_id']
+    session = setup_db(app.config)
+    es = setup_elasticsearch(app.config)
+
+    uq = session.query(UserQueries).filter_by(
+        user_id=user_id, query_id=query_id).first()
+    if uq is None:
+        raise BinoasError('User query could not be found', 404)
+
+    # delete from the database first.
+    session.query(UserQueries).filter_by(
+        user_id=user_id, query_id=query_id).delete()
+    session.commit()
+
+    # now we need to find out if there are any user subscribed to this query
+    # if not so, delete the query also.
+    num_users = session.query(UserQueries).filter_by(
+        query_id=query_id).count()
+    if num_users <= 0:
+        es.delete(index='*', doc_type='queries', id=query_id)
+
+    return jsonify({
+        'status': 'ok'
+    })
+
 
 if __name__ == "__main__":
     app.run(threaded=True)
