@@ -286,6 +286,8 @@
                             </td>
                           </tr>
 
+                          {% block documents %}
+
                           {% for alert in payload.alerts %}
                           <tr>
                             <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
@@ -301,16 +303,24 @@
                             <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
 
                               <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
-                                <ul>
+
                                   {% for doc in alert.documents %}
-                                    <li>{{ doc.title }}</li>
+                                    <div style="margin-bottom: 10px;">
+                                    {% if doc.description %}
+                                      <h6>{{ doc.title }}</h6>
+                                      <p>{{ doc.description }}</p>
+                                    {% else %}
+                                      <p>{{ doc.title }}</p>
+                                    {% endif %}
+                                    </div>
                                   {% endfor %}
-                                </ul>
                               </div>
 
                             </td>
                           </tr>
                           {% endfor %}
+
+                          {% endblock %}
 
                         </table>
 
