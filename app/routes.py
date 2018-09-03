@@ -144,12 +144,12 @@ def delete_subscription():
     })
 
 
-@app.route("/subscriptions", methods=["POST"])
+@app.route("/subscriptions", methods=["GET"])
 @decode_json_post_data
 def list_subscriptions():
     session = setup_db(app.config)
     user_queries = session.query(UserQueries).filter_by(
-        **request.data).all()
+        **request.args).all()
     return jsonify({
         'meta': {
             'total': len(user_queries)
