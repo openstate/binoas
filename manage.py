@@ -15,8 +15,9 @@ from time import sleep
 import click
 from click.core import Command
 from click.decorators import _make_command
+from elasticsearch.exceptions import NotFoundError
 
-from binoas.utils import load_config
+from binoas.utils import load_config, parse_frequency
 from binoas.es import setup_elasticsearch
 from binoas.digest import Digest
 
@@ -86,6 +87,37 @@ def es_put_template(template_file):
     es.indices.put_template('binoas_template', template)
 
 
+@command('cleanup')
+def es_cleanup():
+    """
+    Delete documents beyond retention time
+    """
+    config = load_config()
+    es = setup_elasticsearch(config)
+
+    for application in config['binoas']['applications']:
+        seconds = parse_frequency(
+            config['binoas']['applications'][application].get(
+                'retention', '1h'))
+        click.echo('Cleaning up %s (%s)' % (application, seconds,))
+        es_query = {
+            "query": {
+                "range": {
+                    "modified": {
+                        "lt": "now-%ss/s" % (seconds,),
+                    }
+                }
+            }
+        }
+        index_name = 'binoas_%s' % (application,)
+        try:
+            res = es.delete_by_query(
+                index=index_name, doc_type='item', body=es_query)
+        except NotFoundError:
+            res = None
+        print(res)
+
+
 @command('make')
 @click.option('--frequency', default='1h',
               type=str, help='The frequency for the digest')
@@ -109,6 +141,7 @@ def digest_make(frequency):
 # Register commands explicitly with groups, so we can easily use the docstring
 # wrapper
 elasticsearch.add_command(es_put_template)
+elasticsearch.add_command(es_cleanup)
 digest.add_command(digest_make)
 
 if __name__ == '__main__':

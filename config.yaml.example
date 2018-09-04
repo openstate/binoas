@@ -45,6 +45,7 @@ binoas:
       name: PoliFLW
     politwoops:
       <<: *defaults
+      retention: 1h
       name: politwoops
     openraadsinformatie:
       <<: *defaults
