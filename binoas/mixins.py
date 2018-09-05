@@ -33,7 +33,7 @@ class ConsumerMixin(KafkaBaseMixin):
 
         self.consumer = KafkaConsumer(
             bootstrap_servers=self.config['binoas']['zookeeper'],
-            auto_offset_reset='earliest', consumer_timeout_ms=1000,
+            auto_offset_reset='latest', consumer_timeout_ms=1000,
             value_deserializer=json.loads, group_id=self.group)
         logging.info('Consuming topics: %s' % (self.topics_in,))
         self.consumer.subscribe(self.topics_in)
