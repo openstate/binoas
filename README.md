@@ -1,40 +1,10 @@
-# binoas
-BIg NOtification and Alert System
+## Description
 
-## description
-
-binoas is a service that allows you to get updates via email when one or more documents match a saved query (Ie. a keyword alert system).
-
-
-## Installation
-
-1. Copy `config.py.example` to `config.py` and edit it appropriately
-2. Copy `config.yaml.example` to `config.yaml` and edit it appropriately
-
-## Running
-
-1. `cd docker`
-2. `# Set this correctly: On a Mac lookup the IP en en0` See [documentation](https://github.com/wurstmeister/kafka-docker/wiki/Connectivity) for this
-3. `ifconfig en0 |grep inet |grep -v inet6 |cut -d ' ' -f 2`
-4. `KAFKA_ADVERTISED_HOST_NAME: 192.168.0.1`
-5. `docker-compose up -d`
-6. `# Wait a minute (no, really -- kafka does take a while to init properly)`
-7. `docker exec binoas_transformer_1 manage.py elasticsearch put_template`
-8. `# The above for the first time only`
-9. See [this tutorial](https://wurstmeister.github.io/kafka-docker/)
+binoas (BIg NOtification and Alert System) is a service that allows you to get updates via email when one or more incoming documents match a saved query (Ie. a keyword alert system). (It's like Google Alerts).
 
 ## Documentation
 
-### Using kafka-python
-
-```
-from kafka import KafkaConsumer
-
-consumer = KafkaConsumer('topic', bootstrap_servers='kafka')
-for msg in comsumer:
-    print(msg)
-
-```
+Please see [the wiki](https://github.com/openstate/binoas/wiki) for the documentation.
 
 ## Testing
 
