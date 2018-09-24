@@ -116,6 +116,7 @@ class ElasticsearchLoader(ElasticsearchBaseConsumer):
         self.es.index(
             index=index_name, doc_type=doc_type,
             body=transformed_message['payload'], id=object_id)
+        log.info('Sleeping!')
         time.sleep(0.2)
 
 
