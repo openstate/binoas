@@ -113,10 +113,11 @@ class ElasticsearchLoader(ElasticsearchBaseConsumer):
         doc_type = 'item'
         object_id = transformed_message['payload']['id']
 
-        self.es.index(
-            index=index_name, doc_type=doc_type,
-            body=transformed_message['payload'], id=object_id)
-        log.info('Sleeping!')
+        # FIXME: not actually saving for now, as it overflows ES for some reason
+        # self.es.index(
+        #     index=index_name, doc_type=doc_type,
+        #     body=transformed_message['payload'], id=object_id)
+        # FIXME: this does not help
         time.sleep(0.2)
 
 
