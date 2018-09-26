@@ -106,7 +106,6 @@ class ElasticsearchLoader(ElasticsearchBaseConsumer):
     """
     def output(self, transformed_message):
         logging.info('Should save to Elasticsearch now!')
-        logging.info(transformed_message)
 
         # Index documents into new index
         index_name = 'binoas_%s' % (transformed_message['application'],)
