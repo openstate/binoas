@@ -19,7 +19,7 @@ def main():
         level=logging.INFO)
 
     # config = load_config()
-    # session = setup_db(config)
+    # session = setup_db(config)()
     # print(session)
     # es = setup_elasticsearch(config)
 

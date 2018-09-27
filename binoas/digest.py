@@ -19,7 +19,7 @@ class Digest(ProducerMixin):
         self.config = config
         self.role = 'subfetcher'
         self.es = setup_elasticsearch(self.config)
-        self.db = setup_db(self.config)
+        self.db = setup_db(self.config)()
         self.init_producer()
 
     def _make_percolate_query(self, index_name, r):
@@ -136,3 +136,4 @@ class Digest(ProducerMixin):
             }
 
             self.produce_message(pl)
+        self.db.close()

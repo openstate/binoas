@@ -93,17 +93,18 @@ def new_post():
 @app.route("/subscriptions/new", methods=['POST'])
 @decode_json_post_data
 def new_subscription():
+    session = setup_db(app.config)()
     try:
         subscription = Subscription(request.data)
     except ValueError:
         raise BinoasError('Not a valid subscription payload', 400)
 
     try:
-        user, user_query = subscription.save()
+        user, user_query = subscription.save(session)
     except Exception as e:
         raise BinoasError('General error: %s' % (str(e),), 400)
 
-    return jsonify({
+    result = {
         'status': 'ok',
         'user': {
             'id': user.id,
@@ -111,7 +112,9 @@ def new_subscription():
         'query': {
             'id': user_query.query_id
         }
-    })
+    }
+    session.close()
+    return jsonify(result)
 
 
 @app.route("/subscriptions/delete", methods=['DELETE'])
@@ -119,7 +122,7 @@ def new_subscription():
 def delete_subscription():
     user_id = request.data['user_id']
     query_id = request.data['query_id']
-    session = setup_db(app.config)
+    session = setup_db(app.config)()
     es = setup_elasticsearch(app.config)
 
     uq = session.query(UserQueries).filter_by(
@@ -139,6 +142,8 @@ def delete_subscription():
     if num_users <= 0:
         es.delete(index='*', doc_type='queries', id=query_id)
 
+    session.close()
+
     return jsonify({
         'status': 'ok'
     })
@@ -147,15 +152,17 @@ def delete_subscription():
 @app.route("/subscriptions", methods=["GET"])
 @decode_json_post_data
 def list_subscriptions():
-    session = setup_db(app.config)
+    session = setup_db(app.config)()
     user_queries = session.query(UserQueries).filter_by(
         **request.args).all()
-    return jsonify({
+    results = {
         'meta': {
             'total': len(user_queries)
         },
         'results': [u.to_json() for u in user_queries]
-    })
+    }
+    session.close()
+    return jsonify(results)
 
 if __name__ == "__main__":
     app.run(threaded=True)

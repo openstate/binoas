@@ -157,7 +157,6 @@ class DatabaseBaseConsumer(Consumer):
     """
     def __init__(self, role, group=None):
         super().__init__(role, group)
-        self.db = setup_db(self.config)
 
 
 class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
@@ -167,6 +166,7 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
         logging.info('Found queries:')
         logging.info(query_ids)
 
+        self.db = setup_db(self.config)()
         user_queries = self.db.query(UserQueries).filter(
             UserQueries.query_id.in_(query_ids.keys())
         ).filter(
@@ -197,6 +197,8 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
                     }
                 }
             })
+
+        self.db.close()
         return result
 
     def output(self, transformed_message):

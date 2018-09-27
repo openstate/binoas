@@ -28,13 +28,12 @@ class Subscription(UserDict):
         ):
             raise ValueError('Not a valid subscription')
 
-    def save(self):
-        user = self.save_user()
-        query = self.save_query(user)
+    def save(self, session):
+        user = self.save_user(session)
+        query = self.save_query(user, session)
         return user, query
 
-    def save_user(self):
-        session = setup_db()
+    def save_user(self, session):
         user = session.query(User).filter_by(
             application=self['application'], email=self['email']).first()
         if user is None:
@@ -44,10 +43,10 @@ class Subscription(UserDict):
             )
             session.add(user)
             session.commit()
+        session
         return user
 
-    def save_query(self, user):
-        session = setup_db()
+    def save_query(self, user, session):
         es = setup_elasticsearch()
         es_query = self.build_query()
         es_id = hashlib.sha224(
