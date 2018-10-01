@@ -21,7 +21,7 @@ def decode_json_post_data(fn):
 
     @wraps(fn)
     def wrapped_function(*args, **kwargs):
-        if request.method == 'POST':
+        if request.method in ['POST', 'DELETE']:
             data = request.get_data(cache=False)
             if not data:
                 raise BinoasError('No data was POSTed', 400)
