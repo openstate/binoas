@@ -1,0 +1,47 @@
+{% extends "templates/default/index.html" %}
+
+{% block logo %}
+
+<img alt="header image" height="70" src="https://poliflw.nl/static/images/mstile-70x70.png" style="border:0;display:block;outline:none;text-decoration:none;width:100%;" width="70">
+
+{% endblock %}
+
+{% block documents %}
+
+{% for alert in payload.alerts %}
+<tr>
+  <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
+
+    <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
+      <h5>Nieuwe alerts voor '{{ alert.query.description }}':</h5>
+    </div>
+
+  </td>
+</tr>
+
+<tr>
+  <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
+
+    <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
+
+        {% for doc in alert.documents %}
+          <div style="margin-bottom: 10px;">
+          {% if doc.description %}
+            <h6>{{ doc.title }}</h6>
+            <p>{{ doc.description }}</p>
+          {% else %}
+            <p>{{ doc.title }}</p>
+          {% endif %}
+          </div>
+        {% endfor %}
+    </div>
+
+  </td>
+</tr>
+{% endfor %}
+
+{% endblock %}
+
+{% block after %}
+{{ payload }}
+{% endblock %}
