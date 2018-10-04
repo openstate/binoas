@@ -127,13 +127,11 @@ def delete_subscription():
 
     uq = session.query(UserQueries).filter_by(
         user_id=user_id, query_id=query_id).first()
-    if uq is None:
-        raise BinoasError('User query could not be found', 404)
-
-    # delete from the database first.
-    session.query(UserQueries).filter_by(
-        user_id=user_id, query_id=query_id).delete()
-    session.commit()
+    if uq is not None:
+        # delete from the database first.
+        session.query(UserQueries).filter_by(
+            user_id=user_id, query_id=query_id).delete()
+        session.commit()
 
     # now we need to find out if there are any user subscribed to this query
     # if not so, delete the query also.
