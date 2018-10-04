@@ -138,8 +138,14 @@ def delete_subscription():
     num_users = session.query(UserQueries).filter_by(
         query_id=query_id).count()
     if num_users <= 0:
-        es.delete_by_query(index='_all', doc_type='queries', q='_id:%s' % (
-            query_id,))
+        es.delete_by_query(index='_all', doc_type='queries', body={
+          "query": {
+            "term": {
+              "_id": query_id
+            }
+          }
+        })
+
 
     session.close()
 
