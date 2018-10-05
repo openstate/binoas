@@ -108,7 +108,7 @@ services:
       - binoas-mysql-volume:/var/lib/mysql
       - "./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
     restart: always
-  app:
+  app-binoas:
     build:
       context: .
       dockerfile: Dockerfile-app
