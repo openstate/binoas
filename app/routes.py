@@ -93,6 +93,7 @@ def new_post():
 @app.route("/subscriptions/new", methods=['POST'])
 @decode_json_post_data
 def new_subscription():
+    result = {}
     session = setup_db(app.config)()
     try:
         subscription = Subscription(request.data)
@@ -101,19 +102,21 @@ def new_subscription():
 
     try:
         user, user_query = subscription.save(session)
-    except Exception as e:
-        raise BinoasError('General error: %s' % (str(e),), 400)
-
-    result = {
-        'status': 'ok',
-        'user': {
-            'id': user.id,
-        },
-        'query': {
-            'id': user_query.query_id
+        result = {
+            'status': 'ok',
+            'user': {
+                'id': user.id,
+            },
+            'query': {
+                'id': user_query.query_id
+            }
         }
-    }
-    session.close()
+    except Exception as e:
+        session.rollback()
+        raise BinoasError('General error: %s' % (str(e),), 400)
+    finally:
+        session.close()
+
     return jsonify(result)
 
 
@@ -129,9 +132,13 @@ def delete_subscription():
         user_id=user_id, query_id=query_id).first()
     if uq is not None:
         # delete from the database first.
-        session.query(UserQueries).filter_by(
-            user_id=user_id, query_id=query_id).delete()
-        session.commit()
+        try:
+            session.query(UserQueries).filter_by(
+                user_id=user_id, query_id=query_id).delete()
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            raise BinoasError('General error: %s' % (str(e),), 400)
 
     # now we need to find out if there are any user subscribed to this query
     # if not so, delete the query also.
