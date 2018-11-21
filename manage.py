@@ -19,6 +19,7 @@ from elasticsearch.exceptions import NotFoundError
 
 from binoas.utils import load_config, parse_frequency
 from binoas.es import setup_elasticsearch
+from binoas.db import setup_db
 from binoas.digest import Digest
 
 
@@ -63,6 +64,11 @@ def elasticsearch():
 @cli.group()
 def digest():
     """Manage digests"""
+
+
+@cli.group()
+def database():
+    """Manage database"""
 
 
 @command('put_template')
@@ -138,11 +144,22 @@ def digest_make(frequency):
         sleep(5)
 
 
+@command('rollback')
+def database_rollback():
+    """
+    Do a database rollback.
+    """
+
+    config = load_config()
+    session = setup_db(config)
+    session.rollback()
+
 # Register commands explicitly with groups, so we can easily use the docstring
 # wrapper
 elasticsearch.add_command(es_put_template)
 elasticsearch.add_command(es_cleanup)
 digest.add_command(digest_make)
+database.add_command(database_rollback)
 
 if __name__ == '__main__':
     cli()
