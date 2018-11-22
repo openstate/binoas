@@ -238,11 +238,11 @@ class Mailer(Consumer):
 
         templater = Templater(self.config)
         content = templater.compile(transformed_message)
+        subject = templater.get_subject(transformed_message)
 
         send_mail(
-            self.config['binoas']['sendgrid']['api_key'],
-            '[%s] new alert' % (transformed_message['application'],),
-            content, [transformed_message['payload']['user']['email']])
+            self.config['binoas']['sendgrid']['api_key'], subject, content,
+            [transformed_message['payload']['user']['email']])
 
 
 def start_worker(argv, klass):
