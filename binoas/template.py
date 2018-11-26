@@ -38,7 +38,7 @@ class Templater:
         queries = [
             a['query']['description'] for a in message['payload']['alerts']]
 
-        if suffix != 'index':
+        if suffix == 'index':
             template = 'subject'
         else:
             template = '%s-subject' % (suffix,)
