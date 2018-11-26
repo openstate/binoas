@@ -230,15 +230,21 @@ class Mailer(Consumer):
             return
 
         if 'application' not in transformed_message:
-            logging.info('Discarding message (no valid application specification)')
+            logging.info(
+                'Discarding message (no valid application specification)')
             return
 
         logging.info('Should go and send an email to %s now!' % (
             transformed_message['payload']['user']['email'],))
 
+        if 'template' in transformed_message:
+            template = transformed_message['template']
+        else:
+            template = 'index'
+
         templater = Templater(self.config)
-        content = templater.compile(transformed_message)
-        subject = templater.get_subject(transformed_message)
+        content = templater.compile(transformed_message, template)
+        subject = templater.get_subject(transformed_message, template)
 
         send_mail(
             self.config['binoas']['sendgrid']['api_key'], subject, content,

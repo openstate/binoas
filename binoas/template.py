@@ -26,20 +26,21 @@ class Templater:
 
         return templ.render(ctx_vars)
 
-    def compile(self, message):
-        return self._render(
-            message, 'templates/default/index.html',
-            'templates/applications/%s.html')
+    def compile(self, message, suffix='index', vars={}):
+        default_template = 'templates/default/%s.html' % (suffix,)
+        if suffix == 'index':
+            app_template = 'templates/applications/%s.html'
+        else:
+            app_template = 'templates/applications/%%s.%s.html' % (suffix,)
+        return self._render(message, default_template, app_template, vars)
 
-    def compile_welcome(self, message):
-        return self._render(
-            message, 'templates/default/welcome.html',
-            'templates/applications/%s.welcome.html')
-
-    def get_subject(self, message):
+    def get_subject(self, message, suffix='index'):
         queries = [
             a['query']['description'] for a in message['payload']['alerts']]
 
-        return self._render(
-            message, 'templates/default/subject.html',
-            'templates/applications/%s.subject.html', {'queries': queries})
+        if suffix != 'index':
+            template = 'subject'
+        else:
+            template = '%s-subject' % (suffix,)
+
+        return self.compile(message, template, {'queries': queries})
