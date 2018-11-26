@@ -11,6 +11,8 @@ class Templater:
         application = message['application']
         payload = message['payload']
 
+        app_base_template = 'templates/applications/%s.html' % (application,)
+
         try:
             templ = self.jinja_env.get_template(app_template % (application,))
         except TemplateNotFound:
@@ -20,7 +22,8 @@ class Templater:
             'application': application,
             'app': self.config['binoas']['applications'][application],
             'payload': payload,
-            'config': self.config
+            'config': self.config,
+            'app_base_template': app_base_template
         }
         ctx_vars.update(vars)
 
