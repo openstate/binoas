@@ -13,6 +13,8 @@ from binoas.posts import Post
 from binoas.subscriptions import Subscription
 from binoas.mixins import ProducerMixin
 from binoas.models import UserQueries
+from binoas.template import Templater
+from binoas.mail import send_mail
 
 
 def decode_json_post_data(fn):
@@ -116,6 +118,34 @@ def new_subscription():
         raise BinoasError('General error: %s' % (str(e),), 400)
     finally:
         session.close()
+
+    transformed_message = {
+        'application': subscription['application'],
+        'payload': {
+            'alerts': [
+                {
+                    'query': {
+                        'id': user_query.query_id,
+                        'description': subscription['description']
+                    }
+                }
+            ],
+            'user': {
+                'id': user.id
+            }
+        }
+    }
+
+    try:
+        templater = Templater(app.config)
+        content = templater.compile(transformed_message, 'welcome')
+        subject = templater.get_subject(transformed_message, 'welcome')
+
+        send_mail(
+            app.config['binoas']['sendgrid']['api_key'], subject, content,
+            [subscription['email']])
+    except Exception as e:
+        raise BinoasError('General error upon mailing: %s' % (str(e),), 400)
 
     return jsonify(result)
 
