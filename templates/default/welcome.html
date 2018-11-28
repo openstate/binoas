@@ -8,7 +8,7 @@
   <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
 
     <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
-      <h5>Alert ingesteld voor '{{ alert.query.description }}':</h5>
+      <h5>{% if is_digest %}Verzamelde alert{% else %}Alert{% endif %} ingesteld voor '{{ alert.query.description }}':</h5>
     </div>
 
   </td>
@@ -18,7 +18,7 @@
   <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
 
     <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
-      <p>Om de ingestelde alert stop te zetten kunt u op de onderstaande link klikken.</p>
+      <p>Om de ingestelde {% if is_digest %}verzamelde{% endif %} alert stop te zetten kunt u op de onderstaande link klikken.</p>
     </div>
 
   </td>
