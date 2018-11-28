@@ -124,7 +124,8 @@ class Digest(ProducerMixin):
                         {
                             'query': {
                                 'id': u.query_id,
-                                'description': u.description
+                                'description': u.description,
+                                'frequency': u.frequency
                             },
                             'documents': queries[u.query_id]['documents']
                         } for u in uq],

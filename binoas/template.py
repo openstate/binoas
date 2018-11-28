@@ -18,12 +18,17 @@ class Templater:
         except TemplateNotFound:
             templ = self.jinja_env.get_template(default_template)
 
+        is_digest = False
+        for a in message['payload']['alerts']:
+            is_digest = is_digest or ('frequency' in a['query'])
+
         ctx_vars = {
             'application': application,
             'app': self.config['binoas']['applications'][application],
             'payload': payload,
             'config': self.config,
-            'app_base_template': app_base_template
+            'app_base_template': app_base_template,
+            'is_digest': is_digest
         }
         ctx_vars.update(vars)
 

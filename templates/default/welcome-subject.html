@@ -1,1 +1,1 @@
-[{{ app.name }}] Nieuwe alert aangemaakt voor {{ queries |join(', ') }}
+[{{ app.name }}] Nieuwe {% if is_digest %}verzamelde {% endif %}alert aangemaakt voor {{ queries |join(', ') }}
