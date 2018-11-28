@@ -126,7 +126,8 @@ def new_subscription():
                 {
                     'query': {
                         'id': user_query.query_id,
-                        'description': subscription['description']
+                        'description': subscription['description'],
+                        'frequency': user_query.frequency
                     }
                 }
             ],
