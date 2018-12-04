@@ -35,7 +35,7 @@
     <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
 
       <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#C21789;">
-        <h5><a href="https://www.poliflw.nl/l/{{ doc.location }}/{{ doc.parties[0] }}/{{ doc.id }}">{{ doc.title }}</a></h5>
+        <h5><a href="https://www.poliflw.nl/l/{{ doc.location }}/{{ doc }}/{{ doc.id }}">{{ doc.title }}</a></h5>
       </div>
 
     </td>
@@ -47,9 +47,9 @@
       <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
         <div style="margin-bottom: 10px;">
           <p>{{ doc.description }}</p>
+          <p>{{ doc }}</p>
         </div>
       </div>
-
     </td>
   </tr>
 {% endfor %}
