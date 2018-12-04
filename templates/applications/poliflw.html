@@ -29,25 +29,30 @@
   </td>
 </tr>
 
-<tr>
-  <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
+{% for doc in alert.documents %}
+  {% if doc.title %}
+  <tr>
+    <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
 
-    <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
+      <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#C21789;">
+        <h5><a href="https://www.poliflw.nl/l/{{ doc.location }}/{{ doc.parties[0] }}/{{ doc.id }}">{{ doc.title }}</a></h5>
+      </div>
 
-        {% for doc in alert.documents %}
-          <div style="margin-bottom: 10px;">
-          {% if doc.description %}
-            <h5><a href="{{ doc.url }}" target="_blank">{{ doc.title }}</a></h5>
-            <p>{{ doc.description }}</p>
-          {% else %}
-            <p>{{ doc.title }}</p>
-          {% endif %}
-          </div>
-        {% endfor %}
-    </div>
+    </td>
+  </tr>
+  {% endif %}
 
-  </td>
-</tr>
+  <tr>
+    <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
+      <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
+        <div style="margin-bottom: 10px;">
+          <p>{{ doc.description }}</p>
+        </div>
+      </div>
+
+    </td>
+  </tr>
+{% endfor %}
 
 <tr>
   <td align="center" vertical-align="middle" style="font-size:0px;padding:20px 0 0 0;word-break:break-word;">
