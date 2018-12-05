@@ -147,7 +147,7 @@ class ElasticsearchPercolator(ElasticsearchBaseConsumer):
             logging.error('General error invoking percolator:')
             logging.error(e)
             logging.error(message.value['payload'])
-            result = {'hits': {'total': 0}}
+            results = {'hits': {'total': 0}}
 
 
         if results['hits']['total'] > 0:
