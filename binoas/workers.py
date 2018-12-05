@@ -127,20 +127,28 @@ class ElasticsearchPercolator(ElasticsearchBaseConsumer):
     def transform(self, message):
         index_name = 'binoas_%s' % (message.value['application'],)
         doc_type = 'item'
-        results = self.es.search(index=index_name, body={
-            "query": {
-                "percolate": {
-                    "field": "query",
-                    "document_type": doc_type,
-                    "document": message.value['payload']
+
+        try:
+            results = self.es.search(index=index_name, body={
+                "query": {
+                    "percolate": {
+                        "field": "query",
+                        "document_type": doc_type,
+                        "document": message.value['payload']
+                    }
+                },
+                "highlight": {
+                    "fields": {
+                        "*": {}
+                    }
                 }
-            },
-            "highlight": {
-                "fields": {
-                    "*": {}
-                }
-            }
-        })
+            })
+        except Exception as e:
+            logging.error('General error invoking percolator:')
+            logging.error(e)
+            logging.error(message.value['payload'])
+            result = {'hits': {'total': 0}}
+
 
         if results['hits']['total'] > 0:
             return {
