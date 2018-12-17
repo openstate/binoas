@@ -1,3 +1,5 @@
+import importlib
+
 from jinja2 import Environment, FileSystemLoader
 from jinja2.exceptions import TemplateNotFound
 
@@ -9,6 +11,19 @@ class Templater:
         self.config = config
         self.jinja_env = Environment(loader=FileSystemLoader('.'))
         self.jinja_env.update(filter_functions())
+        for app in self.config['binoas']['applications'].keys():
+            try:
+                filters_module = importlib.import_module(
+                    'templates.filters.%s' % (app,))
+            except ModuleNotFoundError:
+                filters_module = None
+            try:
+                module_filters = getattr(filters_module, 'filter_functions')
+            except (TypeError, AttributeError) as e:
+                module_filters = None
+
+            if module_filters is not None:
+                self.jinja_env.update(module_filters())
 
     def _render(self, message, default_template, app_template, vars={}):
         application = message['application']
