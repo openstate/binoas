@@ -1,11 +1,14 @@
 from jinja2 import Environment, FileSystemLoader
 from jinja2.exceptions import TemplateNotFound
 
+from templates.filters import filter_functions
+
 
 class Templater:
     def __init__(self, config):
         self.config = config
         self.jinja_env = Environment(loader=FileSystemLoader('.'))
+        self.jinja_env.update(filter_functions())
 
     def _render(self, message, default_template, app_template, vars={}):
         application = message['application']
