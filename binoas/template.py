@@ -10,7 +10,7 @@ class Templater:
     def __init__(self, config):
         self.config = config
         self.jinja_env = Environment(loader=FileSystemLoader('.'))
-        self.jinja_env.update(filter_functions())
+        self.jinja_env.filters.update(filter_functions())
         for app in self.config['binoas']['applications'].keys():
             try:
                 filters_module = importlib.import_module(
