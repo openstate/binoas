@@ -3,7 +3,7 @@ from bleach.sanitizer import Cleaner
 from html5lib.filters.base import Filter
 
 
-def binoas_about():
+def binoas_about(s):
     return "binoas"
 
 
