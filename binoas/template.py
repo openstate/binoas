@@ -23,7 +23,7 @@ class Templater:
                 module_filters = None
 
             if module_filters is not None:
-                self.jinja_env.update(module_filters())
+                self.jinja_env.filters.update(module_filters())
 
     def _render(self, message, default_template, app_template, vars={}):
         application = message['application']
