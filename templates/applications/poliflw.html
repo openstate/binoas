@@ -30,21 +30,24 @@
 </tr>
 
 {% for doc in alert.documents %}
-  {% if doc.title %}
   <tr>
     <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
 
       <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#C21789;">
         <h5>
-          <a style="color: #C21789;" href="https://www.poliflw.nl/l/{% for i in doc.data %}{% if i.key == 'location' %}{{ i.value }}{% endif %}{% endfor %}/{% for i in doc.data %}{% if i.key == 'parties' %}{{ i.value }}{% endif %}{% endfor %}/{{ doc.id }}">
-            {% for i in doc.data %}{% if i.key == 'location' %}{{ i.value }}{% endif %}{% endfor %} : {% for i in doc.data %}{% if i.key == 'parties' %}{{ i.value }}{% endif %}{% endfor %} : {{ doc.title }}
+          <a style="color: #C21789;" href="https://www.poliflw.nl/l/{{ doc |poliflw_first_for_key('location') }}/{{ doc |poliflw_first_for_key('parties') }}/{{ doc.id }}">
+            {{ doc |poliflw_first_for_key('location') }} : {{ doc |poliflw_first_for_key('parties') }}
+            {% if doc.title %}
+            : {{ doc.title }} &rarr;
+            {% else %}
+            &rarr;
+            {% endif %}
           </a>
         </h5>
       </div>
 
     </td>
   </tr>
-  {% endif %}
 
   {% if doc.description %}
   <tr>
