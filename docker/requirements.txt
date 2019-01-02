@@ -12,7 +12,7 @@ sendgrid==5.6.0
 bleach
 html5lib
 
-# Dependencies installed by the packages above
+pyt# Dependencies installed by the packages above
 certifi==2018.1.18
 chardet==3.0.4
 click==6.7

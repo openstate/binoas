@@ -8,7 +8,7 @@ def binoas_about(s):
 
 
 def allow_src(tag, name, value):
-    if (tag == 'img') and (name in ('alt', 'height', 'width', 'src')):
+    if (tag == 'img') and (name in ('alt', 'src')):
         return True
     if (tag == 'a') and (name in ('href')):
         return True
@@ -29,7 +29,9 @@ def do_html_cleanup(s, result):
         tags=TAGS, attributes=ATTRS, filters=[Filter], strip=True)
     try:
         return cleaner.clean(s).replace(
-            '<img ', '<img class="img-responsive" ').replace('&amp;nbsp;', '')
+            '<img ',
+            '<img style="border:0;display:block;outline:none;text-decoration:none;width:100%;" '
+        ).replace('&amp;nbsp;', '')
     except TypeError:
         return u''
 
