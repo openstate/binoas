@@ -17,7 +17,7 @@ RUN sed -i -e 's/# nl_NL.UTF-8 UTF-8/nl_NL.UTF-8 UTF-8/' /etc/locale.gen \
 WORKDIR /opt/binoas
 RUN pip install --upgrade pip
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 ENV FLASK_APP=website.py
 CMD uwsgi --socket 0.0.0.0:5000 --touch-reload=uwsgi-touch-reload --processes 8 -w website:app
