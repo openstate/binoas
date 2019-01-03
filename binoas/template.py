@@ -38,7 +38,10 @@ class Templater:
 
         is_digest = False
         for a in message['payload']['alerts']:
-            is_digest = is_digest or ('frequency' in a['query'])
+            is_digest = is_digest or (
+                ('frequency' in a['query']) and
+                (a['query']['frequency'] is not None) and
+                (a['query']['frequency'] != ''))
 
         ctx_vars = {
             'application': application,
