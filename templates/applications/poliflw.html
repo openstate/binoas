@@ -36,9 +36,9 @@
       <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#C21789;">
         <h5>
           <a style="color: #C21789;" href="https://www.poliflw.nl/l/{{ doc |poliflw_first_for_key('location') }}/{{ doc |poliflw_first_for_key('parties') }}/{{ doc.id }}">
-            {{ doc |poliflw_first_for_key('location') }} : {{ doc |poliflw_first_for_key('parties') }}
+            {{ doc |poliflw_first_for_key('parties') }} {{ doc |poliflw_first_for_key('location') }}
             {% if doc.title %}
-            : {{ doc.title }} &rarr;
+            - {{ doc.title }} &rarr;
             {% else %}
             &rarr;
             {% endif %}
