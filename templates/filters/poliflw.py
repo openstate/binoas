@@ -7,8 +7,8 @@ def first_for_key(doc, key):
 
 
 def party_and_location(doc):
-    party = first_for_key('parties')
-    location = first_for_key('location')
+    party = first_for_key(doc, 'parties')
+    location = first_for_key(doc, 'location')
 
     if location is not None:
         if location in party:
