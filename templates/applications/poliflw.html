@@ -39,8 +39,6 @@
               {{ doc |poliflw_party_and_location }}
               {% if doc.title %}
               - {{ doc.title }}
-              {% else %}
-              &rarr;
               {% endif %}
             </a>
           </td>
@@ -74,7 +72,7 @@
     <td align="center" vertical-align="middle" style="font-size:0px;padding:4px 0 0 0;word-break:break-word;">
       <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
         <tr>
-          <td align="center" bgcolor="#C21789" role="presentation" style="border:none;border-radius:3px;cursor:auto;padding:4px 10px;" valign="middle">
+          <td align="center" bgcolor="#0a91a6" role="presentation" style="border:none;border-radius:3px;cursor:auto;padding:4px 10px;" valign="middle">
             <a href="https://www.poliflw.nl/l/{{ doc |poliflw_first_for_key('location') }}/{{ doc |poliflw_first_for_key('parties') }}/{{ doc.id }}" style="background: #C21789; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; line-height: 120%; Margin: 0; text-transform: none; text-decoration: none; color: white;" target="_blank">
               Bericht lezen op Poliflw
             </a>
@@ -87,10 +85,10 @@
 {% endfor %}
 
 <tr>
-  <td align="center" vertical-align="middle" style="font-size:0px;padding:20px 0 20px 0;word-break:break-word;">
+  <td align="center" vertical-align="middle" style="font-size:0px;padding:20px 0 20px 0;word-break:break-word;width: 100%;">
     <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
       <tr>
-        <td align="center" bgcolor="#C21789" role="presentation" style="border:none;border-radius:3px;cursor:auto;padding:4px 10px;" valign="middle">
+        <td align="center" role="presentation" style="border:none;border-radius:3px;cursor:auto;padding:4px 10px;" valign="middle">
           <hr>
         </td>
       </tr>
