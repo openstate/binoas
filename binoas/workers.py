@@ -112,10 +112,12 @@ class ElasticsearchLoader(ElasticsearchBaseConsumer):
         doc_type = 'item'
         object_id = transformed_message['payload']['id']
 
-        # FIXME: not actually saving for now, as it overflows ES for some reason
-        self.es.index(
-            index=index_name, doc_type=doc_type,
-            body=transformed_message['payload'], id=object_id)
+        try:
+            self.es.index(
+                index=index_name, doc_type=doc_type,
+                body=transformed_message['payload'], id=object_id)
+        except Exception as e:
+            logging.error(e)
         # FIXME: this does not help
         # time.sleep(0.2)
 
