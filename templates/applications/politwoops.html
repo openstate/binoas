@@ -1,5 +1,11 @@
 {% extends "templates/default/index.html" %}
 
+{% block logo %}
+
+<img alt="header image" height="70" src="https://politwoops.eu/images/politwoops/logo-only.png" style="border:0;display:block;outline:none;text-decoration:none;width:100%;" width="70">
+
+{% endblock %}
+
 {% block documents %}
 
 {% for alert in payload.alerts %}
@@ -13,25 +19,57 @@
   </td>
 </tr>
 
-<tr>
-  <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
-
-    <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
-
         {% for doc in alert.documents %}
-          <div style="margin-bottom: 10px;">
-          {% if doc.description %}
-            <h6>{{ doc.title }}</h6>
-            <p>{{ doc.description }}</p>
-          {% else %}
-            <p>{{ doc.title }}</p>
-          {% endif %}
-          </div>
-        {% endfor %}
-    </div>
+        <tr>
+          <td align="center" vertical-align="middle" style="font-size:0px;padding:20px 0 0 0;word-break:break-word;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;width:100%;">
+              <tr>
+                <td align="center" bgcolor="#C21789" role="presentation" style="border:none;border-radius:3px;cursor:auto;padding:10px 25px;" valign="middle">
+                  <a href="https://www.politwoops.com/tweet/{{ doc.id }}" style="background: #C21789; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; line-height: 120%; Margin: 0; text-transform: none; text-decoration: none; color: white;" target="_blank">
+                    {{ doc |poliflw_first_for_key('user_name') }}:
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
 
-  </td>
-</tr>
+        <tr>
+          <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
+
+            <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#C21789;">
+            </div>
+
+          </td>
+        </tr>
+
+        {% if doc.description %}
+        <tr>
+          <td align="left" style="font-size:0px;padding:0 25px;word-break:break-word;">
+            <div style="font-family:Montserrat,sans-serif;font-size:14px;line-height:1;text-align:left;color:#000000;">
+              <div style="margin-bottom: 10px;">
+                <p>{{ doc.description }}</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {% endif %}
+
+        <tr>
+          <td align="center" vertical-align="middle" style="font-size:0px;padding:4px 0 0 0;word-break:break-word;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+              <tr>
+                <td align="center" bgcolor="#0a91a6" role="presentation" style="border:none;border-radius:3px;cursor:auto;padding:4px 10px;" valign="middle">
+                  <a href="https://www.politwoops.com/tweet/{{ doc.id }}" style="background: #0a91a6; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; line-height: 120%; Margin: 0; text-transform: none; text-decoration: none; color: white;" target="_blank">
+                    View deleted tweet on {{ app.name }}
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        {% endfor %}
+
 {% endfor %}
 
 {% endblock %}

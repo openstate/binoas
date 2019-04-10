@@ -36,8 +36,17 @@ def do_html_cleanup(s, result):
         return u''
 
 
+def first_for_key(doc, key):
+    try:
+        result = [x.get('value', None) for x in doc.get('data', []) if x.get('key', '') == key][0]
+    except LookupError:
+        result = None
+    return result
+
+
 def filter_functions():
     return {
         'binoas': binoas_about,
-        'binoas_html_clean': do_html_cleanup
+        'binoas_html_clean': do_html_cleanup,
+        'binoas_first_for_key': first_for_key
     }
