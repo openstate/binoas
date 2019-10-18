@@ -1,5 +1,5 @@
 # Packages directly required by the application
-Flask==0.12.2
+Flask==1.0
 Flask-SQLAlchemy==2.3.2
 pytz==2017.3
 uWSGI==2.0.15
