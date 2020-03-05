@@ -21,6 +21,7 @@ from binoas.utils import load_config, parse_frequency
 from binoas.es import setup_elasticsearch
 from binoas.db import setup_db
 from binoas.digest import Digest
+from binoas.transformers import JSONPathPostTransformer
 
 
 logging.basicConfig(
@@ -69,6 +70,10 @@ def digest():
 @cli.group()
 def database():
     """Manage database"""
+
+@cli.group()
+def transform():
+    """Transform documents (for testing)"""
 
 
 @command('put_template')
@@ -154,12 +159,29 @@ def database_rollback():
     session = setup_db(config)
     session.rollback()
 
+@command('json')
+@click.option('--json_file', default='mappings/template.json',
+              type=click.File('rb'), help='Path to JSON file containing the message.')
+def transform_json(json_file):
+    """
+    Transform an incoming json document according to the contents.
+    """
+
+    config = load_config()
+    template = json.load(json_file)
+    json_file.close()
+
+    trf = JSONPathPostTransformer(config)
+    res = trf.transform(template)
+    print(res)
+
 # Register commands explicitly with groups, so we can easily use the docstring
 # wrapper
 elasticsearch.add_command(es_put_template)
 elasticsearch.add_command(es_cleanup)
 digest.add_command(digest_make)
 database.add_command(database_rollback)
+transform.add_command(transform_json)
 
 if __name__ == '__main__':
     cli()
