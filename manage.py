@@ -173,7 +173,7 @@ def transform_json(json_file):
 
     trf = JSONPathPostTransformer(config)
     res = trf.transform(template)
-    print(res)
+    print(json.dumps(res))
 
 # Register commands explicitly with groups, so we can easily use the docstring
 # wrapper
