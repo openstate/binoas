@@ -86,7 +86,7 @@
           "type": "keyword"
         },
         "data": {
-          "type": "object",
+          "type": "nested",
           "properties": {
             "key": {
               "type": "keyword"
