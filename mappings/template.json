@@ -93,7 +93,12 @@
             },
             "value": {
               "type": "text",
-              "analyzer": "text_nl"
+              "analyzer": "text_nl",
+              "fields": {
+                "raw": {
+                  "type": "keyword"
+                }
+              }
             }
           }
         }
