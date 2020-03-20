@@ -251,7 +251,8 @@ class Mailer(Consumer):
             template = transformed_message['template']
         else:
             template = 'index'
-
+        logging.info('Using template %s for app %s' % (
+            template, transformed_message['application']))
         templater = Templater(self.config)
         content = templater.compile(transformed_message, template)
         subject = templater.get_subject(transformed_message, template)

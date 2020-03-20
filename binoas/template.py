@@ -1,4 +1,5 @@
 import importlib
+import logging
 
 from jinja2 import Environment, FileSystemLoader
 from jinja2.exceptions import TemplateNotFound
@@ -30,7 +31,8 @@ class Templater:
         payload = message['payload']
 
         app_base_template = 'templates/applications/%s.html' % (application,)
-
+        logging.info('Using base template %s for app %s' % (
+            app_base_template, application,))
         try:
             templ = self.jinja_env.get_template(app_template % (application,))
         except TemplateNotFound:
