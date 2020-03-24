@@ -44,7 +44,7 @@ def first_for_key(doc, key):
     return result
 
 def split(s, c):
-    return s.plit(c)
+    return s.split(c)
 
 def filter_functions():
     return {
