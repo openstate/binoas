@@ -5,8 +5,12 @@ def first_for_key(doc, key):
         result = None
     return result
 
+def all_alerts(payload):
+    return [
+        '"%s"' % (a['query']['description'],) for a in payload['alerts']].join(", ")
 
 def filter_functions():
     return {
-        'poliscoops_first_for_key': first_for_key
+        'poliscoops_first_for_key': first_for_key,
+        'poliscoops_all_alerts': all_alerts
     }
