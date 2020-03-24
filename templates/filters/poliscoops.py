@@ -6,8 +6,8 @@ def first_for_key(doc, key):
     return result
 
 def all_alerts(payload):
-    return [
-        '"%s"' % (a['query']['description'],) for a in payload['alerts']].join(", ")
+    return u", ".join([
+        '"%s"' % (a['query']['description'],) for a in payload['alerts']])
 
 def filter_functions():
     return {
