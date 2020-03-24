@@ -218,9 +218,11 @@ class DatabaseSubscriberFetcher(DatabaseBaseConsumer):
         """
 
         if transformed_message is None:
+            logging.info('Transformed message is empty')
             return
 
         if self.producer is not None:
+            logging.info('Producing now')
             for r in transformed_message:
                 for t in self.topics_out:
                     if 'user' in r:
