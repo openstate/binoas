@@ -43,10 +43,13 @@ def first_for_key(doc, key):
         result = None
     return result
 
+def split(s, c):
+    return s.plit(c)
 
 def filter_functions():
     return {
         'binoas': binoas_about,
         'binoas_html_clean': do_html_cleanup,
-        'binoas_first_for_key': first_for_key
+        'binoas_first_for_key': first_for_key,
+        'split': split
     }

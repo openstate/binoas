@@ -1,0 +1,85 @@
+<mjml>
+  <mj-head>
+    <mj-title>New alerts for {{[a['query']['description'] for a in payload.alerts] |join(", ") }}</mj-title>
+    <mj-preview>You have several new alerts</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="'Open Sans', Helvetica, Arial, sans-serif"></mj-all>
+      <mj-text font-weight="400" font-size="16px" color="#000000" line-height="24px" font-family="'Open Sans', Helvetica, Arial, sans-serif"></mj-text>
+    </mj-attributes>
+    <mj-style inline="inline">
+      @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+      .body-section { }
+    </mj-style>
+    <mj-style inline="inline">
+      .text-link { color: #E1383A; }
+    </mj-style>
+    <mj-style inline="inline">
+      .footer-link { color: #888888 }
+      .header-link { color: #0603a6; text-decoration: none;}
+    </mj-style>
+
+  </mj-head>
+  <mj-body background-color="#ebf3f7" width="600px">
+    <mj-section full-width="full-width" background-url="https://poliscoops.com/static/images/local-news-bg-2x.png" padding-bottom="0">
+    </mj-section>
+    <mj-section background-color="#ffffff">
+      <mj-column width="100%">
+                <mj-image src="https://www.poliscoops.com/static/dist/images/logo-desktop.png" alt="" align="left" width="150px" />
+      </mj-column>
+    </mj-section>
+    <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
+      <mj-section background-url="https://poliscoops.com/static/images/bg-alt-2.png" padding-left="0px" padding-right="0px">
+        <mj-column width="100%">
+          <mj-text color="#ffffff" font-weight="bold" font-size="20px">
+            Alerts for "lockdown"
+          </mj-text>
+         </mj-column>
+        </mj-section>
+      <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
+        <mj-column width="100%">
+          <mj-text color="#0603a6" font-size="20px" font-weight="bold">
+            <a class="header-link" href="https://google.com">PVV wants clear temporary lockdown, not chaos!</a>
+          </mj-text>
+          <mj-text color="#0603a6" font-size="16px">
+           People don't understand the complicated press conference of four ministers at once.
+
+            It's out there, but not together, but kids do play outside together? No more meetings among 100 people but school exams? PVV wants clear temporary #lockdown, no chaos!— Geert Wilders (@geertwilderspvv) March 23, 2020
+          </mj-text>
+          <mj-text align="right"><a class="text-link" href="https://google.com">Read more &gt;</a></mj-text>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+
+    <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
+      <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
+        <mj-column width="100%">
+          <mj-divider border-color="#005"></mj-divider>
+          <mj-button background-color="#E1383A" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://google.com" width="300px">
+            Unsubscribe
+          </mj-button>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+
+        <mj-wrapper full-width="full-width">
+      <mj-section>
+        <mj-column width="100%" padding="0">
+          <mj-text color="#445566" font-size="11px" align="center" line-height="16px">
+            You are receiving this email advertisement because you registered with Poliscoops. (Kattenburgerstraat 5, 1018 JA, Amsterdam, The Nertherlands) and agreed to receive emails from us regarding keyword alerts.
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section padding-top="0">
+        <mj-group>
+          <mj-column width="100%" padding-right="0">
+            <mj-text color="#445566" font-size="11px" align="center" line-height="16px" font-weight="bold">
+              <a class="footer-link" href="https://www.google.com">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://www.google.com">Unsubscribe</a>
+            </mj-text>
+          </mj-column>
+        </mj-group>
+
+      </mj-section>
+    </mj-wrapper>
+
+  </mj-body>
+</mjml>
