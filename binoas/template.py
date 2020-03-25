@@ -31,8 +31,8 @@ class Templater:
         payload = message['payload']
 
         app_base_template = 'templates/applications/%s.html' % (application,)
-        logging.info('Using base template %s for app %s' % (
-            app_base_template, application,))
+        logging.info('Using template %s (or %s) for app %s' % (
+            app_template, app_base_emplate, application,))
         try:
             templ = self.jinja_env.get_template(app_template % (application,))
         except TemplateNotFound:
@@ -58,6 +58,7 @@ class Templater:
         return templ.render(ctx_vars)
 
     def compile(self, message, suffix='index', vars={}):
+        loggng.ifo('Compiling for suffix %s' % (suffix,))
         default_template = 'templates/default/%s.html' % (suffix,)
         if suffix == 'index':
             app_template = 'templates/applications/%s.html'
