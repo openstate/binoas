@@ -32,7 +32,7 @@ class Templater:
 
         app_base_template = 'templates/applications/%s.html' % (application,)
         logging.info('Using template %s (or %s) for app %s' % (
-            app_template, app_base_emplate, application,))
+            app_template, app_base_template, application,))
         try:
             templ = self.jinja_env.get_template(app_template % (application,))
         except TemplateNotFound:
