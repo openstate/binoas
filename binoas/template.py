@@ -58,7 +58,7 @@ class Templater:
         return templ.render(ctx_vars)
 
     def compile(self, message, suffix='index', vars={}):
-        loggng.ifo('Compiling for suffix %s' % (suffix,))
+        logging.info('Compiling for suffix %s' % (suffix,))
         default_template = 'templates/default/%s.html' % (suffix,)
         if suffix == 'index':
             app_template = 'templates/applications/%s.html'
