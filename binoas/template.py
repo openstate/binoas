@@ -32,7 +32,7 @@ class Templater:
 
         app_base_template = 'templates/applications/%s.html' % (application,)
         logging.info('Using template %s (or %s) for app %s' % (
-            app_template, app_base_template, application,))
+            app_template % (application,), app_base_template, application,))
         try:
             templ = self.jinja_env.get_template(app_template % (application,))
         except TemplateNotFound:
@@ -63,7 +63,7 @@ class Templater:
         if suffix == 'index':
             app_template = 'templates/applications/%s.html'
         else:
-            app_template = 'templates/applications/%%s.%s.html' % (suffix,)
+            app_template = 'templates/applications/%s.%%s.html' % (suffix,)
         return self._render(message, default_template, app_template, vars)
 
     def get_subject(self, message, suffix='index'):
