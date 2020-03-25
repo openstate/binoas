@@ -81,7 +81,7 @@
 </head>
 
 <body style="background-color:#ebf3f7;">
-  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;"> You have several new alerts </div>
+  <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;"> You have created a new alert</div>
   <div style="background-color:#ebf3f7;">
     <table align="center" background="https://poliscoops.com/static/images/local-news-bg-2x.png" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:url(https://poliscoops.com/static/images/local-news-bg-2x.png) top center / auto repeat;width:100%;">
       <tbody>
@@ -233,7 +233,7 @@
                             <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                               <tr>
                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                  <div style="font-family:'Open Sans', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#ffffff;">Alerts for '{{ alert.query.description }}':</div>
+                                  <div style="font-family:'Open Sans', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#ffffff;">New alerts created for '{{ alert.query.description }}'</div>
                                 </td>
                               </tr>
                             </table>
@@ -292,26 +292,8 @@
                           <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                             <tr>
                               <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <div style="font-family:'Open Sans', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#0603a6;">
-                                  <a class="header-link" href="https://www.poliscoops.com/Note/{{ doc.id |split('/') |last }}" style="color: #0603a6; text-decoration: none;">
-                                    {{ doc |poliscoops_first_for_key('nameMap.en') }}
-                                  </a>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                 <div style="font-family:'Open Sans', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#0603a6;">
-                                  <p>{{ doc |poliscoops_first_for_key('contentMap.en') |binoas_html_clean(doc) |safe }}</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="right" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <div style="font-family:'Open Sans', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:right;color:#000000;">
-                                  <a class="text-link" href="https://www.poliscoops.com/Note/{{ doc.id |split('/') |last }}" style="color: #E1383A;">
-                                    Read more &gt;
-                                  </a>
+                                  <p>Thank you for creating a new alert. If at any point you wish to stop this alert you can click the button below.</p>
                                 </div>
                               </td>
                             </tr>
