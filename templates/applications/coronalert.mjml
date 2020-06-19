@@ -3,49 +3,55 @@
     <mj-title>New alerts for {{[a['query']['description'] for a in payload.alerts] |join(", ") }}</mj-title>
     <mj-preview>You have several new alerts</mj-preview>
     <mj-attributes>
-      <mj-all font-family="'Open Sans', Helvetica, Arial, sans-serif"></mj-all>
-      <mj-text font-weight="400" font-size="16px" color="#000000" line-height="24px" font-family="'Open Sans', Helvetica, Arial, sans-serif"></mj-text>
+      <mj-all font-family="'Roboto', Helvetica, Arial, sans-serif"></mj-all>
+      <mj-text font-weight="400" font-size="16px" color="#000000" line-height="24px" font-family="'Roboto', Helvetica, Arial, sans-serif"></mj-text>
     </mj-attributes>
     <mj-style inline="inline">
-      @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+      @import url('https://fonts.googleapis.com/css?family=Roboto');
+      @import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
       .body-section { }
     </mj-style>
     <mj-style inline="inline">
-      .text-link { color: #E1383A; }
+      .text-link { color: #FFFFFF; background-color: #0773A1; padding: 1em;  text-decoration: none;  }
     </mj-style>
     <mj-style inline="inline">
       .footer-link { color: #888888 }
-      .header-link { color: #0603a6; text-decoration: none;}
+      .header-link { color: #092D36; text-decoration: none;}
+      .header-banner { opacity: 0.7; }
     </mj-style>
 
   </mj-head>
-  <mj-body background-color="#ebf3f7" width="600px">
-    <mj-section full-width="full-width" background-url="https://poliscoops.com/static/images/local-news-bg-2x.png" padding-bottom="0">
+  <mj-body background-color="#F3F7F7" width="600px">
+    <mj-section full-width="full-width" background-url="https://coronalert.nl/static/images/AdobeStock_336052008@2x.png" padding-bottom="0">
     </mj-section>
     <mj-section background-color="#ffffff">
       <mj-column width="100%">
-                <mj-image src="https://www.poliscoops.com/static/dist/images/logo-desktop.png" alt="" align="left" width="150px" />
+                <mj-image src="https://coronalert.nl/static/dist/images/logo-desktop.png" alt="" align="left" width="150px" />
       </mj-column>
     </mj-section>
     <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
-      <mj-section background-url="https://poliscoops.com/static/images/bg-alt-2.png" padding-left="0px" padding-right="0px">
+      <mj-section background-url="https://coronalert.nl/static/images/AdobeStock_336052008@2x.png" padding-left="0px" padding-right="0px" css-class="header-banner">
         <mj-column width="100%">
-          <mj-text color="#ffffff" font-weight="bold" font-size="20px">
-            Alerts for "lockdown"
+          <mj-text color="#ED1D24" font-weight="bold" font-size="20px">
+            Alert voor "lockdown"
           </mj-text>
          </mj-column>
         </mj-section>
       <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
         <mj-column width="100%">
-          <mj-text color="#0603a6" font-size="20px" font-weight="bold">
+          <mj-text color="#092D36" font-size="20px" font-weight="bold">
             <a class="header-link" href="https://google.com">PVV wants clear temporary lockdown, not chaos!</a>
           </mj-text>
-          <mj-text color="#0603a6" font-size="16px">
+          <mj-text color="#092D36" font-size="16px">
            People don't understand the complicated press conference of four ministers at once.
 
             It's out there, but not together, but kids do play outside together? No more meetings among 100 people but school exams? PVV wants clear temporary #lockdown, no chaos!— Geert Wilders (@geertwilderspvv) March 23, 2020
           </mj-text>
-          <mj-text align="right"><a class="text-link" href="https://google.com">Read more &gt;</a></mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section background-color="#C9E9FB" padding-left="0px" padding-right="0px">
+        <mj-column width="100%">
+          <mj-text align="right"><a class="text-link" href="https://google.com">Lees verder &gt;</a></mj-text>
         </mj-column>
       </mj-section>
     </mj-wrapper>
@@ -53,9 +59,9 @@
     <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
       <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
         <mj-column width="100%">
-          <mj-divider border-color="#005"></mj-divider>
-          <mj-button background-color="#E1383A" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://google.com" width="300px">
-            Unsubscribe
+          <mj-divider border-color="#092D36"></mj-divider>
+          <mj-button background-color="#ED1D24" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://google.com" width="300px">
+            Uitzetten
           </mj-button>
         </mj-column>
       </mj-section>
@@ -65,7 +71,7 @@
       <mj-section>
         <mj-column width="100%" padding="0">
           <mj-text color="#445566" font-size="11px" align="center" line-height="16px">
-            You are receiving this email advertisement because you registered with Poliscoops. (Kattenburgerstraat 5, 1018 JA, Amsterdam, The Nertherlands) and agreed to receive emails from us regarding keyword alerts.
+           Je krijgt deze email omdat je hebt geabonneerd op CoronAlert en je hebt aangegeven emails over corona updates te willen krijgen. (Kattenburgerstraat 5, 1018 JA, Amsterdam, Nederland) .
           </mj-text>
         </mj-column>
       </mj-section>
@@ -73,7 +79,7 @@
         <mj-group>
           <mj-column width="100%" padding-right="0">
             <mj-text color="#445566" font-size="11px" align="center" line-height="16px" font-weight="bold">
-              <a class="footer-link" href="https://www.google.com">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://www.google.com">Unsubscribe</a>
+              <a class="footer-link" href="https://www.google.com">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://www.google.com">Uitzetten</a>
             </mj-text>
           </mj-column>
         </mj-group>
