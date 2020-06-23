@@ -14,4 +14,4 @@ echo "Everything correct!"
 MJML_API_BASE_URL="https://api.mjml.io/v1"
 
 MJML_CONTENTS=$(jq -Rs '{mjml: .}' $1)
-curl -s -XPOST --basic -u "$MJML_APP_ID:$MJML_SECRET_KEY" "$MJML_API_BASE_URL/render" -d "$MJML_CONTENTS" |jq -r '.html'
+curl -s -XPOST --basic -u "$MJML_APP_ID:$MJML_SECRET_KEY" "$MJML_API_BASE_URL/render" -d "$MJML_CONTENTS" |jq -r 'if .html then .html else "" end'
