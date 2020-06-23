@@ -1,7 +1,7 @@
 <mjml>
   <mj-head>
-    <mj-title>New alerts for {{[a['query']['description'] for a in payload.alerts] |join(", ") }}</mj-title>
-    <mj-preview>You have several new alerts</mj-preview>
+    <mj-title>Nieuwe alerts voor {{[a['query']['description'] for a in payload.alerts] |join(", ") }}</mj-title>
+    <mj-preview>Je hebt een nieuwe alert</mj-preview>
     <mj-attributes>
       <mj-all font-family="'Roboto', Helvetica, Arial, sans-serif"></mj-all>
       <mj-text font-weight="400" font-size="16px" color="#000000" line-height="24px" font-family="'Roboto', Helvetica, Arial, sans-serif"></mj-text>
@@ -30,41 +30,45 @@
       </mj-column>
     </mj-section>
     <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
+    {% for alert in payload.alerts %}
       <mj-section background-url="https://coronalert.nl/static/images/AdobeStock_336052008@2x.png" padding-left="0px" padding-right="0px" css-class="header-banner">
         <mj-column width="100%">
           <mj-text color="#ED1D24" font-weight="bold" font-size="20px">
-            Alert voor "lockdown"
+            Alert voor "{{ alert.query.description}}"
           </mj-text>
          </mj-column>
         </mj-section>
+      {% for doc in alert.documents %}
       <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
         <mj-column width="100%">
           <mj-text color="#092D36" font-size="20px" font-weight="bold">
-            <a class="header-link" href="https://google.com">PVV wants clear temporary lockdown, not chaos!</a>
+            <a class="header-link" href="https://google.com">{{ doc |poliscoops_first_for_key('nameMap.nl') }}</a>
           </mj-text>
           <mj-text color="#092D36" font-size="16px">
-           People don't understand the complicated press conference of four ministers at once.
-
-            It's out there, but not together, but kids do play outside together? No more meetings among 100 people but school exams? PVV wants clear temporary #lockdown, no chaos!— Geert Wilders (@geertwilderspvv) March 23, 2020
+            {{ doc |poliscoops_first_for_key('contentMap.nl') |binoas_html_clean(doc) |safe }}
           </mj-text>
         </mj-column>
       </mj-section>
       <mj-section background-color="#C9E9FB" padding-left="0px" padding-right="0px">
         <mj-column width="100%">
-          <mj-text align="right"><a class="text-link" href="https://google.com">Lees verder &gt;</a></mj-text>
+          <mj-text align="right"><a class="text-link" href="https://www.coronalert.nl/Note/{{ doc.id |split('/') |last }}">Lees verder &gt;</a></mj-text>
         </mj-column>
       </mj-section>
+      {% endfor %}
+    {% endfor %}
     </mj-wrapper>
 
     <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
+      {% for alert in payload.alerts %}
       <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
         <mj-column width="100%">
           <mj-divider border-color="#092D36"></mj-divider>
-          <mj-button background-color="#ED1D24" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://google.com" width="300px">
+          <mj-button background-color="#ED1D24" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://wwww.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}" width="300px">
             Uitzetten
           </mj-button>
         </mj-column>
       </mj-section>
+      {% endfor %}
     </mj-wrapper>
 
         <mj-wrapper full-width="full-width">
@@ -76,14 +80,15 @@
         </mj-column>
       </mj-section>
       <mj-section padding-top="0">
+        {% for alert in payload.alerts %}
         <mj-group>
           <mj-column width="100%" padding-right="0">
             <mj-text color="#445566" font-size="11px" align="center" line-height="16px" font-weight="bold">
-              <a class="footer-link" href="https://www.google.com">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://www.google.com">Uitzetten</a>
+              <a class="footer-link" href="https://www.coronalert.nl/">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://wwww.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}">Uitzetten</a>
             </mj-text>
           </mj-column>
         </mj-group>
-
+        {% endfor %}
       </mj-section>
     </mj-wrapper>
 

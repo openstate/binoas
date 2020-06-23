@@ -3,7 +3,7 @@
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
       <head>
         <title>
-          New alerts for {{[a['query']['description'] for a in payload.alerts] |join(", ") }}
+          Nieuwe alerts voor {{[a['query']['description'] for a in payload.alerts] |join(", ") }}
         </title>
         <!--[if !mso]><!-- -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -63,7 +63,7 @@
       <body style="background-color:#F3F7F7;">
         
     <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
-      You have several new alerts
+      Je hebt een nieuwe alert
     </div>
   
         
@@ -252,7 +252,7 @@
             <tr>
               <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                 
-      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#ED1D24;">Alert voor "lockdown"</div>
+      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#ED1D24;">Alert voor "{{ alert.query.description}}"</div>
     
               </td>
             </tr>
@@ -322,7 +322,7 @@
             <tr>
               <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                 
-      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#092D36;"><a class="header-link" href="https://google.com" style="color: #092D36; text-decoration: none;">PVV wants clear temporary lockdown, not chaos!</a></div>
+      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#092D36;"><a class="header-link" href="https://google.com" style="color: #092D36; text-decoration: none;">{{ doc |poliscoops_first_for_key('nameMap.nl') }}</a></div>
     
               </td>
             </tr>
@@ -330,9 +330,7 @@
             <tr>
               <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                 
-      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#092D36;">People don't understand the complicated press conference of four ministers at once.
-
-            It's out there, but not together, but kids do play outside together? No more meetings among 100 people but school exams? PVV wants clear temporary #lockdown, no chaos!— Geert Wilders (@geertwilderspvv) March 23, 2020</div>
+      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#092D36;">{{ doc |poliscoops_first_for_key('contentMap.nl') |binoas_html_clean(doc) |safe }}</div>
     
               </td>
             </tr>
@@ -400,7 +398,7 @@
             <tr>
               <td align="right" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                 
-      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:right;color:#000000;"><a class="text-link" href="https://google.com" style="color: #FFFFFF; background-color: #0773A1; padding: 1em; text-decoration: none;">Lees verder &gt;</a></div>
+      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:right;color:#000000;"><a class="text-link" href="https://www.coronalert.nl/Note/{{ doc.id |split('/') |last }}" style="color: #FFFFFF; background-color: #0773A1; padding: 1em; text-decoration: none;">Lees verder &gt;</a></div>
     
               </td>
             </tr>
@@ -525,7 +523,7 @@
       <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;width:300px;line-height:100%;">
         <tr>
           <td align="center" bgcolor="#ED1D24" role="presentation" style="border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#ED1D24;" valign="middle">
-            <a href="https://google.com" style="display:inline-block;width:250px;background:#ED1D24;color:#ffffff;font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" target="_blank">
+            <a href="https://wwww.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}" style="display:inline-block;width:250px;background:#ED1D24;color:#ffffff;font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:17px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;" target="_blank">
               Uitzetten
             </a>
           </td>
@@ -734,7 +732,7 @@
             <tr>
               <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                 
-      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:11px;font-weight:bold;line-height:16px;text-align:center;color:#445566;"><a class="footer-link" href="https://www.google.com" style="color: #888888;">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://www.google.com" style="color: #888888;">Uitzetten</a></div>
+      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:11px;font-weight:bold;line-height:16px;text-align:center;color:#445566;"><a class="footer-link" href="https://www.coronalert.nl/" style="color: #888888;">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://wwww.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}" style="color: #888888;">Uitzetten</a></div>
     
               </td>
             </tr>
