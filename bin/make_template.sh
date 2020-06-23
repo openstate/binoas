@@ -9,7 +9,6 @@ then
   echo "You did not set the MJML_SECRET_KEY environment variable."
   exit 1
 fi
-echo "Everything correct!"
 
 MJML_API_BASE_URL="https://api.mjml.io/v1"
 
