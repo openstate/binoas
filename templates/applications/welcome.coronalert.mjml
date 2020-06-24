@@ -40,7 +40,9 @@
       </mj-section>
       <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
         <mj-column width="100%">
-          <p>Bedankt voor het aanmaken van de alert. Als je deze wil stopzetten kan je dat doen door op de link hieronder te klikken.</p>
+            <mj-text color="#ED1D24" font-weight="bold" font-size="20px">
+              Bedankt voor het aanmaken van de alert. Als je deze wil stopzetten kan je dat doen door op de link hieronder te klikken.
+            </mj-text>
         </mj-column>
       </mj-section>
     <mj-raw>{% endfor %}</mj-raw>
