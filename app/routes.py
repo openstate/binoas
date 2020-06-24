@@ -1,6 +1,7 @@
 import json
 from functools import wraps
 import logging
+import traceback
 
 from flask import render_template, request, redirect, url_for, flash, Markup, jsonify
 from kafka import KafkaConsumer, KafkaProducer
@@ -146,7 +147,9 @@ def new_subscription():
             app.config['binoas']['sendgrid']['api_key'], subject, content,
             [subscription['email']])
     except Exception as e:
-        raise BinoasError('General error upon mailing: %s' % (str(e),), 400)
+        l = "\n".join(traceback.format_exc().splitlines())
+        raise BinoasError('General error upon mailing: %s (%s)' % (
+            str(e),l,), 400)
 
     return jsonify(result)
 
