@@ -1,6 +1,6 @@
 <mjml>
   <mj-head>
-    <mj-title>Nieuwe alerts voor {{[a['query']['description'] for a in payload.alerts] |join(", ") }}</mj-title>
+    <mj-title>Nieuwe alerts voor {{ payload |alt_all_alerts }}</mj-title>
     <mj-preview>Je hebt een nieuwe alert</mj-preview>
     <mj-attributes>
       <mj-all font-family="'Roboto', Helvetica, Arial, sans-serif"></mj-all>
