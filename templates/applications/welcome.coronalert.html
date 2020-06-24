@@ -212,7 +212,10 @@
               <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0;padding-top:0;text-align:center;">
                 <!--[if mso | IE]>
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                
+                <![endif]-->
+                  
+      {% for alert in payload.alerts %}
+          <!--[if mso | IE]>
             <tr>
               <td
                  class="header-banner-outlook" width="600px"
@@ -345,7 +348,10 @@
       
               </td>
             </tr>
-          
+          <![endif]-->
+        {% endfor %}
+    
+                <!--[if mso | IE]>
                   </table>
                 <![endif]-->
               </td>
@@ -377,7 +383,10 @@
               <td style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0;padding-top:0;text-align:center;">
                 <!--[if mso | IE]>
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                
+                <![endif]-->
+                  
+      {% for alert in payload.alerts %}
+          <!--[if mso | IE]>
             <tr>
               <td
                  class="" width="600px"
@@ -475,7 +484,10 @@
       
               </td>
             </tr>
-          
+          <![endif]-->
+        {% endfor %}
+    
+                <!--[if mso | IE]>
                   </table>
                 <![endif]-->
               </td>
@@ -618,7 +630,9 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 
         <tr>
-      
+      <![endif]-->
+      {% for alert in payload.alerts %}
+          <!--[if mso | IE]>
             <td
                class="" style="width:600px;"
             >
@@ -672,7 +686,10 @@
     
           <!--[if mso | IE]>
             </td>
-          
+          <![endif]-->
+    {% endfor %}
+
+      <!--[if mso | IE]>
         </tr>
       
                   </table>

@@ -30,7 +30,7 @@
       </mj-column>
     </mj-section>
     <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
-    {% for alert in payload.alerts %}
+    <mj-raw>{% for alert in payload.alerts %}</mj-raw>
       <mj-section background-url="https://coronalert.nl/static/images/AdobeStock_336052008@2x.png" padding-left="0px" padding-right="0px" css-class="header-banner">
         <mj-column width="100%">
           <mj-text color="#ED1D24" font-weight="bold" font-size="20px">
@@ -43,11 +43,11 @@
           <p>Bedankt voor het aanmaken van de alert. Als je deze wil stopzetten kan je dat doen door op de link hieronder te klikken.</p>
         </mj-column>
       </mj-section>
-    {% endfor %}
+    <mj-raw>{% endfor %}</mj-raw>
     </mj-wrapper>
 
     <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
-      {% for alert in payload.alerts %}
+      <mj-raw>{% for alert in payload.alerts %}</mj-raw>
       <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
         <mj-column width="100%">
           <mj-divider border-color="#092D36"></mj-divider>
@@ -56,7 +56,7 @@
           </mj-button>
         </mj-column>
       </mj-section>
-      {% endfor %}
+      <mj-raw>{% endfor %}</mj-raw>
     </mj-wrapper>
 
         <mj-wrapper full-width="full-width">
@@ -68,7 +68,7 @@
         </mj-column>
       </mj-section>
       <mj-section padding-top="0">
-        {% for alert in payload.alerts %}
+        <mj-raw>{% for alert in payload.alerts %}</mj-raw>
         <mj-group>
           <mj-column width="100%" padding-right="0">
             <mj-text color="#445566" font-size="11px" align="center" line-height="16px" font-weight="bold">
@@ -76,7 +76,7 @@
             </mj-text>
           </mj-column>
         </mj-group>
-        {% endfor %}
+        <mj-raw>{% endfor %}</mj-raw>
       </mj-section>
     </mj-wrapper>
 
