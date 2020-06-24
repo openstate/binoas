@@ -1,7 +1,7 @@
 <mjml>
   <mj-head>
-    <mj-title>Nieuwe alerts voor {{[a['query']['description'] for a in payload.alerts] |join(", ") }}</mj-title>
-    <mj-preview>Je hebt een nieuwe alert</mj-preview>
+    <mj-title>Nieuwe alert aangemaakt voor voor {{[a['query']['description'] for a in payload.alerts] |join(", ") }}</mj-title>
+    <mj-preview>Je hebt een nieuwe alert gemaakt</mj-preview>
     <mj-attributes>
       <mj-all font-family="'Roboto', Helvetica, Arial, sans-serif"></mj-all>
       <mj-text font-weight="400" font-size="16px" color="#000000" line-height="24px" font-family="'Roboto', Helvetica, Arial, sans-serif"></mj-text>
@@ -34,27 +34,15 @@
       <mj-section background-url="https://coronalert.nl/static/images/AdobeStock_336052008@2x.png" padding-left="0px" padding-right="0px" css-class="header-banner">
         <mj-column width="100%">
           <mj-text color="#ED1D24" font-weight="bold" font-size="20px">
-            Alert voor "{{ alert.query.description}}"
+            Nieuwe alert gemaakt voor "{{ alert.query.description }}"
           </mj-text>
-         </mj-column>
-        </mj-section>
-      {% for doc in alert.documents %}
+        </mj-column>
+      </mj-section>
       <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
         <mj-column width="100%">
-          <mj-text color="#092D36" font-size="20px" font-weight="bold">
-            <a class="header-link" href="https://www.coronalert.nl/Note/{{ doc.id |split('/') |last }}">{{ doc |alt_first_for_key('nameMap.nl') }}</a>
-          </mj-text>
-          <mj-text color="#092D36" font-size="16px">
-            {{ doc |alt_first_for_key('contentMap.nl') |binoas_html_clean(doc) |safe }}
-          </mj-text>
+          <p>Bedankt voor het aanmaken van de alert. Als je deze wil stopzetten kan je dat doen door op de link hieronder te klikken.</p>
         </mj-column>
       </mj-section>
-      <mj-section background-color="#C9E9FB" padding-left="0px" padding-right="0px">
-        <mj-column width="100%">
-          <mj-text align="right"><a class="text-link" href="https://www.coronalert.nl/Note/{{ doc.id |split('/') |last }}">Lees verder &gt;</a></mj-text>
-        </mj-column>
-      </mj-section>
-      {% endfor %}
     {% endfor %}
     </mj-wrapper>
 

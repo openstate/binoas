@@ -7,5 +7,5 @@ do
   ft=`readlink -f $t`
   bt=`basename $ft .mjml`
   echo "$ft => $bt.html"
-  $BINDIR/make_template.sh $ft >"../templates/applications/$bt.html"
+  $BINDIR/make_template.sh $ft >"$BINDIR/../templates/applications/$bt.html"
 done

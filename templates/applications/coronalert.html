@@ -322,7 +322,7 @@
             <tr>
               <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                 
-      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#092D36;"><a class="header-link" href="https://google.com" style="color: #092D36; text-decoration: none;">{{ doc |poliscoops_first_for_key('nameMap.nl') }}</a></div>
+      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:20px;font-weight:bold;line-height:24px;text-align:left;color:#092D36;"><a class="header-link" href="https://www.coronalert.nl/Note/{{ doc.id |split('/') |last }}" style="color: #092D36; text-decoration: none;">{{ doc |alt_first_for_key('nameMap.nl') }}</a></div>
     
               </td>
             </tr>
@@ -330,7 +330,7 @@
             <tr>
               <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                 
-      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#092D36;">{{ doc |poliscoops_first_for_key('contentMap.nl') |binoas_html_clean(doc) |safe }}</div>
+      <div style="font-family:'Roboto', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#092D36;">{{ doc |alt_first_for_key('contentMap.nl') |binoas_html_clean(doc) |safe }}</div>
     
               </td>
             </tr>

@@ -11,6 +11,6 @@ def all_alerts(payload):
 
 def filter_functions():
     return {
-        'poliscoops_first_for_key': first_for_key,
-        'poliscoops_all_alerts': all_alerts
+        'alt_first_for_key': first_for_key,
+        'alt_all_alerts': all_alerts
     }
