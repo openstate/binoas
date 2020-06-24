@@ -3,7 +3,7 @@
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
       <head>
         <title>
-          Nieuwe alert aangemaakt voor voor {{[a['query']['description'] for a in payload.alerts] |join(", ") }}
+          Nieuwe alert aangemaakt voor voor {{ payload |alt_all_alerts }}
         </title>
         <!--[if !mso]><!-- -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
