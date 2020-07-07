@@ -64,7 +64,7 @@
         <mj-column width="100%">
           <mj-divider border-color="#092D36"></mj-divider>
           <mj-button background-color="#ED1D24" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://www.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}" width="300px">
-            Uitzetten
+            Afmelden
           </mj-button>
         </mj-column>
       </mj-section>
@@ -84,7 +84,7 @@
         <mj-group>
           <mj-column width="100%" padding-right="0">
             <mj-text color="#445566" font-size="11px" align="center" line-height="16px" font-weight="bold">
-              <a class="footer-link" href="https://www.coronalert.nl/">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://www.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}">Uitzetten</a>
+              <a class="footer-link" href="https://www.coronalert.nl/">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://www.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}">Afmelden</a>
             </mj-text>
           </mj-column>
         </mj-group>
