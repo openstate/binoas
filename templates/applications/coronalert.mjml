@@ -26,7 +26,7 @@
     </mj-section>
     <mj-section background-color="#ffffff">
       <mj-column width="100%">
-                <mj-image src="https://coronalert.nl/static/dist/images/logo-desktop.png" alt="" align="left" width="150px" />
+                <mj-image src="https://coronalert.nl/static/images/logo-desktop.png" alt="" align="left" width="150px" />
       </mj-column>
     </mj-section>
     <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
@@ -63,7 +63,7 @@
       <mj-section background-color="#ffffff"padding-left="0px" padding-right="0px">
         <mj-column width="100%">
           <mj-divider border-color="#092D36"></mj-divider>
-          <mj-button background-color="#ED1D24" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://wwww.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}" width="300px">
+          <mj-button background-color="#ED1D24" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://www.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}" width="300px">
             Uitzetten
           </mj-button>
         </mj-column>
@@ -84,7 +84,7 @@
         <mj-group>
           <mj-column width="100%" padding-right="0">
             <mj-text color="#445566" font-size="11px" align="center" line-height="16px" font-weight="bold">
-              <a class="footer-link" href="https://www.coronalert.nl/">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://wwww.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}">Uitzetten</a>
+              <a class="footer-link" href="https://www.coronalert.nl/">Privacy</a>&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;&#xA0;<a class="footer-link" href="https://www.coronalert.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}">Uitzetten</a>
             </mj-text>
           </mj-column>
         </mj-group>
