@@ -7,7 +7,7 @@
 {% for alert in payload.alerts %}
 <h5>{{ alert.query.description }}'</h5>
 
-  <a href="https://app.jodal.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}">
+  <a href="https://api.jodal.nl/subscriptions/delete?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}">
     Alert voor '{{ alert.query.description }}' stopzetten
   </a>
 
