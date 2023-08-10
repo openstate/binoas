@@ -1,0 +1,16 @@
+{% extends "templates/applications/ood.html" %}
+
+{% block documents %}
+
+<h4>Je hebt een alert aangemaakt:</h4>
+
+{% for alert in payload.alerts %}
+<h5>{{ alert.query.description }}'</h5>
+
+  <a href="https://app.jodal.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}">
+    Alert voor '{{ alert.query.description }}' stopzetten
+  </a>
+
+{% endfor %}
+
+{% endblock %}

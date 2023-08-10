@@ -1,0 +1,33 @@
+{% extends "templates/default/index.html" %}
+
+{% block logo %}
+
+<h1>Open Overheidsdata</h1>
+
+{% endblock %}
+
+{% block documents %}
+
+<h4>Je hebt 1 of meerdere alerts:</h4>
+
+{% for alert in payload.alerts %}
+<h5>Nieuwe alerts voor '{{ alert.query.description }}':</h5>
+
+  {% for doc in alert.documents %}
+    {% if doc.title %}
+    <h6>{{ doc.title }}</h6>
+    {% endif %}
+
+    {% if doc.description %}
+            <p>{{ doc.description |binoas_html_clean(doc) |safe }}</p>
+    {% endif %}
+
+  {% endfor %}
+
+  <a href="https://app.jodal.nl/unsubscribe?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}">
+    Alert voor '{{ alert.query.description }}' stopzetten
+  </a>
+
+{% endfor %}
+
+{% endblock %}
