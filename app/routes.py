@@ -105,7 +105,7 @@ def exist_post():
     ids = request.data.get('ids', [])
     existing = [i for i in request.data.get('ids', []) if es.exists(index=application_index, doc_type="item", id=i)]
     return jsonify({
-            "new": list(Set(ids) - Set(existing)),
+            "new": list(set(ids) - set(existing)),
             "existing": existing
     })
 
