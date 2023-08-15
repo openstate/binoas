@@ -93,7 +93,7 @@ def new_post():
     })
 
 
-@app.route("/posts/exists", method=["POST"])
+@app.route("/posts/exists", methods=["POST"])
 @decode_json_post_data
 def exist_post():
     es = setup_elasticsearch(app.config)
