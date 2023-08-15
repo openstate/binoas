@@ -93,6 +93,22 @@ def new_post():
     })
 
 
+@app.route("/posts/exists", method=["POST"])
+@decode_json_post_data
+def exist_post():
+    es = setup_elasticsearch(app.config)
+    application = request.data.get('application', '')
+    if application not in app.config['binoas']['applications'].keys():
+        return jsonify({"status":"error","msg":"Illegal application"})
+
+    application_index = 'binoas_%s' % (application,)
+    ids = request.data.get('ids', [])
+    existing = [i for i in request.data.get('ids', []) if es.exists(index=application_index, doc_type="item", id=i)]
+    return jsonify({
+            "new": (ids - existing),
+            "existing": existing
+    })
+
 @app.route("/subscriptions/new", methods=['POST'])
 @decode_json_post_data
 def new_subscription():
