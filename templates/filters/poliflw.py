@@ -11,7 +11,7 @@ def party_and_location(doc):
     location = first_for_key(doc, 'location')
 
     if party is None:
-        if location is not none:
+        if location is not None:
             return location
         else:
             return ""

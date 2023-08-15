@@ -58,7 +58,7 @@ class Subscription(UserDict):
         # Index documents into new index
         index_name = 'binoas_%s' % (self['application'],)
         es.index(
-            index=index_name, doc_type='queries', body=es_query, id=es_id)
+            index=index_name, doc_type='queries', body=es_query, id=es_id, refresh=True)
 
         user_query = session.query(UserQueries).filter_by(
             user_id=user.id, query_id=es_id).first()

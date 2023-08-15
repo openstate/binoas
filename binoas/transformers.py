@@ -1,4 +1,6 @@
 import sys
+import logging
+
 from jsonpath_rw import jsonpath, parse
 
 from binoas.posts import Post
@@ -29,7 +31,8 @@ class JSONPathPostTransformer(BasePostTransformer):
         transformed message.
         """
         post = Post(payload)
-
+        logging.info('Got a message for application %s' % (post['application'],))
+        logging.info(self.config['binoas']['applications'][post['application']])
         # The result should be a valid post also ...
         result = {
             'application': post['application'],
