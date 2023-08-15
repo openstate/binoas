@@ -66,7 +66,10 @@ class Subscription(UserDict):
             user_query = UserQueries(user_id=user.id, query_id=es_id)
             session.add(user_query)
         user_query.description = self['description']
-        user_query.frequency = self['frequency']
+        frequency = None
+        if str(self['frequency']).strip() == '':
+            frequency = None
+        user_query.frequency = frequency
         session.commit()
         return user_query
 
