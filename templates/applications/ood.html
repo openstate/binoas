@@ -87,15 +87,13 @@
               <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                   <tbody>
+                    {% block logo %}
                     <tr>
                       <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <div style="font-family:monospace;font-size:20px;line-height:1;text-align:center;color:#000000;">
-                          {% block logo %}
-                          BRON MONITOR
-                          {% endblock %}
-                        </div>
+                        <div style="font-family:monospace;font-size:20px;line-height:1;text-align:center;color:#000000;">BRON MONITOR</div>
                       </td>
                     </tr>
+                    {% endblock %}
                     <tr>
                       <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                         <div style="font-family:helvetica;font-size:15px;line-height:1;text-align:left;color:#000000;">We hebben alle nieuwe overheidsinformatie voor je gescand en je lijstjes weer gefixt.</div>
@@ -119,94 +117,78 @@
                         <div style="height:10px;line-height:10px;">&#8202;</div>
                       </td>
                     </tr>
-
-{% block documents %}
-
-  {% for alert in payload.alerts %}
-
-  <tr>
-    <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-      <p style="border-top:solid 1px #000000;font-size:1px;margin:0px auto;width:100%;">
-      </p>
-      <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #000000;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+                    {% block documents %}
+                    {% for alert in payload.alerts %}
+                    <tr>
+                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <div style="font-family:helvetica;font-size:18px;font-weight:bold;line-height:1;text-align:left;color:#000000;">⚡ {{ alert.query.description }}</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <div style="font-family:helvetica;font-size:13px;line-height:1;text-align:left;color:grey;">{{ alert.query.description }}</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <p style="border-top:dashed 1px lightgrey;font-size:1px;margin:0px auto;width:100%;">
+                        </p>
+                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dashed 1px lightgrey;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
 </td></tr></table><![endif]-->
-    </td>
-  </tr>
-  <tr>
-    <td style="font-size:0px;word-break:break-word;">
-      <div style="height:10px;line-height:10px;">&#8202;</div>
-    </td>
-  </tr>
-  <tr>
-    <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-      <div style="font-family:helvetica;font-size:18px;font-weight:bold;line-height:1;text-align:left;color:#000000;">⚡ {{ alert.query.description }}</div>
-    </td>
-  </tr>
-  <tr>
-    <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-      <div style="font-family:helvetica;font-size:13px;line-height:1;text-align:left;color:grey;">{{ alert.query.description }}</div>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-      <p style="border-top:dashed 1px lightgrey;font-size:1px;margin:0px auto;width:100%;">
-      </p>
-      <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dashed 1px lightgrey;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+                      </td>
+                    </tr>
+                    {% for doc in alert.documents %}
+                    <tr>
+                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <div style="font-family:helvetica;font-size:15px;line-height:1;text-align:left;color:#000000;">► <a class="link-nostyle" href="{{ doc.url }}" style="color: black; text-decoration: none;">{{ doc.title }}</a></div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <p style="border-top:dashed 1px lightgrey;font-size:1px;margin:0px auto;width:100%;">
+                        </p>
+                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dashed 1px lightgrey;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
 </td></tr></table><![endif]-->
-    </td>
-  </tr>
-  {% for doc in alert.documents %}
-    <tr>
-      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-        <div style="font-family:helvetica;font-size:15px;line-height:1;text-align:left;color:#000000;">
-          ► <a class="link-nostyle" href="{{ doc.url }}" style="color: black; text-decoration: none;">
-            {{ doc.title }}
-          </a>
-        </div>
-      </td>
-    </tr>
-
-  {% endfor %}
-
-  <tr>
-    <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-      <p style="border-top:dashed 1px lightgrey;font-size:1px;margin:0px auto;width:100%;">
-      </p>
-      <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dashed 1px lightgrey;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <div style="font-family:helvetica;font-size:13px;font-weight:;line-height:1;text-align:left;color:#000000;"><a class="link-nostyle" href="https://api.jodal.nl/subscriptions/delete?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}" style="color: black; text-decoration: none;">Alert voor '{{ alert.query.description }}' stopzetten</a></div>
+                      </td>
+                    </tr>
+                    <!-- Resultaten column 1 -->
+                    <tr>
+                      <td style="font-size:0px;word-break:break-word;">
+                        <div style="height:10px;line-height:10px;">&#8202;</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <p style="border-top:solid 1px #000000;font-size:1px;margin:0px auto;width:100%;">
+                        </p>
+                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 1px #000000;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
 </td></tr></table><![endif]-->
-    </td>
-  </tr>
-  <tr>
-    <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-      <div style="font-family:helvetica;font-size:13px;font-weight:;line-height:1;text-align:left;color:#000000;">
-        <a class="link-nostyle" href="https://api.jodal.nl/subscriptions/delete?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}" style="color: black; text-decoration: none;">
-          Alert voor '{{ alert.query.description }}' stopzetten
-        </a>
-      </div>
-    </td>
-  </tr>
-  <!-- Resultaten column 1 -->
-
-  {% endfor %}
-
-{% endblock %}
-
-<tr>
-  <td style="font-size:0px;word-break:break-word;">
-    <div style="height:10px;line-height:10px;">&#8202;</div>
-  </td>
-</tr>
-</tbody>
-</table>
-</div>
-<!--[if mso | IE]></td></tr></table><![endif]-->
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<!--[if mso | IE]></td></tr></table><![endif]-->
-</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-size:0px;word-break:break-word;">
+                        <div style="height:10px;line-height:10px;">&#8202;</div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    {% endblock %}
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+  </div>
 </body>
 
 </html>
