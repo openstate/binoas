@@ -96,7 +96,7 @@
                     {% endblock %}
                     <tr>
                       <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <div style="font-family:helvetica;font-size:15px;line-height:1;text-align:left;color:#000000;">Je hebt een alsert aangemaakt voor:</div>
+                        <div style="font-family:helvetica;font-size:15px;line-height:1;text-align:left;color:#000000;">Je hebt een alert aangemaakt voor:</div>
                       </td>
                     </tr>
                     <tr>
@@ -147,7 +147,11 @@
                     </tr>
                     <tr>
                       <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <div style="font-family:helvetica;font-size:13px;font-weight:;line-height:1;text-align:left;color:#000000;"><a class="link-nostyle" href="https://api.jodal.nl/subscriptions/delete?query_id={{ alert.query.id }}&amp;user_id={{ payload.user.id }}" style="color: black; text-decoration: none;">Alert voor '{{ alert.query.description }}' stopzetten</a></div>
+                        <div style="font-family:helvetica;font-size:13px;font-weight:;line-height:1;text-align:left;color:#000000;">
+                          <a class="link-nostyle" href="https://bron.live/u/{{ payload.user.id }}/{{ alert.query.id }}" style="font-size: 13px; color: black; text-decoration: none;">
+                            Alert voor '{{ alert.query.description }}' stopzetten
+                          </a>
+                        </div>
                       </td>
                     </tr>
                     <!-- Resultaten column 1 -->
