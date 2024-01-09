@@ -17,6 +17,13 @@ class User(Base):
 
     queries = relationship("UserQueries", back_populates="user")
 
+    def to_json(self):
+        return {
+            'id': self.user_id,
+            'application': self.application,
+            'email': self.email
+        }
+
 
 class UserQueries(Base):
     """
