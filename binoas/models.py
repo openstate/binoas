@@ -19,7 +19,7 @@ class User(Base):
 
     def to_json(self):
         return {
-            'id': self.user_id,
+            'id': self.id,
             'application': self.application,
             'email': self.email
         }
