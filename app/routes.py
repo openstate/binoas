@@ -13,7 +13,7 @@ from binoas.es import setup_elasticsearch
 from binoas.posts import Post
 from binoas.subscriptions import Subscription
 from binoas.mixins import ProducerMixin
-from binoas.models import UserQueries
+from binoas.models import UserQueries, User
 from binoas.template import Templater
 from binoas.mail import send_mail
 
@@ -222,6 +222,22 @@ def list_subscriptions():
             'total': len(user_queries)
         },
         'results': [u.to_json() for u in user_queries]
+    }
+    session.close()
+    return jsonify(results)
+
+
+@app.route("/users", methods=["GET"])
+@decode_json_post_data
+def list_subscriptions():
+    session = setup_db(app.config)()
+    users = session.query(User).filter_by(
+        **request.args).all()
+    results = {
+        'meta': {
+            'total': len(users)
+        },
+        'results': [u.to_json() for u in users]
     }
     session.close()
     return jsonify(results)
