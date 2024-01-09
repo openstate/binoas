@@ -229,7 +229,7 @@ def list_subscriptions():
 
 @app.route("/users", methods=["GET"])
 @decode_json_post_data
-def list_subscriptions():
+def list_users():
     session = setup_db(app.config)()
     users = session.query(User).filter_by(
         **request.args).all()
