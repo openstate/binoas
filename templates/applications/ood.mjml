@@ -1,0 +1,67 @@
+<mjml>
+  <mj-head>
+    <mj-style inline="inline">.link {
+      color: inherit;
+      text-decoration: underline;
+      }
+      .medium {
+      font-weight: 500;
+      }
+      .unsubscribe {
+      color: darkgrey;
+      text-decoration: none;
+      }
+      .caret {
+      color: darkgrey;
+      padding-right: 4px;
+      }
+      .truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      }</mj-style>
+    <mj-attributes>
+      <mj-all font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'" font-size="15px" line-height="1.25"></mj-all>
+    </mj-attributes>
+    <mj-preview>We hebben nieuwe documenten gevonden die passen in jouw feeds.</mj-preview>
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column></mj-column>
+    </mj-section>
+    <mj-section background-url="https://bron.live/bron-mail-banner.png" background-size="cover" background-repeat="no-repeat" border-radius="10px">
+      <mj-column>
+        <mj-spacer height="30px"></mj-spacer>
+        <mj-image src="https://bron.live/bron-mail-logo.png" width="200px" href="https://bron.live" alt="Bron"></mj-image>
+        <mj-spacer height="30px"></mj-spacer>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="30px 0px 0px 0px">
+      <mj-column>
+        <mj-text>We hebben nieuwe documenten gevonden die passen in jouw feeds.</mj-text>
+        <mj-spacer height="20px"></mj-spacer>
+        <mj-raw>{% for alert in payload.alerts %}</mj-raw>
+        <mj-text font-size="18px" font-weight="bold">{{ alert.query.description }}</mj-text>
+        <mj-raw>{% for document in alert.documents %}</mj-raw>
+        <mj-text><span class="caret">►</span> <a class="link medium" href="https://bron.live/r/{{ document.id }}">{{ document.title }}</a></mj-text>
+        <mj-raw>{% endfor %}</mj-raw>
+        <mj-spacer height="20px"></mj-spacer>
+        <mj-raw>{% endfor %}</mj-raw>
+        <mj-text font-size="18px" line-height="1" font-weight="bold">Verder zoeken?</mj-text>
+        <mj-text line-height="1.75">Zoek door op <a href="https://bron.live" class="link medium">bron.live</a>. Stel je vragen via <a href="mailto:contact@openstate.eu" class="link medium">contact@openstate.eu</a>, en volg Bron <a href="https://www.linkedin.com/company/104425917" class="link medium">op LinkedIn</a> om altijd op de hoogte te blijven van de laatste updates.</mj-text>
+        <mj-button href="https://bron.live/" align="left" background-color="#1c1917" font-weight="medium" font-size="15px" color="white" inner-padding="12px 20px" border-radius="10px"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" style="margin:2px 8px -2px 0px;">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6" />
+          </svg>
+          <span style="font-weight:600">Doorzoek 2 miljoen documenten</span>
+        </mj-button>
+        <mj-spacer height="20px"></mj-spacer>
+        <mj-text line-height="2">Met vriendelijke groet,<br />Het Bron-team</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-text color="grey" line-height="1.5" font-size="14px">Je ontvangt deze mail omdat je een alert hebt ingesteld. Meld je af voor specifieke feeds op <a href="https://bron.live/feeds" class="link">de website van Bron</a>. Of klik op <a href="https://bron.live/uitschrijven?id={{ payload.user.id }}" class="link">deze link</a> als je je wil afmelden voor alle mails.</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
