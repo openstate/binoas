@@ -107,3 +107,4 @@ kafka-docker/
 
 config.py
 config.yaml
+docker/backup.sh

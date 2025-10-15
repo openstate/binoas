@@ -11,6 +11,20 @@ Please see [the wiki](https://github.com/openstate/binoas/wiki) for the document
 We use the default unit testing framework that is built into python. You can start
 it as follows: `docker exec binoas_loader_1 python tests.py`
 
+## Backups
+Backups are written to `/usr/share/elasticsearch/backups` in the docker container, mapped to `backups`.
+
+```
+curl -XPUT localhost:9200/_snapshot/local_fs_backups -d '
+{
+    "type" : "fs",
+    "settings" : {
+      "location" : "/usr/share/elasticsearch/backups"
+    }
+}
+'
+```
+
 ## Contributing
 
 ## Authors and contributors

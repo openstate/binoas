@@ -50,6 +50,7 @@ services:
       - xpack.monitoring.enabled=false
       - http.host=0.0.0.0
       - node.master=true
+      - 'path.repo=/usr/share/elasticsearch/backups'
     ulimits:
       memlock:
         soft: -1
@@ -60,6 +61,7 @@ services:
       - IPC_LOCK
     volumes:
       - esdata:/usr/share/elasticsearch/data
+      - ../backups/elasticsearch:/usr/share/elasticsearch/backups
     healthcheck:
       test: wget -q -O - http://127.0.0.1:9200/_cat/health
       interval: 15s
